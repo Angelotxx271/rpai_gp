@@ -1,9 +1,9 @@
-# Venture Skeleton v0
+# RPAI Group Project
 
-First deliverable for the IE course "Rapid Prototyping with AI" (RPAI).
+Group project for the IE course "Rapid Prototyping with AI" (RPAI). Started from the Venture Skeleton v0 scaffold. Progress is tracked through commits rather than per-deliverable folders.
 
 ```
-first_deliverable/
+rpai_gp/
 ├── README.md
 ├── downloads/                     # course-provided prompts and skill file, unmodified
 │   ├── SKILL.md
