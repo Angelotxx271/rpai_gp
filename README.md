@@ -1,25 +1,23 @@
-# RPAI Group Project
-
-Group project for the IE course "Rapid Prototyping with AI" (RPAI). Started from the Venture Skeleton v0 scaffold. Progress is tracked through commits rather than per-deliverable folders.
+# RPAI · First deliverable (Venture Skeleton v0) · TFG Copilot
 
 ```
-rpai_gp/
-├── README.md
-├── downloads/                     # course-provided prompts and skill file, unmodified
-│   ├── SKILL.md
+first_deliverable/
+├── downloads/                  the 5 AI helpers (inputs, do not edit)
+│   ├── SKILL.md                  helper that writes ai-usage-log.md
 │   ├── ai-prompt-opportunity.md
 │   ├── ai-prompt-assumptions.md
 │   ├── ai-prompt-goals.md
 │   └── ai-prompt-experiment-card.md
-├── evidence-log/                  # our filled-in outputs, one file per stage
-│   ├── opportunity.md
-│   ├── assumptions.md
-│   ├── goals.md
-│   ├── experiment-card.md
-│   ├── ai-usage-log.md
-│   └── recruitment.md
-└── prototype/                     # empty for now
-    └── .gitkeep
+├── evidence-log/               what we produced (outputs)
+│   ├── opportunity.md          user, pain point, need, insight, HMW
+│   ├── assumptions.md          3 areas, 11 assumptions, riskiest assumption
+│   ├── goals.md                Product Goal, Sprint Goal
+│   ├── experiment-card.md      hypothesis, method, metric, threshold, evidence strength, decision rule
+│   ├── ai-usage-log.md         6-column course log, 5 rows (row 5 has a PENDING cell to fill)
+│   └── recruitment.md          test access: who, how many, how, by when, consent
+├── prototype/
+│   ├── prototype-v0.pdf        Wizard-of-Oz kit: chat front, task brief, wizard protocol, observation sheet, exclusions
+│   └── prototype-v0-backup.png screenshot of the chat front (page 2), in case the live version fails
+└── venture-skeleton-v0.pptx    2 slides for the 2-minute presentation (table + rough test)
 ```
 
-The Session 5 challenge brief lives one level up at `../2026_RPAI_1st_challenge_Session5.pdf`.
