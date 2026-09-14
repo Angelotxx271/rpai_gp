@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TFGPT — the AI agent for your TFG</title>
+<meta name="description" content="TFGPT: the AI agent designed to help you complete your TFG. It knows every IE TFG guideline.">
+<meta property="og:title" content="TFGPT — the AI agent for your TFG">
+<meta property="og:description" content="Your TFG drifts a little every day. Your supervisor sees it every few weeks.">
+<meta name="theme-color" content="#ffffff">
+<link rel="preload" href="/fonts/newsreader-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family: "Newsreader"; font-weight: 500; font-display: swap; src: url("/fonts/newsreader-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Instrument Sans"; font-weight: 400; font-display: swap; src: url("/fonts/instrument-sans-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Instrument Sans"; font-weight: 500; font-display: swap; src: url("/fonts/instrument-sans-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Instrument Sans"; font-weight: 600; font-display: swap; src: url("/fonts/instrument-sans-latin-600-normal.woff2") format("woff2"); }
+
+  :root {
+    --paper: #ffffff; --ink: #1b2437; --ink-soft: #5c6478; --rule: #cfd3dc; --pen: #c4261d;
+    --serif: "Newsreader", Georgia, serif; --sans: "Instrument Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 18px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+  main, footer { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+  .top { max-width: 680px; margin: 0 auto; padding: 22px 24px 0; font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
+
+  .hero { padding: 40px 0 56px; }
+  .aud { margin: 0 0 14px; font-size: 15px; color: var(--ink-soft); }
+  h1 { margin: 0; font: 500 clamp(38px, 7vw, 64px)/1.06 var(--serif); letter-spacing: -0.012em; text-wrap: balance; }
+  .sub { margin: 22px 0 0; font: 500 clamp(21px, 3.4vw, 24px)/1.25 var(--serif); letter-spacing: -0.006em; text-wrap: pretty; }
+  .cta { display: inline-block; width: 100%; margin: 30px 0 0; padding: 18px 28px; border: 0; border-radius: 8px;
+         background: var(--ink); color: #fff; font: 600 18px/1.2 var(--sans); cursor: pointer; transition: background .15s ease; }
+  .cta:hover { background: #2b364e; } .cta:focus-visible { outline: 3px solid var(--pen); outline-offset: 3px; }
+  .micro { margin: 12px 0 0; font-size: 14px; color: var(--ink-soft); }
+  @media (min-width: 560px) { .cta { width: auto; } .hero { padding-top: 56px; } }
+
+  /* diagram */
+  .drift { margin: 0 0 56px; }
+  .drift svg { display: block; width: 100%; height: auto; }
+  .drift text { font-family: var(--sans); }
+  .drift .mob { display: none; }
+  @media (max-width: 559px) { .drift .desk { display: none; } .drift .mob { display: block; } }
+  .drift .work { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.4s ease-out .3s forwards; }
+  .drift .late { opacity: 0; animation: fade .5s ease-out 1.6s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fade { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .drift .work { animation: none; stroke-dashoffset: 0; } .drift .late { animation: none; opacity: 1; } }
+
+  /* the three lines */
+  .lines { padding: 0 0 56px; }
+  .lines ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .lines li { padding: 18px 0; border-bottom: 1px solid var(--rule); font-size: 19px; }
+  .muted { margin: 26px 0 0; color: var(--ink-soft); }
+
+  .end { padding: 0 0 64px; }
+  h2 { margin: 0; font: 500 32px/1.15 var(--serif); letter-spacing: -0.01em; }
+
+  footer { padding: 0 24px 48px; font-size: 14px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 24px; }
+  footer a { color: inherit; }
+
+  /* signup panel */
+  .panel { margin: 20px 0 0; padding: 24px; border: 1px solid var(--rule); border-radius: 10px; }
+  .panel h3 { margin: 0; font: 500 26px/1.15 var(--serif); letter-spacing: -0.008em; }
+  .panel p { margin: 10px 0 0; }
+  .field { margin: 18px 0 0; }
+  .field label { display: block; font-size: 14px; font-weight: 600; margin: 0 0 6px; }
+  .field input[type="email"], .field input[type="text"] { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--rule); border-radius: 8px;
+         font: 400 16px var(--sans); color: var(--ink); background: #fff; }
+  .field input:focus { outline: 2px solid var(--ink); outline-offset: 1px; border-color: var(--ink); }
+  .radios { margin: 18px 0 0; } .radios > span { display: block; font-size: 14px; font-weight: 600; margin: 0 0 6px; }
+  .radios label { display: flex; gap: 10px; align-items: center; padding: 8px 0; cursor: pointer; }
+  .radios input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .panel .cta { margin-top: 22px; }
+  .err { margin: 12px 0 0; color: var(--pen); font-size: 15px; } .err:empty { display: none; }
+  .ok h3 { margin: 0; } .ok .cta { background: #fff; color: var(--ink); border: 1px solid var(--ink); }
+  .ok .cta:hover { background: #f3f4f7; }
+</style>
+</head>
+<body>
+<div class="top">TFGPT</div>
+
+<main>
+  <section class="hero">
+    <p class="aud">For final-year IE students</p>
+    <h1>Your TFG drifts a little every day. Your supervisor sees it every few weeks.</h1>
+    <p class="sub">TFGPT: the AI agent designed to help you complete your TFG. It knows every IE TFG guideline.</p>
+    <button class="cta" type="button" data-source="hero">I'd use this</button>
+    <p class="micro">Twenty seconds. We only build it if enough of you want it.</p>
+    <div class="slot"></div>
+  </section>
+
+  <figure class="drift" aria-label="Diagram: what your topic and the IE guidelines ask for stays a straight line; what you're actually writing curves away from it after a supervisor meeting, and the gap at the next meeting is the weeks you'll redo.">
+    <!-- desktop / tablet -->
+    <svg class="desk" viewBox="0 95 1000 490" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="30" y1="160" x2="970" y2="160" stroke="#1b2437" stroke-width="3" stroke-dasharray="14 12" stroke-linecap="round"/>
+      <text x="30" y="130" font-size="24" fill="#1b2437">What your topic and the IE guidelines ask for</text>
+      <path class="work" pathLength="1" d="M 30 160 L 300 160 C 470 160, 660 240, 935 565" fill="none" stroke="#c4261d" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="300" cy="160" r="11" fill="#ffffff" stroke="#1b2437" stroke-width="4"/>
+      <text x="300" y="212" font-size="22" fill="#5c6478" text-anchor="middle">Supervisor meeting</text>
+      <circle cx="850" cy="160" r="11" fill="#ffffff" stroke="#1b2437" stroke-width="4"/>
+      <text x="850" y="118" font-size="22" fill="#5c6478" text-anchor="middle">Next meeting</text>
+      <g class="late">
+        <text x="400" y="400" font-size="24" fill="#c4261d">What you're actually writing</text>
+        <line x1="850" y1="178" x2="850" y2="468" stroke="#c4261d" stroke-width="3"/>
+        <line x1="837" y1="178" x2="863" y2="178" stroke="#c4261d" stroke-width="3"/>
+        <line x1="837" y1="468" x2="863" y2="468" stroke="#c4261d" stroke-width="3"/>
+        <text x="872" y="312" font-size="24" fill="#c4261d">The weeks</text>
+        <text x="872" y="340" font-size="24" fill="#c4261d">you'll redo</text>
+      </g>
+    </svg>
+    <!-- phones: same drawing, re-laid-out so the labels stay legible -->
+    <svg class="mob" viewBox="0 60 760 470" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="20" y1="120" x2="740" y2="120" stroke="#1b2437" stroke-width="3" stroke-dasharray="12 10" stroke-linecap="round"/>
+      <text x="20" y="92" font-size="26" fill="#1b2437">Your topic + the IE guidelines</text>
+      <path class="work" pathLength="1" d="M 20 120 L 200 120 C 330 120, 460 190, 670 470" fill="none" stroke="#c4261d" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="200" cy="120" r="11" fill="#ffffff" stroke="#1b2437" stroke-width="4"/>
+      <text x="200" y="168" font-size="24" fill="#5c6478" text-anchor="middle">Supervisor meeting</text>
+      <circle cx="600" cy="120" r="11" fill="#ffffff" stroke="#1b2437" stroke-width="4"/>
+      <text x="600" y="86" font-size="24" fill="#5c6478" text-anchor="middle">Next meeting</text>
+      <g class="late">
+        <text x="230" y="330" font-size="26" fill="#c4261d">What you're writing</text>
+        <line x1="600" y1="138" x2="600" y2="378" stroke="#c4261d" stroke-width="3"/>
+        <line x1="588" y1="138" x2="612" y2="138" stroke="#c4261d" stroke-width="3"/>
+        <line x1="588" y1="378" x2="612" y2="378" stroke="#c4261d" stroke-width="3"/>
+        <text x="616" y="250" font-size="26" fill="#c4261d">The weeks</text>
+        <text x="616" y="280" font-size="26" fill="#c4261d">you'll redo</text>
+      </g>
+    </svg>
+  </figure>
+
+  <section class="lines">
+    <ul>
+      <li>Knows the IE TFG guidelines for your degree, section by section.</li>
+      <li>Knows your topic, your proposal and your deadline.</li>
+      <li>Paste a chapter. It shows you, line by line, where you've drifted.</li>
+    </ul>
+    <p class="muted">It won't write your TFG for you. It tells you what's wrong with it, at 2am, without sighing.</p>
+  </section>
+
+  <section class="end">
+    <h2>Would you use this?</h2>
+    <button class="cta" type="button" data-source="bottom">I'd use this</button>
+    <p class="micro">We only build it if enough of you want it.</p>
+    <div class="slot"></div>
+  </section>
+</main>
+
+<footer>By final-year IE students who are also behind on their TFGs. Not an official IE tool (yet). One email, no spam.</footer>
+
+<!-- the signup panel; moved under whichever button was tapped -->
+<div class="panel" id="panel" hidden>
+  <form id="form" novalidate>
+    <h3>It doesn't exist yet. We're checking whether it should.</h3>
+    <p>Leave your email. You'll hear from us only if we build it.</p>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@student.ie.edu" required>
+    </div>
+    <div class="field">
+      <label for="programme">Programme <span style="font-weight:400;color:var(--ink-soft)">(optional)</span></label>
+      <input id="programme" name="programme" type="text" autocomplete="off" placeholder="e.g. BBA, BDBA, Law, Architecture" maxlength="80">
+    </div>
+    <div class="radios">
+      <span>If it existed, would you use it… <span style="font-weight:400;color:var(--ink-soft)">(optional)</span></span>
+      <label><input type="radio" name="usage_intent" value="instead"> instead of the AI I use now</label>
+      <label><input type="radio" name="usage_intent" value="alongside"> alongside it</label>
+      <label><input type="radio" name="usage_intent" value="probably_not"> probably not</label>
+    </div>
+    <div class="hp" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+    <button class="cta" type="submit">Count me in</button>
+    <p class="micro">One email, no spam.</p>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+  <div class="ok" id="ok" hidden>
+    <h3>You're in. Now go write chapter 3.</h3>
+    <button class="cta" type="button" id="copy">Copy link for a friend who's behind</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const sid = sessionStorage.getItem("tfgpt_sid") || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+  sessionStorage.setItem("tfgpt_sid", sid);
+
+  const send = (event, meta) => fetch("/api/event", {
+    method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ session_id: sid, event, meta: meta || {} })
+  }).catch(() => {});
+
+  if (!sessionStorage.getItem("tfgpt_pv")) { sessionStorage.setItem("tfgpt_pv", "1"); send("page_view"); }
+
+  const panel = document.getElementById("panel");
+  const form = document.getElementById("form");
+  const ok = document.getElementById("ok");
+  const err = document.getElementById("err");
+  let source = "hero";
+
+  document.querySelectorAll("button.cta[data-source]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      source = btn.dataset.source;
+      send("cta_click", { button: source });
+      btn.parentElement.querySelector(".slot").appendChild(panel);
+      panel.hidden = false;
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      const email = document.getElementById("email");
+      if (!form.hidden) setTimeout(() => email.focus({ preventScroll: true }), 350);
+    });
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    err.textContent = "";
+    const data = Object.fromEntries(new FormData(form).entries());
+    const email = (data.email || "").trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = "That email doesn't look right."; return; }
+    const submit = form.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    try {
+      const r = await fetch("/api/signup", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, programme: data.programme || null, usage_intent: data.usage_intent || null, source, session_id: sid, website: data.website || "" })
+      });
+      if (r.status === 409) { err.textContent = "You're already on the list."; return; }
+      if (r.status === 400) { err.textContent = "That email doesn't look right."; return; }
+      if (!r.ok) throw new Error("server");
+      form.hidden = true; ok.hidden = false;
+    } catch (_) {
+      err.textContent = "Couldn't save that. Try again.";
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  document.getElementById("copy").addEventListener("click", async (e) => {
+    const url = location.origin + location.pathname;
+    try { await navigator.clipboard.writeText(url); } catch (_) { prompt("Copy this link:", url); }
+    const b = e.currentTarget, t = b.textContent; b.textContent = "Copied"; setTimeout(() => (b.textContent = t), 1500);
+  });
+})();
+</script>
+</body>
+</html>
