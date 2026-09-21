@@ -1,7 +1,9 @@
 # Persona Hypothesis 03: The AI Cross-Checker
 
 > Status: Provisional Persona hypothesis requiring real-user validation
-> Shared Job to Be Done: When final-year IE students work on their TFG through two-month gaps between deliverable meetings without knowing whether they are on track, finding out at a meeting that the last two months of work were faulty prompts them to seek a way to go into each meeting already knowing their work meets what is required, so they can move on to the next phase.
+
+## Shared Job to Be Done: 
+When final-year IE students work on their TFG through two-month gaps between deliverable meetings without knowing whether they are on track, finding out at a meeting that the last two months of work were faulty prompts them to seek a way to go into each meeting already knowing their work meets what is required, so they can move on to the next phase.
 
 ## Behavioural archetype
 
