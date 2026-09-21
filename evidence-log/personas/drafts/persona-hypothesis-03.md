@@ -1,47 +1,65 @@
-# Persona Hypothesis 03: The Programmer Outside Their Depth
+# Persona Hypothesis 03: The AI Cross-Checker
 
-> Status: HYPOTHESIS FOR REAL-USER VALIDATION
-> Evidence boundary: The starting pattern was supplied as a team direction. The behavioural details below are provisional hypotheses to test with a real final-year student. This is not customer evidence.
+> Status: Provisional Persona hypothesis requiring real-user validation
+> Shared Job to Be Done: When final-year IE students work on their TFG through two-month gaps between deliverable meetings without knowing whether they are on track, finding out at a meeting that the last two months of work were faulty prompts them to seek a way to go into each meeting already knowing their work meets what is required, so they can move on to the next phase.
 
-## Behavioural focus
+## Behavioural archetype
 
-This Persona represents a final-year student whose last available TFG option is game design. They are comfortable programming, but have little or no experience in the other work the project demands, such as game feel, visual design, narrative, level design, audio, or user testing.
+This Persona represents a final-year Data student at IE who has not started her TFG yet and works alongside other BCsAI students. She runs most of her coursework through AI and uses the same tool both to produce work and to check whether that work follows the professor's instructions.
 
-The defining pattern is: **uses the strongest known skill, programming, to create visible progress while postponing unfamiliar disciplines until they become urgent.**
+The defining pattern is: **feeds the professor's instructions and rubric into AI, asks it to follow them, then asks the same AI whether the result meets the criteria while also trying to understand what it did.**
 
-## Situation and job
+## Decision-relevant profile
 
-The student has reached the final year and has been assigned or selected for a game-design TFG as their last option. The project requires them to combine technical implementation with creative and design decisions that they do not yet know how to evaluate confidently.
-
-They need to turn an incomplete idea into a coherent, playable project that satisfies the TFG requirements and can be explained and defended at each deliverable meeting. The feared outcome is reaching a review with a working technical prototype that is still judged incomplete because the design, player experience, presentation, or project rationale is weak.
-
-## What this student does
-
-- **HYPOTHESIS:** Starts with coding because it is the part of the project where they can work independently and see immediate progress.
-- **HYPOTHESIS:** Builds features before defining a small, testable game concept and clear success criteria.
-- **HYPOTHESIS:** Treats unfamiliar areas as tasks to finish later, especially when a deadline is still weeks away.
-- **HYPOTHESIS:** Uses technical competence as evidence that the project is moving forward, even when the overall player experience has not been tested.
-- **HYPOTHESIS:** Becomes blocked when asked to make subjective design choices, then seeks reassurance from a supervisor or peers instead of having a repeatable way to evaluate the choice.
+- **SUPPORTED:** Final-year Data student at IE; has not started the TFG yet.
+- **OBSERVED:** Double-checks work with AI across subjects, including emails, code, projects and papers.
+- **OBSERVED:** Wants to understand what the AI did rather than simply accept its output.
+- **OBSERVED:** Pastes instructions, guidelines and rubrics into AI, asks it to follow them, then asks it to check the criteria; she also reads and checks the result herself.
+- **OBSERVED:** Leans on AI more when the topic is new or complex.
+- **OBSERVED:** Uses Claude as her main AI.
 
 ## Current approach and constraints
 
-- **HYPOTHESIS:** Relies on programming as the main way to reduce uncertainty and regain a sense of control.
-- **HYPOTHESIS:** Has difficulty judging whether a mechanic is enjoyable, whether a level communicates its goal, or whether the project has enough design depth for the TFG.
-- **HYPOTHESIS:** Delays playtesting because unfinished work feels embarrassing or because they do not yet know what feedback to ask for.
-- **HYPOTHESIS:** Has limited time to build missing skills while also meeting the formal TFG milestones.
-- **UNKNOWN:** Whether the student chose game design willingly, accepted it because it was the last option, or has access to a supervisor with game-design expertise.
-- **UNKNOWN:** Which non-programming discipline creates the greatest practical risk for this student.
+Her current approach is to give the AI the fullest available context from the professor, use it to produce or improve the work, and then ask it to verify compliance with the same instructions. She performs a personal check as well, but her own check is weakest when the material is unfamiliar.
 
-## Decision consequence
+- **OBSERVED:** New or complex topics increase her reliance on the AI.
+- **HYPOTHESIS:** She mostly trusts the result and checks it because she needs confirmation, rather than because she expects the check to challenge the draft.
+- **HYPOTHESIS:** Claude is valuable because it holds the context she has already supplied.
+- **HYPOTHESIS:** She pays for AI.
+- **UNKNOWN:** Whether she will have regular supervisor meetings once the TFG begins.
 
-The product should help this student convert vague creative work into small, reviewable design decisions before too much implementation is committed. A useful workflow would make the non-programming parts visible, connect each deliverable to a concrete project requirement, and prompt early testing of the playable experience rather than rewarding code volume alone.
+## Product or research decision affected
 
-The first test should use a real game-design milestone and observe whether the student can identify what is missing, make one design decision, and gather useful feedback before adding more code.
+Every answer should show which sources and tools it used and where each piece of information comes from, rather than presenting unsupported text with no references. For this Persona, source visibility is not decorative: it is the mechanism that may let her understand and challenge the result instead of asking the same system to approve its own work.
 
-## Critical uncertainty
+The first validation should use a real coursework task or early TFG task. Compare what she does when the answer includes source and tool traceability with what she does when it does not. Observe whether she uses the sources to check the result and whether the trace changes her next action.
 
-The key uncertainty is whether the student's difficulty comes mainly from lacking non-programming skills, from being assigned an unwanted TFG option, or from weak supervision and unclear requirements. These causes would produce different interventions and should not be merged into one explanation without evidence.
+## Evidence boundary
 
-## Validation needed
+| Claim | Evidence status | Basis |
+|---|---|---|
+| Final-year Data student at IE; TFG not started yet | SUPPORTED | Known to the author as a classmate |
+| Works alongside other BCsAI students | SUPPORTED | Supplied context; scope and relevance still need checking |
+| Double-checks everything with AI across subjects | OBSERVED | Author's informal observation, repeated across subjects |
+| Wants to understand what the AI did, not just take it | OBSERVED | Author's observation |
+| Supplies professor instructions and rubrics, asks the AI to follow them, then asks it to check the criteria; also checks herself | OBSERVED | Author's observation of her coursework |
+| Leans on AI more for new or complex topics | OBSERVED | Author's observation |
+| Uses Claude as her main AI | OBSERVED | Known to the author |
+| Mostly trusts the result and checks mainly for confirmation | HYPOTHESIS | Author's interpretation; not directly confirmed |
+| Claude is valuable because it holds her full context | HYPOTHESIS | Author's belief; not checked |
+| Pays for AI | HYPOTHESIS | Stated but not verified |
+| Her TFG routine will match her coursework routine, including supervisor meetings | HYPOTHESIS | Projected from coursework; she has not started the TFG |
+| Checking with the same AI that drafted the work catches scope drift | UNKNOWN | Not established |
+| She would move her workflow from Claude to a new tool | UNKNOWN | Not established |
 
-Speak with final-year students who have completed or are currently completing a game-design TFG. Reconstruct a recent milestone: what they tried to produce, which part they started with, what they postponed, how they decided whether the result was good enough, and what feedback changed their next action. Check whether the programming-first pattern repeats across more than one milestone and whether the student actually experiences the non-programming work as the main constraint.
+## Critical validation gaps
+
+- Whether she would move her workflow away from Claude, which she may believe holds her context.
+- Whether her TFG routine matches her coursework routine once the TFG starts.
+- Whether the same AI that drafted the work can catch drift, especially on unfamiliar topics.
+- Whether she actually uses the sources shown with each answer, which the product decision assumes.
+- Whether she pays for AI and whether she can get supervisor meetings when she needs them.
+
+## Validation plan
+
+Ask her to reconstruct one recent coursework task involving a rubric or detailed instructions. Then observe a comparable task using a prototype that exposes sources and tool traceability. Record whether she checks the cited material, challenges the answer, changes the work, or simply accepts the confirmation. Repeat with a new or complex topic and, once possible, compare the pattern with an early TFG milestone. Treat any stated willingness to switch tools as a hypothesis until actual workflow behaviour is observed.
