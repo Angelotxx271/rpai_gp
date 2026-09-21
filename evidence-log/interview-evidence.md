@@ -31,3 +31,14 @@ Real-user evidence gathered outside AI sessions. Each entry says who it came fro
 - They keep using the AI they already pay for, or use for almost everything, because it's the best they know
 - If an option offered to them compared fairly with the AI they can access elsewhere, it would feel like a no-brainer. This is a stated intention, not behaviour
 - They worry whether a new option is good enough to switch to, because most products the university offers run old, outdated models
+
+## 03 · Participant 02, final-year Data student at IE
+
+- **Who:** the classmate that personas/ai-persona-01.md (The AI Cross-Checker) is based on. She hasn't started her TFG yet
+- **How:** conversation with a team member, recorded 2026-09-21
+- **Used in:** personas/ai-persona-01.md, assumptions.md
+
+### What she said (first-hand, relayed)
+- She would leave Claude for the TFG tool if it meant she no longer had to keep re-prompting it or adding new context every time she works, and could comfortably do her TFG with it, as long as it works the way the team envisions it
+- Her condition implies that with Claude today she keeps re-prompting and re-adding context each time she works
+- This is a stated, conditional intention, not observed switching
