@@ -1,8 +1,8 @@
 # Persona: The AI Cross-Checker
 
-**Status:** Selected critical Persona. Not yet validated with real users
+**Status:** Selected critical Persona. Partly checked with the person it is based on (a stated intention only); not validated with other users
 
-**Source draft:** drafts/persona-hypothesis-01.md (content unchanged; see selection.md)
+**Source draft:** drafts/persona-hypothesis-01.md. Updated 2026-09-21 from interview-evidence.md 03
 
 ## Shared Job to Be Done
 
@@ -31,15 +31,16 @@ A final-year student who runs almost all of her work through AI. She feeds it th
 | Leans on AI more for new or complex topics | OBSERVED | Author's observation |
 | Uses Claude as her main AI | OBSERVED | Known to the author |
 | Mostly trusts the AI's result; checks because she needs its confirmation | HYPOTHESIS | Author's reading of her |
-| Claude holds her full context | HYPOTHESIS | Author's belief, not checked |
+| Claude holds her full context | HYPOTHESIS | Author's earlier belief, now contradicted by interview-evidence.md 03 (see next row) |
+| With Claude she keeps re-prompting and re-adding context each time she works | REPORTED | interview-evidence.md 03: implied by her condition for switching |
 | Pays for AI | HYPOTHESIS | Stated, not known |
 | Her TFG routine will match her coursework routine, including booking supervisor meetings | HYPOTHESIS | Projected; she hasn't started. Whether she gets the meetings is UNKNOWN |
 | Checking with the same AI that drafted the work catches drift | UNKNOWN | Not established |
-| She'd move her workflow from Claude to a new tool | UNKNOWN | Author's key open question |
+| She'd move her workflow from Claude to a new tool | REPORTED, stated intention | interview-evidence.md 03: she says she would, if she no longer had to re-prompt and re-add context and could comfortably do the TFG with it. Not observed behaviour |
 
 ## Validation gaps
 
-- Whether she'd move her workflow off Claude, which the author believes holds her context, to a new tool
+- Whether she actually moves her TFG work off Claude when the tool keeps her context, rather than only saying she would
 - Whether her TFG routine matches her coursework routine once she starts
 - Whether checking with the same AI that drafted the work catches drift, especially on unfamiliar topics
 - Whether she'd actually use the sources shown with each answer, which is what the decision assumes

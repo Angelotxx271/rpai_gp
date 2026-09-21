@@ -25,3 +25,5 @@
 ## Validation status
 
 Not validated with real users. On 2026-09-21 the team deferred real-user validation for lack of time. All evidence statuses stay as drafted, and no synthetic Persona output is treated as validation.
+
+One check was made the same day: the classmate behind ai-persona-01 said she would switch if the tool kept her context (interview-evidence.md 03). That is a stated intention, not validation, and ai-persona-01.md was updated with it. Testing whether students actually switch becomes the next Sprint Goal.
