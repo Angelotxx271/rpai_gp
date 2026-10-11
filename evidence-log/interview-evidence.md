@@ -42,3 +42,15 @@ Real-user evidence gathered outside AI sessions. Each entry says who it came fro
 - She would leave Claude for the TFG tool if it meant she no longer had to keep re-prompting it or adding new context every time she works, and could comfortably do her TFG with it, as long as it works the way the team envisions it
 - Her condition implies that with Claude today she keeps re-prompting and re-adding context each time she works
 - This is a stated, conditional intention, not observed switching
+
+## 04 · 4th-year Computer Science student at IE
+
+- **Who:** 4th-year Computer Science student at IE, interviewed by Adriana
+- **How:** interview conducted at university  , recorded 2026-09-22
+- **Used in:** persona-hypothesis-04.md
+
+### What she said (first-hand)
+- I asked whether she had ever needed a TFG document or guideline and not known where to find it, and how she resolved it
+- She said she could find the thesis syllabus itself, but when she looked in the courses assigned for capstones, it wasn't there
+- She stopped looking at that point, reasoning that if it wasn't in the intuitive place where it should be, it probably didn't exist
+- She decided to ask her mentor about it at the next meeting instead of continuing to search
