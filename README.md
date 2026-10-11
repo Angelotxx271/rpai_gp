@@ -1,16 +1,17 @@
-# RPAI · Venture Skeleton v0.1 · TFG Copilot
+# RPAI · Venture Skeleton v0.1 · TFGPT
 
 ```
 rpai_gp/
 ├── AGENTS.md                   Persona Agent instructions from the course (synthetic persona rehearsal)
-├── downloads/                  the 7 AI helpers from the course deck (inputs, do not edit)
+├── downloads/                  the 8 AI helpers from the course deck (inputs, do not edit)
 │   ├── SKILL.md                  helper that writes ai-usage-log.md
 │   ├── ai-prompt-opportunity.md
 │   ├── ai-prompt-assumptions.md
 │   ├── ai-prompt-goals.md
 │   ├── ai-prompt-experiment-card.md
 │   ├── ai-prompt-job-to-be-done.md
-│   └── ai-prompt-persona-builder.md
+│   ├── ai-prompt-persona-builder.md
+│   └── ai-prompt-constitution.md
 ├── evidence-log/               what we produced (outputs)
 │   ├── opportunity.md          pain point, user, need, insight, HMW, open gaps
 │   ├── assumptions.md          3 areas, riskiest assumption, evidence since v0
@@ -18,12 +19,12 @@ rpai_gp/
 │   ├── jtbd.md                 Job to Be Done statement, eight-element table, validation gaps
 │   ├── experiment-card.md      hypothesis, method, metric, threshold, evidence strength, decision rule
 │   ├── recruitment.md          test access: who, how many, how, dates, consent
-│   ├── interview-evidence.md   real-user evidence, anonymised (Participant 01, 02…)
+│   ├── interview-evidence.md   real-user evidence, anonymised (Participant 01, 02…; Advisor A, B)
 │   ├── ai-usage-log.md         6-column course log, one row per meaningful AI run
 │   └── personas/
 │       ├── ai-persona-01..03.md  the 3 selected critical personas (not yet validated with real users)
 │       ├── selection.md          how and why they were selected
-│       └── drafts/               one persona hypothesis per team member
+│       └── drafts/               persona hypotheses: 01-05 one per team member, 06 the TFG advisor (stakeholder)
 ├── prototype/
 │   ├── prototype-v0.pdf        Wizard-of-Oz kit: chat front, task brief, wizard protocol, observation sheet, exclusions
 │   └── prototype-v0-backup.png screenshot of the chat front (page 2), in case the live version fails

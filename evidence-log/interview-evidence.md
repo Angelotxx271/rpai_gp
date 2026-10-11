@@ -45,8 +45,8 @@ Real-user evidence gathered outside AI sessions. Each entry says who it came fro
 
 ## 04 · 4th-year Computer Science student at IE
 
-- **Who:** 4th-year Computer Science student at IE, interviewed by Adriana
-- **How:** interview conducted at university  , recorded 2026-09-22
+- **Who:** 4th-year Computer Science student at IE, interviewed by a team member
+- **How:** interview conducted at university, recorded 2026-09-22
 - **Used in:** persona-hypothesis-04.md
 
 ### What she said (first-hand)
@@ -54,3 +54,39 @@ Real-user evidence gathered outside AI sessions. Each entry says who it came fro
 - She said she could find the thesis syllabus itself, but when she looked in the courses assigned for capstones, it wasn't there
 - She stopped looking at that point, reasoning that if it wasn't in the intuitive place where it should be, it probably didn't exist
 - She decided to ask her mentor about it at the next meeting instead of continuing to search
+
+## 05 · Advisor A, TFG supervisor at IE
+
+- **Who:** TFG supervisor and full-time professor at IE, supervising about 10 TFGs, no name
+- **How:** in-person conversations with the advisor and with some of his TFG students, early October 2026; recorded 2026-10-11 by a team member
+- **Consent:** the advisor had a general notion of what the conversation was for, but not its exact nature; whether the students were told is not recorded; no names or contact details stored
+- **Used in:** personas/drafts/persona-hypothesis-06.md
+
+### What he said (first-hand, relayed)
+- He has limited time and would like to help his students more, but his schedule doesn't allow it
+
+### What the advisor and some of his students told the team member (sources not separated)
+- He supervises about 10 TFGs as a full-time professor, with maybe a few minutes per student and no time for long conversations or one-to-one meetings
+
+### What some of his students said (relayed)
+- It took almost two weeks from their first email to his first reply
+- When they email him a draft or a change, the answer takes more than a week, sometimes longer, and comes back as a short email or comment rather than detailed guidance
+- After about a month the cycle is the same: one short meeting so far and almost no guidance
+
+### The team member's account of the students' situation
+- They wait, stuck, and can't yet tell whether their work is on track. The team member's reading is that they lack experience writing a paper. Whether they are drifting is too early to see
+- The team member's impression is that they are frustrated with the delays
+
+### Stated intentions (not behaviour)
+- He would like to be able to check how his students are doing without having to interact with them. This is the team member's account, which he confirmed as the advisor's stated opinion, not observed behaviour
+
+## 06 · Advisor B, TFG supervisor at IE (contrast case)
+
+- **Who:** researcher-supervisor with 2 TFGs and very little teaching, no name. The account comes from a team member who works with him directly, so this is not a neutral source
+- **How:** the team member's own account; the team also reached out to this advisor, and per the team member he said the same; recorded 2026-10-11
+- **Consent:** not recorded; no names or contact details stored
+- **Used in:** personas/drafts/persona-hypothesis-06.md (contrast case)
+
+### What the team member reports about him (first-hand)
+- He supervises 2 TFGs and teaches only an occasional class. The team member's reading is that this lets him devote most of his time to his students
+- Long conversations, a lot of help, and communication that has been flawless so far
