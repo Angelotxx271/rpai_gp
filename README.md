@@ -24,6 +24,7 @@ rpai_gp/
 │   ├── press-release.md        Working Backwards opener with an evidence box
 │   ├── market-research.md      Fermi estimate, four-category alternatives map, factors, claim table, stress test, so what
 │   ├── market-sources.md       the 200 sourced desk-research claims behind market-research.md, each checked
+│   ├── value-curve.svg         current value curve chart (scores and evidence in market-research.md, section 4)
 │   ├── ai-usage-log.md         6-column course log, one row per meaningful AI run
 │   └── personas/
 │       ├── ai-persona-01..03.md  the 3 selected student personas (not yet validated with real users)

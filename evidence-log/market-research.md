@@ -1,6 +1,6 @@
 # Market evidence: TFGPT
 
-**Status:** Draft for Group Project I. AI research agents did the desk research on 2026-10-11, and a second agent re-opened every source to check each claim. Sourced numbers cite a row in [market-sources.md](market-sources.md) (#n); bounds marked ASSUME are the author's. Behaviour evidence comes from the team's own tests and conversations and carries its status. The author chose the strongest alternative, the factors, the Fermi filters and the so-what; the value-curve scores come next
+**Status:** Draft for Group Project I. AI research agents did the desk research on 2026-10-11, and a second agent re-opened every source to check each claim. Sourced numbers cite a row in [market-sources.md](market-sources.md) (#n); bounds marked ASSUME are the author's. Behaviour evidence comes from the team's own tests and conversations and carries its status. The author chose the strongest alternative, the factors, the Fermi filters and the so-what; the value-curve scores were proposed by AI from the evidence and await the team's review
 
 Desk research shapes the hypothesis; real users test it. Market sources show what exists, not what IE students do
 
@@ -51,12 +51,12 @@ Desk research shapes the hypothesis; real users test it. Market sources show wha
 - **Where it is weak:**
   - It only checks against the student's guidelines if the student loads them and the draft
   - It knows nothing about the student's programme out of the box
-  - It carries no authority, so some students still check with Blackboard, friends or the supervisor
+  - It has no standing with the supervisor or IE. In the Wizard-of-Oz test some participants re-checked the simulated chat's answers with Blackboard, a friend or the supervisor (1, 3, 5, 9), which suggests AI-chat answers get verified
 - **Evidence:** in the Wizard-of-Oz test, 3 of 10 used their own AI and 4 of 10 checked with an official source or a person; the habit is supported by the team member's report and interview-evidence 02 (second-hand); 89% of Spanish students who use AI use chat assistants (#166). The manual route is a close second
 
 ---
 
-## 4. Factors for the value curve (chosen by the author; scores to set next)
+## 4. Factors for the value curve (chosen by the author) and current scores
 
 | Factor | What the student receives or gives up | Where it comes from |
 |---|---|---|
@@ -70,7 +70,29 @@ Desk research shapes the hypothesis; real users test it. Market sources show wha
 | Cost to the student | Money | #18, #24, #27, #51 |
 | Effort to start | Setup and loading the guidelines | #20, #75 |
 
-Alternatives to plot: general AI on the student's own account (ChatGPT / Claude), the supervisor, Blackboard plus friends, thesis feedback tools (Thesify / Grammarly), and TFGPT
+### Current value curve
+
+![Current value curve](value-curve.svg)
+
+**Status:** scores proposed by AI from the cited evidence on 2026-10-11 and checked against their sources by a second agent; they await the team's review. They are judgements on a 0 to 5 scale, not measurements. Conventions: each cell scores what the alternative offers when the student uses it as intended; for cost and effort a higher score means more cost or more effort, as price is plotted on a strategy canvas; the two alternatives without AI score 5 on "Fits IE's AI rules" because those rules do not apply to them. TFGPT's own line is not plotted: it comes out of the ERRC run
+
+| Factor | General AI, own account (ChatGPT / Claude) | Supervisor | Blackboard plus friends | Thesis feedback tools (Thesify / Grammarly) |
+|---|---|---|---|---|
+| Knows my programme's TFG guidelines without being told | 1: only if the student uploads them (#20, #75); the rubrics are hosted on Campus Online (#106), access path not checked | 5: judges the work against the programme's minimum standards and can refuse permission to present (#16, #82); the authority participant 3 chose for her format question (experiment-card.md); some rules are set by each supervisor (#13) | 3: the guidelines are on Campus Online (#106), and Wizard-of-Oz participants 1, 5 and 9 got format or date answers from Blackboard; classmates gave participant 3 conflicting format advice | 1: their own rubrics or one the student uploads, nothing IE-specific (#49, #53) |
+| Keeps my TFG context between sessions | 3: Claude projects and memory, ChatGPT Projects, if the student sets them up (#20, #24); Free-tier limits apply (#18); one student's condition for switching implies she re-prompts and re-adds context in Claude today (interview-evidence 03, a conditional intention) | 3: ASSUME he follows the project across meetings, not evidenced; with about 10 TFGs he has a few minutes per student and gives short replies (interview-evidence 05); the 2-TFG contrast case reports long conversations (06, not a neutral source) | 1: ASSUME: documents are static and friends know only what they are told | 1: one upload per review (#49, #51); Mattie keeps context across drafts but only at RSM (#47) |
+| Checks scope and method fit before the meeting | 3: possible with the rubric loaded (#75); participant 10 did the fit check in Claude and participants 4 and 7 used their own AI alongside the chat (experiment-card.md); how well it checks is untested (section 8) | 3: the authoritative scope check, but only when he meets or replies: students found out at the meeting (interview-evidence 01), replies were slow (05); the calendar is his to set (#96) | 2: a friend checked participant 1's fit verdict; participant 3 searched Google for hers (experiment-card.md); peers help when the tutor is absent (#123); documents check nothing | 3: rubric-based feedback on an uploaded draft (#49, #53), generic and with untested quality, the same mechanism as general AI with a rubric (#75) |
+| Model quality (for people: quality of the answer) | 5: the reference point for this factor; students stay with the AI they know as the best they know (interview-evidence 02, second-hand); the team member describes IE-provided AI as outdated (unverified) | 4: varies by supervisor, so a midpoint: brief comments and almost no guidance with about 10 students (05, relayed by students); long conversations and a lot of help in the 2-TFG case (06, not neutral); better-guided work with a good relationship (01) | 2: one episode of conflicting advice from classmates (participant 3); no conflict was recorded for participants 1, 5 and 9, who used Blackboard or a friend | 3: model-based, with no independent accuracy data found; a grade estimate is not a grade (#189) |
+| Speed of an answer | 5: no wait by nature (assumed); participants 10, 4 and 7 opened their own AI at minutes 1, 2 and 4 (experiment-card.md) | 2: about two weeks for a first reply and more than a week for drafts (interview-evidence 05); a few days (ai-persona-03); some reply the same day (#117) | 3: Blackboard is immediate once found (participants 1, 5, 9); friends were consulted mid-session (participant 1 at minute 6, participant 5 at minute 11), with reply times not recorded | 4: automated, so presumably fast; turnaround not stated (#53) |
+| Authority | 1: no standing with the supervisor or IE: the supervisor decides (#16, #82) and IE makes the student own and disclose AI output (#8, #78). The Wizard-of-Oz re-checks (participants 1, 3, 5, 9) were of the simulated chat, not of their own AI | 5: decides permission to present (#16, #82) | 3: official documents carry weight, friends less; participants 1 and 9 confirmed on Blackboard, participant 5 got her answer there and then checked with a friend | 1: the Grammarly estimate is explicitly not a grade (#189); nothing found gives Thesify standing |
+| Fits IE's AI rules | 3: allowed for feedback (#76); disclosure and usage records are required (#8, #78), and how a student keeps them with ChatGPT or Claude is not established; it can also write the text | 5: no AI involved | 5: no AI involved | 3: feedback-only positioning, though Thesify also markets a Coauthor that drafts (#50); Grammarly Authorship records the writing process but shows no link to IE's rules (#55); writing tools are left out of this line (#60, #138) |
+| Cost to the student (higher = more) | 2: a range from 0 on a free plan to about 2 on Claude Pro at about USD 20 a month (#18, #24); many technical students pay (team member's report), most others use free or the cheapest plans (interview-evidence 02, second-hand); a free year of Google AI Plus (#27) | 0: part of tuition | 0: free | 2: Grammarly free for one use a day (#189); Thesify EUR 14.95 per review (#51) |
+| Effort to start (higher = more) | 3: load the guidelines and the draft and prompt for the check (#20, #75), though using it is already a habit | 2: an email and finding the right moment; the student has to make contact (#96) | 3: finding the right document: one interviewee gave up (interview-evidence 04) and one persona episode found it only through a friend (ai-persona-03); how common this is is untested | 3: an upload, and for Thesify a paid review, each time (#49, #51, #53) |
+
+**Reading the curve**
+- **No alternative scores high on programme knowledge, authority and speed together.** The supervisor scores 5, 5 and 2. The student's own AI is fast and strong but knows the programme only if the student loads it, and has no standing. Blackboard plus friends sits at 3 on all three, held back by findability
+- **Every line stays at 3 or below on "keeps my context" and "checks scope before the meeting".** That is the dip TFGPT aims at, alongside the student's own AI
+- **Authority stays with the supervisor.** This fits "live alongside" and "checks, not grades"; TFGPT may borrow some authority by citing the guideline section behind every answer (HYPOTHESIS)
+- **For ERRC:** TFGPT's line is the team's to set. The table points to raising programme guidelines, context and the scope check, and speed relative to the supervisor and Blackboard (general AI is already at 5). The cell wording also points to what could be eliminated or reduced (writing the text, grading) and created (an IE-rule AI-use record)
 
 ---
 
@@ -146,7 +168,7 @@ The ERRC helper (downloads/ai-prompt-ERRC.md) starts with three market-baseline 
 
 1. **Alternatives in the four categories:** section 2
 2. **Strongest current alternative:** section 3, the student's own general AI plus their own judgement, with the supervisor as the only authoritative check
-3. **Factors and trade-offs:** section 4. The current value-curve scores for these factors are still to be set
+3. **Factors and trade-offs:** section 4, with the current value curve proposed for the team to review
 
 Carry into ERRC:
 - **The decision:** live alongside general AI (section 7)
