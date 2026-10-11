@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>TFGPT</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body class="chat-page">
+  <div class="shell">
+    <header class="bar">
+      <div class="brand">TFGPT <span class="badge" id="badge">Pilot</span></div>
+      <div class="who" id="who"></div>
+    </header>
+    <div class="chips" id="chips"></div>
+    <main class="log" id="log" aria-live="polite"></main>
+    <div class="typing" id="typing" hidden>TFGPT is writing<span class="dots"></span></div>
+    <div class="suggest" id="suggest">
+      <button type="button">Does my idea fit my topic?</button>
+      <button type="button">Which sections must the TFG have?</button>
+      <button type="button">When is the first deliverable due?</button>
+    </div>
+    <form class="composer" id="composer">
+      <textarea id="input" rows="1" maxlength="4000" placeholder="Ask about your TFG, or paste a paragraph to check..." aria-label="Your message"></textarea>
+      <button type="submit" id="send">Send</button>
+    </form>
+    <p class="err" id="err" hidden></p>
+    <p class="pilot">Pilot version. Some responses are prepared with human help. Nothing you share is stored after the session.</p>
+  </div>
+  <script src="/chat.js"></script>
+</body>
+</html>
