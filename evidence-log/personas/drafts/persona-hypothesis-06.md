@@ -42,7 +42,7 @@ A full-time professor supervising about ten TFGs, whose students report slow, br
 | How much guidance students get depends on the advisor's available time, not on a missing tool | HYPOTHESIS | The author's interpretation across two advisors (entries 05 and 06). Participant 01's entry credits a good relationship with his supervisor, not capacity, so it may be a competing explanation (entry 01) |
 | Contrast case: a researcher-supervisor with 2 TFGs and very little teaching | REPORTED | A team member's account; per the team member, the advisor said the same when the team reached out (entry 06) |
 | Contrast case: he gives long conversations and a lot of help, and communication has been flawless so far | OBSERVED, first-hand, not a neutral source | A team member who works with him directly (entry 06) |
-| IE requires students to submit an AI declaration (when and where AI was used) and a log | REPORTED | The author's account of IE's guidelines on Blackboard, which apply to all students; the text is not yet quoted in the repo |
+| IE requires students to disclose their AI use (the tool, how it was used, and the prompts on request) and keep usage records | SUPPORTED | IE's Student Guidelines for Appropriate Use of AI, July 2025 (market-sources.md #8, #78). The author also reports a declaration of when and where AI was used, plus a log, in the guidelines on Blackboard |
 | A supervisor view would save this advisor time | HYPOTHESIS | The author's proposal |
 | An AI log the advisor can see would remove any worry about concealment | HYPOTHESIS | The author's reasoning; there is no recorded statement from the advisor about concealment |
 | Students would still do their TFG work in the tool if their advisor can see an AI log | UNKNOWN | Conflicts with the concealment insight (opportunity.md) and the riskiest assumption (assumptions.md) |
@@ -54,4 +54,4 @@ A full-time professor supervising about ten TFGs, whose students report slow, br
 - All evidence on this advisor is relayed by one team member, who also proposed the supervisor view, and how many of his students were spoken to is not recorded. Ask the advisor and a few of his students directly, in neutral wording, what he would want to see and how often
 - Whether the pattern goes beyond one advisor: two advisor inputs so far (interview-evidence.md entries 05 and 06), one matching this persona and one its opposite. How many advisors carry about 10 TFGs as full-time professors, and how many of their students reach a meeting off scope
 - Whether this advisor's students are drifting or only stalled, since the Job to Be Done assumes drift
-- The exact Blackboard guideline text on the AI declaration and log
+- Whether each programme's final-project syllabus adds its own AI rule: one BBA syllabus bans AI by default (market-sources.md #12)
