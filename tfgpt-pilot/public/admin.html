@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>TFGPT console</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <form class="login" id="login" hidden>
+    <h1>TFGPT console</h1>
+    <p class="meta">Wizard side of the pilot. Enter the admin key (Railway variable ADMIN_KEY).</p>
+    <input id="key" type="password" autocomplete="current-password" aria-label="Admin key" placeholder="Admin key" required>
+    <button class="btn primary" type="submit">Enter</button>
+    <p class="err" id="loginErr" hidden></p>
+  </form>
+
+  <div class="banner" id="offline" hidden>Live updates disconnected. Reconnecting… New messages will appear when it's back.</div>
+  <div class="banner" id="ephemeral" hidden>Sessions are not on a mounted volume: they will be lost on the next redeploy. Add a volume at /data on Railway.</div>
+
+  <div class="console" id="app" hidden>
+    <!-- sessions -->
+    <section class="col" aria-label="Sessions">
+      <div class="col-head">
+        <h1>TFGPT console</h1>
+        <button class="btn" id="logout" type="button">Log out</button>
+      </div>
+      <div class="tally" id="tally"></div>
+      <div class="col-head">
+        <h2>Sessions</h2>
+        <span>
+          <a class="btn" href="/api/admin/export.csv">CSV</a>
+          <button class="btn primary" id="newBtn" type="button">New</button>
+        </span>
+      </div>
+      <form class="form" id="newForm" hidden>
+        <div class="row">
+          <label>First name<input name="firstName" maxlength="40" required></label>
+          <label>Degree<input name="degree" maxlength="40" list="degrees" required></label>
+        </div>
+        <div class="row">
+          <label>Year<input name="year" maxlength="12" value="2026-27"></label>
+          <label>Started?<input name="started" maxlength="60" placeholder="yes / no / proposal written"></label>
+        </div>
+        <label>Assigned topic or line<input name="topic" maxlength="200" required></label>
+        <label>Notes file name (optional)<input name="notesName" maxlength="80" placeholder="notes.pdf"></label>
+        <label>Template: fit (cite the guideline section)<textarea name="fit" maxlength="2000"></textarea></label>
+        <label>Template: structure and format<textarea name="structure" maxlength="2000"></textarea></label>
+        <label>Template: dates (from the document, never from memory)<textarea name="dates" maxlength="2000"></textarea></label>
+        <button class="btn" type="button" id="copyPrev">Copy templates from the last session that has them</button>
+        <p class="err" id="newErr" hidden></p>
+        <div class="row">
+          <button class="btn" type="button" id="cancelNew">Cancel</button>
+          <button class="btn primary" type="submit">Create link</button>
+        </div>
+      </form>
+      <datalist id="degrees">
+        <option value="BBA"><option value="BCSAI"><option value="BDBA"><option value="BAM"><option value="BIR">
+        <option value="BIE"><option value="LLB"><option value="BCOM"><option value="BPPL"><option value="BARCH">
+      </datalist>
+      <ul class="list" id="list"></ul>
+    </section>
+
+    <!-- conversation -->
+    <section class="center" aria-label="Conversation">
+      <div class="col-head">
+        <h2 id="convTitle">No session selected</h2>
+        <span class="meta" id="convMeta"></span>
+      </div>
+      <div class="linkbox" id="linkbox" hidden>
+        Student link: <span id="link"></span>
+        <button class="btn" id="copy" type="button">Copy</button>
+        <button class="btn" id="clock" type="button">Start clock now</button>
+      </div>
+      <main class="log" id="log"><p class="empty">Pick a session, or create one with New.</p></main>
+      <form class="reply" id="reply" hidden>
+        <div class="snips" id="snips">
+          <button type="button" data-snip="fit">Fit</button>
+          <button type="button" data-snip="structure">Structure</button>
+          <button type="button" data-snip="dates">Dates</button>
+          <button type="button" data-snip="out">Not in the guidelines</button>
+          <button type="button" data-snip="clarify">Clarifying question</button>
+        </div>
+        <textarea id="answer" maxlength="4000" placeholder="Answer as TFGPT. Check every claim against the guidelines and cite the section." aria-label="Answer"></textarea>
+        <div class="acts">
+          <span class="meta" id="replyMeta">Enter sends · Shift+Enter new line</span>
+          <button class="btn primary" type="submit" id="sendAnswer">Send as TFGPT</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- protocol + observation -->
+    <section class="col" aria-label="Protocol and observation sheet">
+      <details class="box">
+        <summary>Task brief (copy for the student)</summary>
+        <div id="brief">
+          <p><b>TFGPT pilot · your <span class="mins">20</span> minutes</b></p>
+          <p>Thanks for helping. This is an early pilot of a TFG helper the university might offer. You'll do three real things for your own TFG. Use whatever you normally use: Google, your own AI, the TFGPT chat, anything. Nothing is graded and there are no right answers.</p>
+          <ol>
+            <li>Check whether your project idea (or the idea you're considering) fits the topic or line you've been assigned. Write the answer and one reason.</li>
+            <li>Find out the structure your TFG must have (the required sections) and one format requirement.</li>
+            <li>Find the key dates for this year's TFG deliverables.</li>
+          </ol>
+          <p>Afterwards we'll ask you two short questions about how it went. Part of this pilot is operated manually; we'll explain at the end.</p>
+        </div>
+        <button class="btn" id="copyBrief" type="button">Copy brief</button>
+      </details>
+      <details class="box">
+        <summary>Before the session</summary>
+        <ul>
+          <li>Two days before: ask for degree, assigned topic or line, whether they've started, and optional notes or draft.</li>
+          <li>Load the official IE TFG guidelines for their degree. Verify dates and sections in the actual document, not from memory.</li>
+          <li>Prepare the three templates (fit, structure, dates) with the guideline sections to cite.</li>
+          <li>Open this console and the observation sheet. A second person observes if possible; otherwise screen share, with consent.</li>
+        </ul>
+      </details>
+      <details class="box" open>
+        <summary>During</summary>
+        <ul>
+          <li>Reply within 60 seconds. Draft with your own AI if you want, then check every claim against the guidelines before sending.</li>
+          <li>Answer only from the guidelines and the student's material, and cite the section ("Guidelines §3.2 Structure").</li>
+          <li>Not in the guidelines: use "Not in the guidelines".</li>
+          <li>Never invent a date. Never write thesis text. Never grade or approve: "this fits" is a check against the topic, not an approval.</li>
+          <li>Tone: a good supervisor in a hurry. Short, specific, one clarifying question at most.</li>
+          <li>Don't prompt them to use the chat. If they leave for their own AI, let them: that is the data.</li>
+        </ul>
+      </details>
+      <details class="box" open>
+        <summary>After</summary>
+        <ul>
+          <li>Reveal: "Some answers were prepared by a person using the guidelines. Thanks for testing."</li>
+          <li>Ask: (1) What did you use for each of the three tasks, and why? (2) Would you use this next week for your real work, instead of, or alongside, your AI?</li>
+          <li>Fill the observation sheet now, while you remember the minute they switched.</li>
+          <li>Close the session: it deletes the thesis text unless the student agrees to keep it.</li>
+        </ul>
+      </details>
+
+      <form class="form" id="obs" hidden>
+        <div class="col-head flat"><h2>Observation sheet</h2><span class="saved" id="saved"></span></div>
+        <div class="row">
+          <label>Degree<input name="degree" maxlength="40" list="degrees"></label>
+          <label>Started?<input name="started" maxlength="60"></label>
+        </div>
+        <label>Tasks done in TFGPT
+          <span class="checks">
+            <label><input type="checkbox" name="t0"> 1 fit</label>
+            <label><input type="checkbox" name="t1"> 2 structure</label>
+            <label><input type="checkbox" name="t2"> 3 dates</label>
+          </span>
+        </label>
+        <div class="row">
+          <label>Opened own AI?
+            <select name="ownAI">
+              <option value="">not recorded</option>
+              <option value="no">no</option>
+              <option value="yes">yes</option>
+            </select>
+          </label>
+          <label>At minute<input name="ownAIMinute" maxlength="8" inputmode="numeric"></label>
+        </div>
+        <p class="hint-admin">No names or thesis text in the fields below: the observation row is kept after the session.</p>
+        <label>Switched for...<input name="switchedFor" maxlength="200" placeholder="e.g. Blackboard (min 9, T2)"></label>
+        <label>Quote / note<textarea name="note" maxlength="600"></textarea></label>
+        <label>After: what they used for each task, and why<textarea name="usedForEach" maxlength="600"></textarea></label>
+        <label>After: next week, instead of or alongside their AI?
+          <select name="insteadOrAlongside">
+            <option value="">not asked yet</option>
+            <option value="instead">instead</option>
+            <option value="alongside">alongside</option>
+            <option value="neither">neither</option>
+          </select>
+        </label>
+        <div class="checks"><label><input type="checkbox" name="rehearsal"> Rehearsal or test session (left out of the tally)</label></div>
+        <p class="meta" id="turns"></p>
+      </form>
+
+      <details class="box" id="tplBox" hidden>
+        <summary>Edit this session's templates</summary>
+        <form class="form flat-form" id="tplForm">
+          <label>Fit<textarea name="fit" maxlength="2000"></textarea></label>
+          <label>Structure and format<textarea name="structure" maxlength="2000"></textarea></label>
+          <label>Dates<textarea name="dates" maxlength="2000"></textarea></label>
+          <button class="btn" type="submit">Save templates</button> <span class="saved" id="tplSaved"></span>
+        </form>
+      </details>
+
+      <div class="box" id="endBox" hidden>
+        <h3>End of session</h3>
+        <p class="meta">Closing deletes the transcript, name, topic and templates, and removes the name from the notes, unless the student agreed to keep the transcript. The observation row stays.</p>
+        <div class="checks"><label><input type="checkbox" id="keep"> Student agreed to keep the transcript</label></div>
+        <p class="acts-row">
+          <button class="btn primary" id="close" type="button">Close session</button>
+          <button class="btn" id="purge" type="button" hidden>Delete the kept transcript</button>
+          <button class="btn danger" id="del" type="button">Delete everything</button>
+        </p>
+        <p class="err" id="endErr" hidden></p>
+      </div>
+    </section>
+  </div>
+  <script src="/admin.js"></script>
+</body>
+</html>
