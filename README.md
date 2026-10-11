@@ -3,14 +3,15 @@
 ```
 rpai_gp/
 ├── AGENTS.md                   Persona Agent instructions from the course (synthetic persona rehearsal)
-├── downloads/                  the 7 AI helpers from the course deck (inputs, do not edit)
+├── downloads/                  the 8 AI helpers from the course deck (inputs, do not edit)
 │   ├── SKILL.md                  helper that writes ai-usage-log.md
 │   ├── ai-prompt-opportunity.md
 │   ├── ai-prompt-assumptions.md
 │   ├── ai-prompt-goals.md
 │   ├── ai-prompt-experiment-card.md
 │   ├── ai-prompt-job-to-be-done.md
-│   └── ai-prompt-persona-builder.md
+│   ├── ai-prompt-persona-builder.md
+│   └── ai-prompt-constitution.md
 ├── evidence-log/               what we produced (outputs)
 │   ├── opportunity.md          pain point, user, need, insight, HMW, open gaps
 │   ├── assumptions.md          3 areas, riskiest assumption, evidence since v0

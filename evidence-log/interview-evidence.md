@@ -45,8 +45,8 @@ Real-user evidence gathered outside AI sessions. Each entry says who it came fro
 
 ## 04 · 4th-year Computer Science student at IE
 
-- **Who:** 4th-year Computer Science student at IE, interviewed by Adriana
-- **How:** interview conducted at university  , recorded 2026-09-22
+- **Who:** 4th-year Computer Science student at IE, interviewed by a team member
+- **How:** interview conducted at university, recorded 2026-09-22
 - **Used in:** persona-hypothesis-04.md
 
 ### What she said (first-hand)
