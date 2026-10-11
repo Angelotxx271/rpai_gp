@@ -1,0 +1,158 @@
+{
+  "id": "wizard-of-oz-round-1",
+  "round": 1,
+  "label": "Round 1: Wizard-of-Oz test, imported from evidence-log/experiment-card.md",
+  "source": "evidence-log/experiment-card.md, Results table (10 sessions run by a team member; recorded 2026-10-11)",
+  "sessions": [
+    {
+      "participant": 1,
+      "degree": "BCSAI",
+      "started": "Yes",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": false,
+      "ownAIMinute": "",
+      "turnsText": "6",
+      "switchedFor": "Friend (min 6, T1); Blackboard (min 9, T2)",
+      "note": "Accepted the dates as given; checked the fit verdict with a peer and the format against the official source. Trust seems to depend on the stakes of the answer, not on the tool"
+    },
+    {
+      "participant": 2,
+      "degree": "BBA",
+      "started": "No (broad topic from list, narrow topic not chosen yet; proposal not due yet for her degree)",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": false,
+      "ownAIMinute": "",
+      "turnsText": "3",
+      "switchedFor": "No exits",
+      "note": "Short session. T1 asked what kind of topics could fit her broad area (ideas, not a fit check). T2 asked about the proposal's format, not the thesis sections. T3 asked when the proposal is due"
+    },
+    {
+      "participant": 3,
+      "degree": "BCSAI",
+      "started": "Yes",
+      "tasks": [
+        true,
+        true,
+        false
+      ],
+      "ownAI": false,
+      "ownAIMinute": "",
+      "turnsText": "4",
+      "switchedFor": "Google (T1); message to her supervisor (T2)",
+      "note": "Confirmed the fit of her idea on Google, and asked her supervisor whether the proposal goes in LaTeX or Word, because classmates had told her different things. Skipped T3: \"already had a good notion of the dates\". The copilot didn't settle either question for her, and peer noise on format sent her to the one authority she trusts"
+    },
+    {
+      "participant": 4,
+      "degree": "BDBA",
+      "started": "Yes",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": true,
+      "ownAIMinute": "2",
+      "turnsText": "~5",
+      "switchedFor": "ChatGPT open on a second screen from min 2, used alongside the copilot for the rest of the session",
+      "note": "Opened ChatGPT right after his first question and kept both tools side by side, using ChatGPT to work out his answers to the copilot's clarifying questions on T2 and T3. He didn't leave the copilot; he paired it with his own AI. The first real case of \"alongside, not instead\""
+    },
+    {
+      "participant": 5,
+      "degree": "BDBA",
+      "started": "Yes",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": false,
+      "ownAIMinute": "",
+      "turnsText": "8",
+      "switchedFor": "T2 Blackboard, get answer (min 9); T2–T3 friend, verify (min 11)",
+      "note": "Went to official sources and a friend before her own AI, wrote to friend: \"I'm worried about the AI policy.\" Policy fear seems to shape *how* she will use AI, not *whether*"
+    },
+    {
+      "participant": 6,
+      "degree": "BAM",
+      "started": "Yes",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": false,
+      "ownAIMinute": "",
+      "turnsText": "8+",
+      "switchedFor": "none",
+      "note": "T2 and T3: she already knew the dates and format. Spent ~8 minutes and 8+ messages on one question: whether her topic is too mathematical and not applied enough, and how to balance both in her thesis. The copilot became a sounding board for scope, the exact drift question the product is about"
+    },
+    {
+      "participant": 7,
+      "degree": "BCSAI",
+      "started": "No",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": true,
+      "ownAIMinute": "4",
+      "turnsText": "9–10",
+      "switchedFor": "Claude (min 4, T1, get ideas)",
+      "note": "Worried the proposal is due soon and not well informed. Generated computer vision topic ideas in Claude, then brought them back to the copilot to validate (7 of his messages). For T2 and T3 he simply asked it to \"tell me everything\". Claude generated, the copilot checked: a clean split between the two tools"
+    },
+    {
+      "participant": 8,
+      "degree": "BCSAI",
+      "started": "Yes (proposal already written)",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": false,
+      "ownAIMinute": "",
+      "turnsText": "1",
+      "switchedFor": "Her own proposal doc (T1, to re-read her draft)",
+      "note": "Asked: whether her topic is too simple. Opened her own written proposal to check it against that, then stopped: \"she had everything done\" so T2 and T3 were quick. With the proposal finished, the copilot's only value was a single reassurance check"
+    },
+    {
+      "participant": 9,
+      "degree": "BCSAI",
+      "started": "Yes (proposal started, written in LaTeX)",
+      "tasks": [
+        true,
+        true,
+        true
+      ],
+      "ownAI": false,
+      "ownAIMinute": "",
+      "turnsText": "[4+]",
+      "switchedFor": "Blackboard (T3, verify dates)",
+      "note": "Used the copilot to understand his field first (\"what does NLP entail?\"), then to check whether his topic made sense based on that answer. T2 was about submission: LaTeX link or PDF?. Took the dates from the copilot, then reconfirmed them on Blackboard"
+    },
+    {
+      "participant": 10,
+      "degree": "BBA",
+      "started": "No",
+      "tasks": [
+        false,
+        false,
+        false
+      ],
+      "ownAI": true,
+      "ownAIMinute": "1",
+      "turnsText": "1",
+      "switchedFor": "Claude (all tasks, from the start)",
+      "note": "Read the copilot's opening message, then did all three tasks in his own AI using that message as the prompt. Came back only to paste his finished answers in. The copilot was a briefing and a drop box; the work happened in his own AI"
+    }
+  ]
+}

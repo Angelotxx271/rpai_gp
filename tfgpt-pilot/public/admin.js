@@ -6,7 +6,8 @@
   const drafts = new Map(); // id -> unsent answer text
   let current = null; // full session object
   let shownIds = new Set(); // message ids in the transcript on screen
-  let tally = null;
+  let tallies = []; // one per round, newest first
+  let currentRound = 1;
   let es = null;
   let retryDelay = 1000;
   let offset = 0; // server clock minus this laptop's clock
@@ -63,11 +64,30 @@
   function renderTally() {
     const t = $("tally");
     t.replaceChildren();
-    if (!tally) return;
-    const line = el("div");
-    line.append("Completed in TFGPT without own AI: ", el("b", "", `${tally.completed} / ${tally.recorded}`), ` (threshold ${tally.threshold} of ${tally.sample})`);
-    t.append(line, el("div", "dec", tally.decision));
+    for (const x of tallies) {
+      const block = el("div", x.current ? "round current" : "round");
+      const label = x.label ? ` · ${x.label.replace(/^Round \d+:\s*/, "")}` : "";
+      block.append(el("div", "rhead", `Round ${x.round}${x.current ? " (current)" : ""}${label}`));
+      const line = el("div");
+      line.append("Completed in TFGPT without own AI: ", el("b", "", `${x.completed} / ${x.recorded}`), ` (threshold ${x.threshold} of ${x.sample})`);
+      block.append(line, el("div", "dec", x.decision));
+      t.append(block);
+    }
+    const b = el("button", "btn", `Start round ${currentRound + 1}`);
+    b.type = "button";
+    b.addEventListener("click", startRound);
+    t.append(b);
   }
+  async function startRound() {
+    if (!confirm(`Start round ${currentRound + 1}? New sessions will count towards the new round's tally; earlier rounds keep theirs.`)) return;
+    const r = await api("/api/admin/rounds", { method: "POST" });
+    if (!r.ok) return;
+    const d = await r.json();
+    currentRound = d.currentRound;
+    tallies = d.tallies;
+    renderTally();
+  }
+  const sessionLabel = (s) => (s.imported ? `#${s.number} · round ${s.round}, participant ${s.participant}` : `#${s.number} ${s.firstName || "(name removed)"}`);
 
   function renderList() {
     const ul = $("list");
@@ -79,16 +99,16 @@
       b.type = "button";
       if (current && current.id === s.id) b.setAttribute("aria-current", "true");
       const l1 = el("span", "l1");
-      l1.append(el("span", "", `#${s.number} ${s.firstName || "(name removed)"}${s.rehearsal ? " · rehearsal" : ""}`));
+      l1.append(el("span", "", `${sessionLabel(s)}${s.rehearsal ? " · rehearsal" : ""}`));
       if (s.waitingSince) {
         const w = el("span", "wait");
         w.dataset.waiting = s.waitingSince;
         l1.append(w);
       } else {
-        l1.append(el("span", "tag", s.status === "open" ? (s.openedAt ? "live" : "not opened") : "closed"));
+        l1.append(el("span", "tag", s.imported ? "imported" : s.status === "open" ? (s.openedAt ? "live" : "not opened") : "closed"));
       }
       const l2 = el("span", "l2");
-      const parts = [s.degree, `${s.turns} turns`];
+      const parts = [`R${s.round}`, s.degree, `${s.turnsText} turns`];
       if (s.recorded) parts.push(s.completed ? "completed without own AI" : "recorded");
       l2.append(parts.join(" · "));
       if (s.clockAt && s.status === "open") {
@@ -122,11 +142,12 @@
   function renderHead() {
     if (!current) return;
     const s = sessions.get(current.id) || current.summary;
-    $("convTitle").textContent = `#${current.number} ${current.firstName || "(name removed)"} · ${current.degree}`;
+    $("convTitle").textContent = `${sessionLabel(current)} · ${current.degree}`;
     const bits = [current.topic ? `Topic: ${current.topic}` : null];
     if (current.status === "open" && s.clockAt) bits.push(`clock ${mmss(secs(s.clockAt))}${secs(s.clockAt) >= sessionMinutes * 60 ? " (past the session length)" : ""}`);
     if (current.status === "open" && s.waitingSince) bits.push(`waiting ${mmss(secs(s.waitingSince))}`);
-    if (current.status !== "open") bits.push(current.transcriptKept ? "closed, transcript kept" : "closed, transcript deleted");
+    if (current.imported) bits.push(`imported from ${current.source || "experiment-card.md"}`);
+    else if (current.status !== "open") bits.push(current.transcriptKept ? "closed, transcript kept" : "closed, transcript deleted");
     $("convMeta").textContent = bits.filter(Boolean).join(" · ");
   }
 
@@ -145,7 +166,9 @@
     const log = $("log");
     log.replaceChildren();
     shownIds = new Set();
-    if (!current.messages.length) log.append(el("p", "empty", current.status === "open" ? "No messages yet." : "Transcript deleted when the session closed."));
+    const emptyText = current.imported ? "Imported result: the observation row only, with no transcript."
+      : current.status === "open" ? "No messages yet." : "Transcript deleted when the session closed.";
+    if (!current.messages.length) log.append(el("p", "empty", emptyText));
     current.messages.forEach(addBubble);
     const open = current.status === "open";
     $("reply").hidden = !open;
@@ -173,7 +196,7 @@
     set("ownAI", () => { f.ownAI.value = o.ownAI === true ? "yes" : o.ownAI === false ? "no" : ""; });
     for (const k of ["ownAIMinute", "switchedFor", "note", "usedForEach", "insteadOrAlongside"]) set(k, () => { f[k].value = o[k]; });
     set("rehearsal", () => { f.rehearsal.checked = Boolean(current.rehearsal); });
-    $("turns").textContent = `Turns (student messages): ${current.turns || 0}. Counts as completed only if all three tasks were done in TFGPT and their own AI was never opened.`;
+    $("turns").textContent = `Round ${current.round} · turns (student messages): ${current.turnsText || current.turns || 0}. Counts as completed only if all three tasks were done in TFGPT and their own AI was never opened.`;
   }
 
   function renderTemplates() {
@@ -336,7 +359,7 @@
         const r = await api(`/api/admin/sessions/${target.id}`, { method: "PATCH", body: JSON.stringify(body) });
         if (!r.ok) throw new Error(await errorText(r));
         const d = await r.json();
-        tally = d.tally;
+        tallies = d.tallies;
         sessions.set(d.id, d);
         if (current && current.id === d.id) {
           Object.assign(current, { observation: d.observation, degree: d.degree, started: d.started, rehearsal: d.rehearsal });
@@ -513,6 +536,7 @@
       renderList();
       renderHead();
     });
+    es.addEventListener("rounds", refresh);
     es.addEventListener("removed", (e) => {
       const { id } = JSON.parse(e.data);
       if (current && current.id === id) clearView("This session was deleted from another console.");
@@ -552,7 +576,8 @@
       $("ephemeral").hidden = d.persistent;
       sessions.clear();
       d.sessions.forEach((s) => sessions.set(s.id, s));
-      tally = d.tally;
+      tallies = d.tallies;
+      currentRound = d.currentRound;
       renderTally();
       renderList();
     } catch { /* shown by the offline banner */ }

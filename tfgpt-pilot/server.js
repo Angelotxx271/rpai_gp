@@ -35,6 +35,40 @@ if (!store.persistent) {
   console.warn(`Sessions are stored in ${store.dir}, which is not a mounted volume. Mount one at /data on Railway, or they are lost on redeploy.`);
 }
 
+// earlier results (seed/*.json) are imported once as closed sessions of their round
+function importSeeds() {
+  const dir = path.join(__dirname, "seed");
+  if (require("fs").existsSync(dir)) {
+    for (const f of require("fs").readdirSync(dir).filter((x) => x.endsWith(".json")).sort()) {
+      let seed;
+      try { seed = JSON.parse(require("fs").readFileSync(path.join(dir, f), "utf8")); } catch (err) { console.error("bad seed", f, err.message); continue; }
+      if (!seed.id || (store.meta().importedSeeds || []).includes(seed.id)) continue;
+      for (const r of seed.sessions) {
+        const s = store.create({
+          firstName: "", topic: "", notesName: "", year: "", degree: r.degree, started: r.started,
+          templates: { fit: "", structure: "", dates: "" },
+          round: seed.round, imported: true, participant: r.participant, source: seed.source, turnsText: r.turnsText,
+        });
+        s.status = "closed";
+        s.closedAt = s.createdAt;
+        s.turns = Number((String(r.turnsText).match(/\d+/) || [0])[0]);
+        s.observation = { ...s.observation, tasks: r.tasks, ownAI: r.ownAI, ownAIMinute: r.ownAIMinute, switchedFor: r.switchedFor, note: r.note };
+        store.update(s);
+      }
+      const m = store.meta(); // fresh copy: create() has moved the session counter on
+      store.setMeta({
+        importedSeeds: [...(m.importedSeeds || []), seed.id],
+        roundLabels: { ...(m.roundLabels || {}), [seed.round]: seed.label },
+        currentRound: Math.max(m.currentRound, seed.round + 1),
+      });
+      console.log(`imported ${seed.sessions.length} sessions from ${f} as round ${seed.round}`);
+    }
+  }
+  // sessions created before rounds existed join the current round
+  for (const s of store.all()) if (!s.round) { s.round = store.meta().currentRound; store.update(s); }
+}
+importSeeds();
+
 const app = express();
 app.set("trust proxy", 1);
 app.set("env", PRODUCTION ? "production" : "development");
@@ -116,6 +150,9 @@ function summary(s) {
     id: s.id,
     number: s.number,
     status: s.status,
+    round: s.round,
+    imported: Boolean(s.imported),
+    participant: s.participant || null,
     rehearsal: Boolean(s.rehearsal),
     firstName: s.firstName,
     degree: s.degree,
@@ -124,6 +161,7 @@ function summary(s) {
     clockAt: s.clockAt || s.openedAt,
     closedAt: s.closedAt,
     turns: s.turns || 0,
+    turnsText: s.turnsText || String(s.turns || 0),
     lastAt: last ? last.at : null,
     waitingSince: s.status === "open" ? waitingSince(s) : null,
     recorded: s.observation.ownAI !== null,
@@ -140,8 +178,8 @@ const sessionEvent = (s) => ({
   templates: s.templates,
 });
 
-function tally() {
-  const recorded = store.all().filter((s) => !s.rehearsal && s.observation.ownAI !== null);
+function tally(round) {
+  const recorded = store.all().filter((s) => s.round === round && !s.rehearsal && s.observation.ownAI !== null);
   const counted = recorded.slice(0, SAMPLE);
   const completed = counted.filter(completedWithoutOwnAI).length;
   let decision = `No decision yet: ${counted.length} of ${SAMPLE} students recorded`;
@@ -151,7 +189,12 @@ function tally() {
       : "CHANGE: reframe TFGPT as a complement alongside their own AI, and rerun";
   }
   if (recorded.length > SAMPLE) decision += `. ${recorded.length - SAMPLE} later session(s) are not counted: the rule uses the first ${SAMPLE}`;
-  return { completed, recorded: counted.length, threshold: THRESHOLD, sample: SAMPLE, decision };
+  return { round, completed, recorded: counted.length, threshold: THRESHOLD, sample: SAMPLE, decision };
+}
+function tallies() {
+  const meta = store.meta();
+  const rounds = [...new Set([...store.all().map((s) => s.round), meta.currentRound])].sort((a, b) => b - a);
+  return rounds.map((r) => ({ ...tally(r), label: (meta.roundLabels || {})[r] || "", current: r === meta.currentRound }));
 }
 
 const studentView = (s) => ({
@@ -340,7 +383,8 @@ app.get("/api/admin/stream", requireAdmin, (req, res) => {
 app.get("/api/admin/sessions", requireAdmin, (req, res) => {
   res.json({
     sessions: store.all().map(summary),
-    tally: tally(),
+    tallies: tallies(),
+    currentRound: store.meta().currentRound,
     now: now(),
     persistent: store.persistent,
     sessionMinutes: SESSION_MINUTES,
@@ -422,7 +466,13 @@ app.patch("/api/admin/sessions/:id", requireAdmin, findSession, (req, res) => {
   if (b.templates && typeof b.templates === "object" && s.status === "open") s.templates = { ...s.templates, ...cleanTemplates({ ...s.templates, ...b.templates }) };
   store.update(s);
   toAdmins("session", sessionEvent(s));
-  res.json({ ...sessionEvent(s), tally: tally() });
+  res.json({ ...sessionEvent(s), tallies: tallies() });
+});
+
+app.post("/api/admin/rounds", requireAdmin, (req, res) => {
+  const meta = store.setMeta({ currentRound: store.meta().currentRound + 1 });
+  toAdmins("rounds", { currentRound: meta.currentRound });
+  res.json({ currentRound: meta.currentRound, tallies: tallies() });
 });
 
 app.post("/api/admin/sessions/:id/close", requireAdmin, findSession, (req, res) => {
@@ -458,17 +508,19 @@ const csvCell = (v) => {
 };
 
 app.get("/api/admin/export.csv", requireAdmin, (req, res) => {
-  const head = ["number", "rehearsal", "degree", "started", "task_1_fit", "task_2_structure", "task_3_dates", "opened_own_ai",
+  const head = ["number", "round", "participant", "imported", "rehearsal", "degree", "started", "task_1_fit", "task_2_structure", "task_3_dates", "opened_own_ai",
     "own_ai_minute", "turns", "switched_for", "note", "used_for_each", "instead_or_alongside", "completed_without_own_ai", "status"];
   const yn = (v) => (v === true ? "y" : v === false ? "n" : "");
   const rows = store.all().map((s) => {
     const o = s.observation;
-    return [s.number, s.rehearsal ? "y" : "", s.degree, s.started, yn(o.tasks[0]), yn(o.tasks[1]), yn(o.tasks[2]), yn(o.ownAI),
-      o.ownAIMinute, s.turns || 0, o.switchedFor, o.note, o.usedForEach, o.insteadOrAlongside, completedWithoutOwnAI(s) ? "y" : "n", s.status];
+    return [s.number, s.round, s.participant || "", s.imported ? "y" : "", s.rehearsal ? "y" : "", s.degree, s.started, yn(o.tasks[0]), yn(o.tasks[1]), yn(o.tasks[2]), yn(o.ownAI),
+      o.ownAIMinute, s.turnsText || s.turns || 0, o.switchedFor, o.note, o.usedForEach, o.insteadOrAlongside, completedWithoutOwnAI(s) ? "y" : "n", s.status];
   });
-  const t = tally();
   const lines = [head, ...rows].map((r) => r.map(csvCell).join(","));
-  lines.push("", csvCell(`Completed all three tasks in TFGPT without opening own AI: ${t.completed} / ${t.recorded} (threshold ${t.threshold} of ${t.sample}; rehearsals excluded)`), csvCell(t.decision));
+  lines.push("");
+  for (const t of tallies()) {
+    lines.push(csvCell(`Round ${t.round}${t.label ? ` (${t.label})` : ""}: completed all three tasks in TFGPT without opening own AI: ${t.completed} / ${t.recorded} (threshold ${t.threshold} of ${t.sample}; rehearsals excluded). ${t.decision}`));
+  }
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
   res.setHeader("Content-Disposition", 'attachment; filename="tfgpt-observation-sheet.csv"');
   res.send(`﻿${lines.join("\n")}\n`); // BOM so Excel shows accents correctly

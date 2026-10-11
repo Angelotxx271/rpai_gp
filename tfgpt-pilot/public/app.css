@@ -127,3 +127,6 @@ details.box p { margin: 0 0 8px; }
 .flat-form { padding: 8px 0 0; border: 0; }
 .acts-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
 .linkbox .btn { margin-left: 6px; }
+.round { padding: 0 0 10px; margin: 0 0 10px; border-bottom: 1px solid var(--rule); }
+.round:not(.current) { color: var(--ink-soft); font-size: 13px; }
+.round .rhead { font-weight: 600; margin-bottom: 2px; }

@@ -33,7 +33,18 @@ The console shows the protocol (Before, During, After) and the task brief with a
    - Do the reveal and ask the two questions, then fill the observation sheet: tasks done in TFGPT, opened own AI (and the minute), switched for, note, and the two answers. It saves as you type and is safe with two people on it
    - Tick **Rehearsal** for test sessions so they stay out of the tally
    - **Close session** deletes the transcript, first name, topic and templates, and removes the first name from the notes, unless the student agreed to keep the transcript. **Delete the kept transcript** removes it later. The observation row stays
-4. **Results:** the tally applies the rule committed in experiment-card.md to the first 10 non-rehearsal sessions recorded: at least 6 completed all three tasks in TFGPT without opening their own AI. **CSV** downloads the observation sheet without names
+4. **Results:**
+   - The tally applies the rule committed in experiment-card.md, round by round: of the first 10 non-rehearsal sessions recorded in a round, at least 6 completed all three tasks in TFGPT without opening their own AI
+   - **Start round N** begins a new round for a rerun; earlier rounds keep their tally
+   - **CSV** downloads the observation sheet, with no names, and a tally line per round
+
+## Earlier results (Round 1)
+
+`seed/wizard-of-oz-round-1.json` holds the first Wizard-of-Oz test, copied from the Results table in `evidence-log/experiment-card.md`: 10 observation rows, no names, no transcripts.
+
+- On its first start, the app imports them once as the closed sessions of Round 1. Its own tally reproduces the recorded result: 6 of 10, CONTINUE
+- New sessions belong to Round 2
+- Adding another JSON file in the same shape (`id`, `round`, `label`, `source`, `sessions`) imports it the same way
 
 ## Deploy on Railway
 

@@ -39,7 +39,7 @@ function makeStore() {
     }
   }
 
-  let meta = { nextNumber: 1 };
+  let meta = { nextNumber: 1, currentRound: 1, importedSeeds: [] };
   try { meta = { ...meta, ...JSON.parse(fs.readFileSync(metaFile, "utf8")) }; } catch { /* first run */ }
   for (const s of sessions.values()) meta.nextNumber = Math.max(meta.nextNumber, s.number + 1);
   writeAtomic(metaFile, JSON.stringify(meta));
@@ -49,6 +49,12 @@ function makeStore() {
   return {
     dir,
     persistent: base.persistent,
+    meta: () => JSON.parse(JSON.stringify(meta)),
+    setMeta(patch) {
+      meta = { ...meta, ...patch };
+      writeAtomic(metaFile, JSON.stringify(meta));
+      return meta;
+    },
     all: () => [...sessions.values()].sort((a, b) => a.number - b.number),
     get: (id) => sessions.get(id) || null,
     byToken: (token) => {
@@ -63,6 +69,7 @@ function makeStore() {
         token: crypto.randomBytes(18).toString("base64url"),
         number,
         status: "open",
+        round: meta.currentRound,
         rehearsal: false,
         createdAt: new Date().toISOString(),
         openedAt: null,
