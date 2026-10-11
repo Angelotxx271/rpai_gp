@@ -1,4 +1,4 @@
-# RPAI · Venture Skeleton v0.1 · TFG Copilot
+# RPAI · Venture Skeleton v0.1 · TFGPT
 
 ```
 rpai_gp/
