@@ -37,3 +37,18 @@ Sources: interview-evidence.md, jtbd.md, personas/. Nothing here is validated; s
 - As good as their current models, and holds context across sessions: untested, now conditions for switching
 - Catches drift like a supervisor: untested. ai-persona-01 checks with the same AI that drafted the work; ai-persona-03 needs problems flagged before the student knows to ask
 - IE knowledge base: ai-persona-03 shows TFG documents are scattered across courses and emails (first-hand); nothing new on whether IE will tailor, invest or promote
+
+## Evidence since 2026-10-11
+Sources: experiment-card.md (Wizard-of-Oz, 10 final-year students), market-research.md, ERRC.md. Statuses as recorded there; nothing here is validated in real use.
+- Instead of their AI of choice: in one 20-minute Wizard-of-Oz session, 6 of 10 completed all three tasks in the chat without opening their own AI, exactly the committed threshold, so the decision was CONTINUE (experiment-card.md). 3 of the other 4 opened their own AI: participants 4 and 7 used ChatGPT or Claude alongside the chat, and participant 10 did all three tasks in Claude. This is one session with a simulated chat, not use over a real deliverable
+- Scope of "instead": ERRC.md narrows it to the pre-meeting check. Students use TFGPT instead of their AI of choice for the check and keep their own AI for everything else (market-research.md section 7). The riskiest assumption above is read with that scope
+- Re-checked on 2026-10-12: still the riskiest. The Wizard-of-Oz result cleared the bar once; ERRC.md falsifier 1 restates it for real use
+- What would prove these areas wrong (the falsifiers in ERRC.md):
+  - Area 1: students don't end up using TFGPT instead of their AI of choice for the pre-meeting check (ERRC.md proposes measuring it in real use against the committed 6-of-10 bar)
+  - Area 2: TFGPT misses more than 40% of what a supervisor would otherwise flag as not ideal in the TFG; or the check can be copy-pasted into a different LLM and it gives the same flags for the same effort, in which case TFGPT has no value
+  - Area 3: IE does not commit to the full maintenance and adoption of the tool
+- New must-be-true items from ERRC.md (HYPOTHESIS, untested):
+  - Area 1: students read and act on flags TFGPT raises without being asked, rather than muting them
+  - Area 1: students still use it when it stores their topic and work between sessions (ERRC.md notes a tension with concealment)
+  - Area 2: TFGPT can get each programme's current guidelines, rubrics and dates from Campus Online or Blackboard, and someone keeps them up to date
+  - Area 3: IE counts a tool that flags points and may suggest a fix for a flagged passage, with no grade and no drafting, as feedback under its AI rules

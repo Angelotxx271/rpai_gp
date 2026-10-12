@@ -26,6 +26,7 @@ When final-year IE students work on their TFG through two-month gaps between del
 ## Validation gaps
 
 - All of the evidence comes through one IE Computer Science graduate and what the student has heard. It needs checking with more final-year students across different degrees
+- "About two months" between deliverables is reported for one Computer Science programme. Meeting cadence differs by programme (4 mandatory sessions in one BBA syllabus, 4 or 5 in BIE, about monthly in IR; market-research.md section 5), and no Computer Science or SciTech cadence was found in documents
 - It's unclear whether students feel anything is wrong during the two months, or only after a bad meeting. The job may only start once someone has been caught out
 - The scale claims ("almost no one finished on time", "almost everyone had AI write it") haven't been checked
 - Pull is the student's interpretation, not something students said

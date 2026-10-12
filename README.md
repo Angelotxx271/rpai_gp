@@ -15,7 +15,8 @@ rpai_gp/
 │   └── ai-prompt-ERRC.md         writes ERRC.md and opportunity-v02.md from the market evidence
 ├── evidence-log/               what we produced (outputs)
 │   ├── opportunity.md          pain point, user, need, insight, HMW, open gaps
-│   ├── assumptions.md          3 areas, riskiest assumption, evidence since v0
+│   ├── opportunity-v02.md      proposed update from ERRC; becomes opportunity.md when the team accepts it
+│   ├── assumptions.md          3 areas, riskiest assumption, evidence since v0 and since the Wizard-of-Oz test
 │   ├── goals.md                Product Goal, current and previous Sprint Goal
 │   ├── jtbd.md                 Job to Be Done statement, eight-element table, validation gaps
 │   ├── experiment-card.md      hypothesis, method, metric, threshold, evidence strength, decision rule, Wizard-of-Oz results
@@ -24,7 +25,8 @@ rpai_gp/
 │   ├── press-release.md        Working Backwards opener with an evidence box
 │   ├── market-research.md      Fermi estimate, four-category alternatives map, factors, claim table, stress test, so what
 │   ├── market-sources.md       the 200 sourced desk-research claims behind market-research.md, each checked
-│   ├── value-curve.svg         current value curve chart (scores and evidence in market-research.md, section 4)
+│   ├── value-curve.svg         value curve chart with TFGPT's target line (scores and evidence in market-research.md, section 4)
+│   ├── ERRC.md                 Eliminate / Reduce / Raise / Create grid, falsifiable value innovation hypothesis, validation points
 │   ├── ai-usage-log.md         6-column course log, one row per meaningful AI run
 │   └── personas/
 │       ├── ai-persona-01..03.md  the 3 selected student personas (not yet validated with real users)
