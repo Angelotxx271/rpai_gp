@@ -12,20 +12,35 @@
 - TFGPT flags points with the guideline section behind each one and gives no grade or overall verdict. 4 of 10 participants re-checked answers with Blackboard, a friend, Google or their supervisor (experiment-card.md; ERRC.md Eliminate)
 - The two-month gap between deliverables is qualified by programme: it comes from the Computer Science programme we heard about, and cadence differs elsewhere (market-research.md section 5)
 
-## Next test
+## Spike already run: field comparison
+
+Two team members checked their own TFG proposals two ways, judged by their own advisors (spikes.md). With the TFGPT stand-in (all programme documents and fixed instructions preloaded, guidance and flags only, no sentences written) the advisor made 4 minor corrections. With a plain Claude chat and only some of the documents, the advisor made 9, mostly major (methodology, research question). The stand-in then flagged all 9 of those points, and the version revised with it came back with only small fixes. This confirms CONTINUE as feasibility on the team's own work (n = 2), not as demand
+
+## Next tests (decided by the team on 2026-10-12)
+
+**1. Run the same comparison with more students who are willing to**
 
 | Field | Content |
 |---|---|
-| Question | Does TFGPT give the same flags as a general AI for less effort? (ERRC.md falsifier 4, validation point 1) |
-| Test | The same piece of TFG work and the same programme guidelines, checked twice: in ChatGPT with the guidelines and the work pasted in, and in a TFGPT stand-in with the guidelines already loaded. Each run records the flags each tool gives, which of them are correct, and the total minutes from opening the tool to the last flag |
-| Owner | Every team member runs it once, so the comparison covers several pieces of work |
-| Threshold | In each run, TFGPT gives the same flags in fewer total minutes, or better flags (more of the real issues, fewer wrong ones) |
-| Stop condition | ChatGPT with only the context pasted in gives the same correct flags in no more total minutes: then TFGPT adds no value (ERRC.md falsifier 4) |
-| By | Friday 23 October 2026 |
+| Question | Does the stand-in catch what advisors flag for students outside the team? (ERRC.md falsifier 3, validation point 3) |
+| Test | Volunteers run their current TFG work through the stand-in before sending it. Their advisor's corrections are compared with the stand-in's flags, and with the corrections they got before using it, as in the field comparison |
+| Owner | The team |
+| Threshold | The stand-in misses at most 40% of what advisors flag, pooled over at least 15 advisor points (spikes.md rules), and advisors' corrections after using it are mostly minor |
+| Stop condition | The stand-in misses more than 40% of what advisors flag (falsifier 3): narrow the check, per the table below |
+| By | Proposed: Friday 23 October 2026 |
 
-How the test runs (the stand-in, scoring, who judges a flag, how many runs count) is set out in spikes.md, to be confirmed by the team before the first run
+**2. Test the advisor-facing side, which has not been tested yet**
 
-The same runs also give the miss rate against a supervisor (ERRC.md falsifier 3), and a first step checks access to each programme's guidelines (a precondition for falsifier 2); both are in spikes.md
+| Field | Content |
+|---|---|
+| Question | Would advisors use a view of their students' TFGPT flags and progress? (the supervisor view ERRC.md set aside; ai-persona-04) |
+| Test | Proposed: show two or three advisors a mock-up of what they would see, and ask whether they would use it and what would make them refuse |
+| Owner | The team |
+| Threshold | Proposed: at least 2 of 3 advisors say they would use it |
+| Stop condition | Proposed: no advisor would use it, or they object to students' work being visible to them |
+| By | To set |
+
+**Still open:** the head-to-head against a student who pastes everything into a general AI (ERRC.md falsifier 4). In the field comparison the usual route had only part of the documents and no instructions, so falsifier 4 is untested; the protocol for it is in spikes.md
 
 ## Would anyone invest?
 
@@ -36,6 +51,7 @@ The same runs also give the miss rate against a supervisor (ERRC.md falsifier 3)
 | Students find out about drift at the meeting and redo the work | interview-evidence.md 01, one Computer Science graduate about his classmates | REPORTED, second-hand; no count of how often it happens |
 | Students will do the check in a tool like this instead of their own AI | experiment-card.md: 6 of 10 in one 20-minute session, exactly the bar | OBSERVED once; evidence strength MEDIUM |
 | Advisors with many TFGs lack time for each student | interview-evidence.md 05: about 10 TFGs, a few minutes per student, almost two weeks to a first reply (relayed by students); 06 is a contrast case with 2 TFGs | REPORTED, relayed by a team member; no advisor has been asked about TFGPT itself |
+| A preloaded setup catches what advisors flag | spikes.md field comparison: the stand-in flagged all 9 of one advisor's points, and work checked with it came back from two advisors with only minor corrections | OBSERVED by the team on its own work, n = 2; feasibility, not demand |
 | IE already provides AI to everyone | market-sources.md #1, #3, #181 (ChatGPT licences for all students, faculty and staff) | SUPPORTED; who pays is not stated, and whether IE would fund this tool is untested. The same licences are also the strongest argument against: if ChatGPT gives the same flags for the same effort, IE has no reason to fund a second tool (falsifier 4) |
 
 The yes holds only if IE commits to the full maintenance and adoption of the tool (ERRC.md falsifier 2) and the next test shows the same flags for less effort (falsifier 4). Nobody at IE has been asked yet, and money is not estimated (market-research.md section 1)

@@ -65,6 +65,28 @@ Spike C shows what a student can find. It does not show whether IE will commit (
 
 **Spike B, pooled over all runs:** miss rate = key points the stand-in missed ÷ all key points, reported with the number of points N, and the G-only rate beside it. Falsifier 3 holds above 40%. Read it only once N is at least 15; below that, run the stand-in alone on more commented pieces (about 10 minutes each)
 
+## Field comparison (run before this protocol was written)
+
+Two team members, their own TFG proposals, over a two-week stretch before 2026-10-12. Both used Claude with Opus 5.5. The judges were their own advisors (two advisors), through their corrections on the proposals as submitted
+
+| | Team member 1 (Data) | Team member 2 (Computer Science) |
+|---|---|---|
+| How the proposal was checked | TFGPT stand-in: a Claude project with all the programme documents and context, and instructions never to write sentences, only to give guidance and flag what might be wrong. All the text came from the student | The usual route: a plain Claude chat with no instructions, and only the documents she could find |
+| Advisor's corrections on the submitted proposal | 4, all minor: two punctuation fixes, one word choice, and one passage to simplify because it was too technical | 9, mostly major: the methodology, the research question and similar |
+| Her original proposal run through the stand-in afterwards | | The stand-in flagged all 9 of the advisor's points |
+| Her advisor on the version revised with the stand-in | | Only small fixes, like team member 1's |
+
+**What it shows:** with the programme documents and fixed instructions preloaded, the stand-in caught every major point one advisor raised, and work checked with it came back from two advisors with only minor corrections. For ERRC.md falsifier 3, the stand-in missed 0 of 9 advisor points on one proposal
+
+**What it does not show:**
+- Two students, two programmes, two advisors and two topics: part of the difference can come from the person or the topic, not the tool
+- A team member built the stand-in, and the team judged that its flags matched the 9 points after the advisor's comments were known, not blind
+- 9 advisor points is below the 15 the rules below need before the miss rate is read: it is a first data point, not a result
+- Team member 2's route had only part of the documents and no instructions, so it does not test a student who pastes everything into a general AI (falsifier 4)
+- Team members on their own work: feasibility, not demand
+
+Status: OBSERVED by the team on its own work, n = 2; evidence strength LOW as value evidence. Both runs are AI use on a TFG and go in each member's TFG AI declaration
+
 ## Results
 
 ### Spike C
@@ -88,3 +110,4 @@ Spike C shows what a student can find. It does not show whether IE will commit (
 - Spike A: "It asks only whether plain ChatGPT, given the same instructions and guidelines, gives the same flags for the same effort. It is a feasibility check on our own work, not proof that students want TFGPT"
 - After one run: "Protocol and rules committed on [date]; one run done to test the procedure; results due 23 October; each outcome maps to continue, narrow, pivot or stop". One run is never shown as a pass or a stop
 - Spike C: "Findable by a student in [n] programmes; whether IE commits is a separate question"
+- Field comparison: "Two of us, two advisors: the stand-in caught all 9 of one advisor's points, and work checked with it came back with only minor corrections. Two people, so it shows the mechanism works, not that students want it"
