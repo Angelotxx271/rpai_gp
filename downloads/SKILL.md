@@ -1,6 +1,6 @@
 ---
 name: course-ai-interaction-logger
-description: "Create and maintain the Rapid Prototyping with AI course AI Usage Log for one session, several sessions, or the full project. Use when a student asks to log, summarise, record, append, rebuild, or update meaningful AI interactions. Produces the course table Date | Tool & version | Stage/ Step | Use | Output used | Student's decisions, preserves student judgement and human verification, uses the syllabus to label stages when available, creates a new Markdown log when none exists, appends safely to an existing log by default, and overwrites only with explicit permission."
+description: "Preview and, only after explicit user approval, create or update the Rapid Prototyping with AI course AI Usage Log. Use when a student asks to log, summarise, record, append, rebuild, or update meaningful AI interactions. Every user-facing response and generated log uses Markdown table format. Preserves student judgement and human verification, uses the syllabus to label stages when available, appends safely by default, and overwrites only with explicit permission."
 ---
 
 # Course AI Interaction Logger
@@ -49,6 +49,30 @@ Markdown header:
 
 Do not add extra columns unless the professor explicitly changes the schema
 
+## Mandatory approval gate
+
+Always show the proposed AI interactions to the user before creating or changing a file
+
+1. Draft the supported rows
+2. Display the complete proposed interaction table in the screen, console, or chat where the skill is running
+3. Stop and request explicit approval to write those exact rows
+4. If the user requests changes, revise the rows and display the complete table again
+5. Create, append, overwrite, or rebuild the file only after the user explicitly approves the currently displayed table
+
+A request to log, update, append, rebuild, or overwrite starts the preview workflow. It does not approve a file change before the preview
+
+Approval must refer clearly to the latest displayed table. Do not treat silence, a prior approval, or approval of different rows as approval
+
+The approval request must also be a Markdown table. Use this shape after the interaction table:
+
+```markdown
+| Status | Required action |
+|---|---|
+| Awaiting approval | Approve this table to write it, or request changes |
+```
+
+Do not include prose, headings, bullets, or code fences outside the rendered tables in any user-facing response
+
 ## What counts as a loggable interaction
 
 Log meaningful AI use that materially contributed to course work, including when AI:
@@ -79,7 +103,7 @@ When the student asks to log a particular session or range of sessions:
 1. Use only interactions visible in the current conversation, supplied transcripts, supplied files, or project history the current environment can actually access
 2. Do not invent missing interactions from the syllabus
 3. Use the syllabus only to identify the correct stage, step, learning purpose, or artifact ownership
-4. If important source material is missing, say what is missing and ask for the relevant transcript, file, or short recap
+4. If important source material is missing, identify what is missing and request it in a two-column Markdown status table
 5. If the student gives a short recap of an off-platform AI interaction, log it as student-reported rather than pretending the interaction was directly observed
 
 Do not claim completeness beyond the evidence available
@@ -224,32 +248,30 @@ Do not fabricate filler rows so every session appears populated
 
 If the course project filesystem is available, use `evidence-log/ai-usage-log.md`
 
-If the file does not exist, create it with:
+If the file does not exist, create it after approval with:
 
 ```markdown
-# AI Usage Log
-
 | Date | Tool & version | Stage/ Step | Use | Output used | Student's decisions |
 |---|---|---|---|---|---|
 ```
 
 Then add the new rows
 
-If the file already exists, append new rows by default without rewriting historical rows
+If the file already exists, append the approved rows by default without rewriting historical rows
 
-If the filesystem is unavailable, return the complete Markdown content or the proposed rows so the student can save them
+If the filesystem is unavailable, return the complete approved Markdown table in the response so the student can save it
 
 ### Path supplied
 
 Use the exact supplied `.md` path
 
-If it does not exist, create it when the student's request is clearly to create or update the log
+If it does not exist, create it only after the student approves the displayed table
 
-If it exists and the student asks to `update`, `log`, or `append`, preserve the existing content and append the new rows
+If it exists and the student asks to `update`, `log`, or `append`, preserve the existing content and append only the approved rows
 
 If it exists and the student explicitly asks to `overwrite`, `replace`, or `rebuild` the file, treat that as overwrite permission only when the exact path is clear
 
-If overwrite intent or path is ambiguous, ask one short confirmation before replacing anything
+If overwrite intent or path is ambiguous, request confirmation in a two-column Markdown status table before replacing anything
 
 Never overwrite an existing file merely because a path was supplied
 
@@ -279,11 +301,13 @@ When invoked:
 6. Extract only meaningful AI-assisted episodes
 7. Draft rows using the six-column schema
 8. Check attribution, evidence support, duplicates, dates, and tool/version accuracy
-9. Create or append to the file when authorised by the logging request
-10. Overwrite only under the explicit overwrite rule above
-11. Report the path written and a concise count of rows added or replaced
+9. Display the complete proposed interaction table
+10. Display the table-formatted approval request and stop without changing any file
+11. After explicit approval of the displayed table, create or append to the file
+12. Overwrite only when both the displayed rows and the overwrite operation were explicitly approved
+13. Report the path and row count in a Markdown status table
 
-If the user asks only to preview or draft the rows, do not write a file
+If the user asks only to preview or draft the rows, display only the interaction table and do not write a file
 
 ## Quality audit
 
@@ -301,6 +325,9 @@ Before finalising, verify mechanically:
 - Closely related prompts have been clustered rather than over-logged
 - Existing rows are not overwritten during an append
 - No destructive overwrite occurs without explicit permission
+- No file is created or changed before the latest displayed interaction table is explicitly approved
+- The written file contains the approved six-column Markdown table and no generated prose outside table format
+- Every user-facing response contains only rendered Markdown tables
 - Real-user evidence is not replaced by synthetic or AI-generated feedback
 - The log does not imply that AI made consequential academic, product, privacy, security, legal, fiscal, or business decisions for the student
 
@@ -314,12 +341,20 @@ Use the live syllabus to adapt `Stage/ Step` as the course progresses from disco
 
 ## Output style
 
-For a preview, return only the Markdown table unless the student asks for explanation
+Every user-facing output must use rendered Markdown table format, including previews, approval requests, missing-evidence requests, clarification requests, warnings, and completion reports
 
-After a file write, report concisely:
+For a preview, show the six-column interaction table first. Then show the two-column approval table unless the user requested preview only
 
-- File path
-- Rows added, or rows replaced if overwrite was explicitly requested
-- Any session in the requested scope for which evidence was unavailable
+After an approved file write, use this format:
 
-Use plain English suitable for first-year bachelor students
+```markdown
+| Result | Details |
+|---|---|
+| File | `evidence-log/ai-usage-log.md` |
+| Change | Added 3 approved rows |
+| Evidence gaps | None |
+```
+
+Adapt the values and path to the actual result. Include unavailable sessions in the `Evidence gaps` row
+
+Do not output prose, headings, lists, block quotes, or code fences outside the rendered tables. Keep cell content in plain English suitable for first-year bachelor students
