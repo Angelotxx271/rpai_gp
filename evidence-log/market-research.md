@@ -167,7 +167,7 @@ Desk research shapes the hypothesis; real users test it. Market sources show wha
 1. An IE-rule-specific AI-use record (#8, #78): not taken into the grid; kept as an open option
 2. Scope and method checks with the guideline section cited: adopted (Eliminate: flags with the source behind each one; Raise and Create)
 3. Checks, not grades: adopted (Eliminate); the EU AI Act position still needs legal advice
-4. Qualifying the "two-month gap" by programme: done in opportunity-v02.md, press-release.md and the jtbd.md validation gaps
+4. Qualifying the "two-month gap" by programme: done in opportunity.md (v02), press-release.md and the jtbd.md validation gaps
 5. IE or other universities as the buyer: partly reflected in the falsifiable hypothesis, which is wrong if IE doesn't commit to the full maintenance and adoption of the tool; who pays is still untested
 
 ## 8. Gaps to take to real users
@@ -197,4 +197,4 @@ Carry into ERRC:
   - whether ChatGPT Edu is still live at IE
   - meeting cadence by programme
 
-The helper also reads opportunity.md, jtbd.md, goals.md and assumptions.md, the personas (ai-persona-01 to 04) and the Wizard-of-Oz results in experiment-card.md. It writes evidence-log/ERRC.md and a proposed evidence-log/opportunity-v02.md
+The helper also reads opportunity.md, jtbd.md, goals.md and assumptions.md, the personas (ai-persona-01 to 04) and the Wizard-of-Oz results in experiment-card.md. It writes evidence-log/ERRC.md and a proposed evidence-log/opportunity-v02.md (accepted by the team as opportunity.md on 2026-10-12)

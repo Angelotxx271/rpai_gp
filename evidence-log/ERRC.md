@@ -4,7 +4,7 @@
 
 **Sources:** Run on 2026-10-11 with the course ERRC prompt (downloads/ai-prompt-ERRC.md). Baseline from market-research.md sections 2 to 4; context from opportunity.md, jtbd.md, assumptions.md, experiment-card.md and personas/ai-persona-01 to 04. #n refers to a row in market-sources.md; participant numbers refer to the Wizard-of-Oz results in experiment-card.md. The student chose all four moves and asked for hints and choices on the Raise and Create wording; most cell wording is AI-proposed options the student selected and confirmed (ai-usage-log.md, 2026-10-11). Revised on 2026-10-12 with the student's decisions on the falsifiers, the new-market intent, the non-customers, the Create move and the net effect for the student, and with evidence corrections from independent reviews (ai-usage-log.md, 2026-10-12)
 
-**Target user:** Final-year IE students doing their TFG, any degree ("any degree" is a hypothesis; see opportunity-v02.md)
+**Target user:** Final-year IE students doing their TFG, any degree ("any degree" is a hypothesis; see opportunity.md)
 
 **Job to Be Done:** When final-year IE students work on their TFG through two-month gaps between deliverable meetings without knowing whether they're on track, finding out at a meeting that the last two months of work were faulty prompts them to seek a way to go into each meeting already knowing their work meets what's required, so they can move on to the next phase
 
@@ -97,9 +97,9 @@ This remains a hypothesis, not a validated blue ocean or confirmed business mode
 
 **Contradictions and unresolved gaps**
 - "Instead of their AI of choice" (assumptions.md, goals.md, experiment-card.md) and "alongside" (market-research.md section 7) are reconciled as: instead of their AI of choice for the check, alongside it for everything else (falsifier 1). assumptions.md and goals.md now note that scope; the riskiest-assumption and Sprint Goal sentences themselves are unchanged
-- "Students will use AI no matter what" (opportunity-v02.md need statement) and the first non-customer group (students who will not use AI for the check): the team holds both, the second as a smaller group
+- "Students will use AI no matter what" (opportunity.md need statement) and the first non-customer group (students who will not use AI for the check): the team holds both, the second as a smaller group
 - Concealment: the opportunity insight (a team hypothesis) says students care most about making work look not-AI, while Raise and Create need TFGPT to store the student's work
 - Participant 10 did all three check tasks in Claude: the negative case for doing the check in TFGPT instead of their own AI; the experiment card gives no drafting-related reason
-- Meeting cadence differs by programme (#14, #15, #89, #96, #97, #105), which affects when "before each deliverable" falls. jtbd.md keeps "two-month gaps" in its statement and notes the difference in its validation gaps; opportunity-v02.md qualifies it by programme
+- Meeting cadence differs by programme (#14, #15, #89, #96, #97, #105), which affects when "before each deliverable" falls. jtbd.md keeps "two-month gaps" in its statement and notes the difference in its validation gaps; opportunity.md qualifies it by programme
 - Whether ChatGPT Edu is still live at IE is disputed (#4, #181, #188 against the team member's report)
 - Willingness to pay, and who would pay, is untested; falsifier 2 makes IE's commitment a condition

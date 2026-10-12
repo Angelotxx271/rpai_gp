@@ -12,10 +12,9 @@ rpai_gp/
 │   ├── ai-prompt-job-to-be-done.md
 │   ├── ai-prompt-persona-builder.md
 │   ├── ai-prompt-constitution.md
-│   └── ai-prompt-ERRC.md         writes ERRC.md and opportunity-v02.md from the market evidence
+│   └── ai-prompt-ERRC.md         writes ERRC.md and the proposed opportunity v02 from the market evidence
 ├── evidence-log/               what we produced (outputs)
-│   ├── opportunity.md          pain point, user, need, insight, HMW, open gaps
-│   ├── opportunity-v02.md      proposed update from ERRC; becomes opportunity.md when the team accepts it
+│   ├── opportunity.md          v02 (team-accepted 2026-10-12): pain point, user, need, insight, HMW, alternatives, factors, value innovation, open gaps
 │   ├── assumptions.md          3 areas, riskiest assumption, evidence since v0 and since the Wizard-of-Oz test
 │   ├── goals.md                Product Goal, current and previous Sprint Goal
 │   ├── jtbd.md                 Job to Be Done statement, eight-element table, validation gaps
@@ -39,7 +38,7 @@ rpai_gp/
 ├── tfgpt-landing/              fake-door landing page and signup API (deployed on Railway)
 ├── tfgpt-pilot/                Wizard-of-Oz pilot: student chat + wizard console, answered live by the team (Railway)
 ├── venture-skeleton-v0.pptx    v0 presentation (table + rough test)
-└── venture-skeleton-v0.1.pptx  v0.1 presentation for the Session 8 checkpoint
+└── venture-skeleton-v0.1.pptx  v0.1 Venture Skeleton (Session 8), updated 12 Oct 2026 for Group Project I
 ```
 
 ## Adding a persona draft
