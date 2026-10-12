@@ -23,9 +23,9 @@
 | Stop condition | ChatGPT with only the context pasted in gives the same correct flags in no more total minutes: then TFGPT adds no value (ERRC.md falsifier 4) |
 | By | Friday 23 October 2026 |
 
-Still to define before the first run: what the TFGPT stand-in is (proposed: the working slice from the decision above, one programme's guidelines and a fixed check prompt), who judges whether a flag is correct, and how many runs count as a result
+How the test runs (the stand-in, scoring, who judges a flag, how many runs count) is set out in spikes.md, to be confirmed by the team before the first run
 
-The team's other spikes (the miss rate against a supervisor, ERRC.md falsifier 3, and access to each programme's guidelines, falsifier 2) are being designed and will be added here when agreed
+The same runs also give the miss rate against a supervisor (ERRC.md falsifier 3), and a first step checks access to each programme's guidelines (a precondition for falsifier 2); both are in spikes.md
 
 ## Would anyone invest?
 

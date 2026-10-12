@@ -51,7 +51,7 @@ Compared with the student's own general AI, TFGPT is a checker, not a writer:
 
 **How each would be measured (proposed by AI, confirmed by the student on 2026-10-12):**
 - Falsifier 1: in real use over a deliverable rather than one session, against the bar the team committed for the Wizard-of-Oz test (at least 6 of 10 doing the check without opening their own AI for it, experiment-card.md). That bar measured three tasks in one 20-minute session, so reusing it is a proposal. Students in the second non-customer group who also run the check in their own AI count against this falsifier
-- Falsifier 2: what counts as IE's commitment (an owner for the guidelines, access to Campus Online or Blackboard, offering TFGPT to final-year students) is for the team to define (validation point 2)
+- Falsifier 2: IE counts as committed only when it does all three: names an owner who keeps the guidelines current, gives access to them through Campus Online or Blackboard, and offers TFGPT to final-year students (defined by the team on 2026-10-12; validation point 2)
 - Falsifier 3: the supervisor reviews the same piece of work, and TFGPT's flags are compared with the supervisor's (validation point 3)
 - Falsifier 4: the same check task in a general LLM with the guidelines and work pasted in (validation point 1). "Does the same" means the same flags for the same effort: TFGPT is expected to give the same flags as a general LLM with less effort for the student, so we are wrong if the other LLM matches both. Which model TFGPT runs on is not decided. The effort claim in the hypothesis is tested here
 
