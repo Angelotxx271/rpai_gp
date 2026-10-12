@@ -34,7 +34,7 @@ No ambiguous branch: the metric is a count out of 10.
 | 9 | BCSAI | Yes (proposal started, written in LaTeX) | 1 / 2 / 3 | n | [4+] | Blackboard (T3, verify dates) | Used the copilot to understand his field first ("what does NLP entail?"), then to check whether his topic made sense based on that answer. T2 was about submission: LaTeX link or PDF?. Took the dates from the copilot, then reconfirmed them on Blackboard |
 | 10 | BBA | No | — / — / — | y, min 1 | 1 | Claude (all tasks, from the start) | Read the copilot's opening message, then did all three tasks in his own AI using that message as the prompt. Came back only to paste his finished answers in. The copilot was a briefing and a drop box; the work happened in his own AI |
 ## Tally
-**Real participants tested** form BCSAI, BBA, BAM and BDBA
+**Real participants tested** from BCSAI, BBA, BAM and BDBA
 
 
 **Completed all three tasks in the copilot without opening their own AI:** 6 / 10 

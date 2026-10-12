@@ -51,7 +51,7 @@ Compared with the student's own general AI, TFGPT is a checker, not a writer:
 
 **How each would be measured (proposed by AI, confirmed by the student on 2026-10-12):**
 - Falsifier 1: in real use over a deliverable rather than one session, against the bar the team committed for the Wizard-of-Oz test (at least 6 of 10 doing the check without opening their own AI for it, experiment-card.md). That bar measured three tasks in one 20-minute session, so reusing it is a proposal. Students in the second non-customer group who also run the check in their own AI count against this falsifier
-- Falsifier 2: what counts as IE's commitment (an owner for the guidelines, access to Campus Online or Blackboard, offering TFGPT to final-year students) is for the team to define (validation point 2)
+- Falsifier 2: IE counts as committed only when it does all three: names an owner who keeps the guidelines current, gives access to them through Campus Online or Blackboard, and offers TFGPT to final-year students (defined by the team on 2026-10-12; validation point 2)
 - Falsifier 3: the supervisor reviews the same piece of work, and TFGPT's flags are compared with the supervisor's (validation point 3)
 - Falsifier 4: the same check task in a general LLM with the guidelines and work pasted in (validation point 1). "Does the same" means the same flags for the same effort: TFGPT is expected to give the same flags as a general LLM with less effort for the student, so we are wrong if the other LLM matches both. Which model TFGPT runs on is not decided. The effort claim in the hypothesis is tested here
 
@@ -61,7 +61,7 @@ This remains a hypothesis, not a validated blue ocean or confirmed business mode
 
 1. **Own AI against TFGPT (falsifier 4):** give students the same check task in a general LLM with the guidelines and work pasted in and in TFGPT with them preloaded, and compare the answers and the effort (Raise; the first gap in market-research.md section 8)
 2. **IE's commitment and the guidelines (falsifier 2):** whether IE commits to maintaining and adopting TFGPT, and whether TFGPT can get current guidelines, rubrics and dates for each programme from Campus Online or Blackboard, and who keeps them up to date (Raise; also a precondition for Create)
-3. **Miss rate of flags (falsifier 3):** whether TFGPT misses more than 40% of what the supervisor would otherwise flag as not ideal in the same work; wrong flags are recorded too, since they are Create's shifted cost (Create)
+3. **Miss rate of flags (falsifier 3):** whether TFGPT misses more than 40% of what the supervisor would otherwise flag as not ideal in the same work; wrong flags are recorded too, since they are Create's shifted cost (Create). First data point: a TFGPT stand-in flagged all 9 points one advisor raised on a team member's proposal (spikes.md, field comparison; n = 9 points, below the 15 needed for a result)
 4. **Use instead of their AI for the check (falsifier 1):** whether students do the check in TFGPT rather than their AI of choice over a real deliverable, not only in one 20-minute session
 5. **No verdict:** whether students who get cited flags with no verdict can tell if they're ready (Eliminate)
 6. **Counts as feedback:** whether IE counts a tool that flags points and may suggest a fix for a flagged passage, with no grade and no drafting, as "feedback", and whether that makes IE more willing to back it (Reduce)
@@ -73,6 +73,9 @@ This remains a hypothesis, not a validated blue ocean or confirmed business mode
 - Wizard-of-Oz test (experiment-card.md: 10 final-year classmates across BCSAI, BBA, BAM and BDBA, one 20-minute session in a simulated chat): 3 of 10 opened their own AI; 4 of 10 checked with Blackboard, a friend, Google or the supervisor; participant 7 generated topic ideas in Claude and checked them in the chat; participant 3 got conflicting format advice from classmates. The copilot answered fit questions and every check was started by the student, so the 6 of 10 covers neither a no-verdict TFGPT nor flags it raises unprompted
 - Sourced market facts (market-sources.md): TFG format and citation rules differ between the programmes compared (#104) and one programme's rubrics sit on Campus Online (#106); IE allows AI for feedback and requires disclosure (#8, #76, #78); Grammarly's grade estimate is explicitly not a grade (#189); in the BIE and International Relations theses the supervisor decides permission to present (#16, #82); AI that evaluates learning outcomes, including steering the learning process, is high-risk under the EU AI Act (#194; timing #195, #196)
 - Late discovery at the meeting is REPORTED second-hand (interview-evidence.md 01)
+
+**Technical spikes (the team's own work, feasibility only)**
+- Field comparison (spikes.md): two team members, two advisors. Work checked with a TFGPT stand-in came back with 4 minor corrections; work checked in a plain Claude chat with part of the documents came back with 9, mostly major, and the stand-in then flagged all 9. n = 2, not blind, not a test of demand
 
 **Based on Persona, team or AI inference**
 - The value-curve scores the moves start from (for example programme-guideline knowledge at 1 for the student's own AI), the new tenth factor and TFGPT's target line were proposed by AI; the student accepted them on 2026-10-12. They are judgements, not measurements

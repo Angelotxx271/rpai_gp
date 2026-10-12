@@ -26,6 +26,8 @@ rpai_gp/
 │   ├── market-sources.md       the 200 sourced desk-research claims behind market-research.md, each checked
 │   ├── value-curve.svg         value curve chart with TFGPT's target line (scores and evidence in market-research.md, section 4)
 │   ├── ERRC.md                 Eliminate / Reduce / Raise / Create grid, falsifiable value innovation hypothesis, validation points
+│   ├── decision-record.md      decision after the Wizard-of-Oz test, what the evidence changed, next test card, invest answer, narrow / pivot / stop options
+│   ├── spikes.md               technical spikes: protocol, decision rules and results (feasibility, not user validation)
 │   ├── ai-usage-log.md         6-column course log, one row per meaningful AI run
 │   └── personas/
 │       ├── ai-persona-01..03.md  the 3 selected student personas (not yet validated with real users)

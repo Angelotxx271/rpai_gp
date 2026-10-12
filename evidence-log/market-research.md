@@ -139,8 +139,8 @@ Desk research shapes the hypothesis; real users test it. Market sources show wha
 
 **Top 3 findings most likely to change the decision**
 1. The strongest alternative is the student's own general AI, free or already paid for, allowed by IE for feedback, and gaining course context, so TFGPT lives alongside it and has to win on IE-programme specificity and scope checks (section 7 later scopes this: instead of it for the check, alongside it for everything else)
-2. Disclosure is mandatory at IE, so an IE-rule-specific AI-use record could set TFGPT apart (HYPOTHESIS). It carries a tension: a log the advisor can see may push real AI work back to students' own AI (persona-hypothesis-06.md; opportunity.md)
-3. Cadence differs by programme, and in one study guidance on goals and methods mattered more than students' rating of availability, so early scope and method checks per programme look central (HYPOTHESIS; one participant spent most of his session on a scope question)
+2. Disclosure is mandatory at IE, so an IE-rule-specific AI-use record could set TFGPT apart (HYPOTHESIS). It carries a tension: a log the advisor can see may push real AI work back to students' own AI (ai-persona-04.md; opportunity.md)
+3. Cadence differs by programme, and in one study guidance on goals and methods mattered more than students' rating of availability, so early scope and method checks per programme look central (HYPOTHESIS; one participant spent most of her session on a scope question)
 
 ---
 
