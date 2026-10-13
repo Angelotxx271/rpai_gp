@@ -13,6 +13,8 @@ Class WhatsApp group plus direct messages, and the TFGPT landing page (tfgpt-pro
 
 The landing page's signups are a demand signal, not a test: no threshold was set before it went live, and it was shared in the same class WhatsApp group the Wizard-of-Oz participants came from (decided by the team on 2026-10-12)
 
+Result, read from the landing page's stats on 2026-10-13: 19 signups: 2 said they'd use it instead of their own AI, 11 alongside it, 6 probably not. The question asked about using TFGPT in general, not about the pre-meeting check specifically
+
 ## By when
 Sessions: held in the last week of September 2026. Results and decision-rule outcome recorded in experiment-card.md on 11 October 2026 (planned for 5 October), before the Phase 1 gate at Session 15 (15 October).
 

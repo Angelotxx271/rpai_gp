@@ -8,7 +8,7 @@
 
 ## What the evidence changed
 
-- "Instead of their AI of choice" became instead of it for the pre-meeting check, and alongside it for everything else. Participants 4 and 7 used their own AI alongside the chat and participant 10 did every task in Claude (experiment-card.md; market-research.md section 7)
+- "Instead of their AI of choice" became instead of it for the pre-meeting check, and alongside it for everything else. Participants 4 and 7 used their own AI alongside the chat and participant 10 did every task in Claude (experiment-card.md; market-research.md section 7). The landing-page signups point the same way: of 19, 11 said alongside their own AI, 2 instead and 6 probably not (a signal, not a test; recruitment.md)
 - TFGPT flags points with the guideline section behind each one and gives no grade or overall verdict. 4 of 10 participants re-checked answers with Blackboard, a friend, Google or their supervisor (experiment-card.md; ERRC.md Eliminate)
 - The two-month gap between deliverables is qualified by programme: it comes from the Computer Science programme we heard about, and cadence differs elsewhere (market-research.md section 5)
 
