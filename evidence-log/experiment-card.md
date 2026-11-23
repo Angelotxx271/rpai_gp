@@ -44,3 +44,13 @@ No ambiguous branch: the metric is a count out of 10.
 
 
 **Decision (committed before the test):** CONTINUE. Build a working slice of the chat with the IE guidelines loaded.
+
+## Note on the count (added 2026-11-23)
+The team confirms 6 of 10. The rows above are unchanged. This note explains how the count reads the log
+
+- **How it was counted:** a participant counts when the log has all three tasks done in the copilot and their own AI not opened. That gives participants 1, 2, 5, 6, 8 and 9. Blackboard, a friend or the student's own document is not their own AI, so using one does not exclude a participant by itself
+- **Participant 5:** recorded as 1 / 2 / 3 with own AI not opened, so they count. The log also says they got the Task 2 answer from Blackboard (min 9) and verified with a friend (min 11). It does not say whether they also settled Task 2 in the copilot
+- **Participant 8:** recorded as 1 / 2 / 3 with own AI not opened, so they count. Their proposal was already written, and the note says Tasks 2 and 3 were quick because they "had everything done". The log has one turn and does not say how Tasks 2 and 3 were done in it
+- **How much depends on these rows:** 6 is exactly the threshold. Without one of the two it is 5 of 10 and without both 4 of 10, which would be the CHANGE branch
+- **What does not depend on them:** 7 of 10 (the six plus participant 3, who skipped Task 3) never opened their own AI. This is context, not the committed metric
+- **For the next test:** record for each task where the answer came from, so the count does not need a note
