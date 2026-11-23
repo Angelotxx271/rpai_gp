@@ -2,10 +2,18 @@
 
 const express = require("express");
 const path = require("path");
+const crypto = require("crypto");
 const { makeStore, EVENTS, INTENTS } = require("./store");
 
 const PORT = process.env.PORT || 3000;
-const STATS_KEY = process.env.STATS_KEY || "tfg2026"; // change this on Railway
+
+// /stats and /export.csv (signup emails) stay off unless a private key is set.
+// There is no default: this repo is public, so any key written here is public too.
+const STATS_KEY = process.env.STATS_KEY || "";
+const MIN_KEY_LENGTH = 12;
+const STATS_ON = STATS_KEY.length >= MIN_KEY_LENGTH;
+if (!STATS_ON) console.warn(`Stats and the signup export are off: set STATS_KEY to a private random string of at least ${MIN_KEY_LENGTH} characters.`);
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const store = makeStore();
@@ -67,7 +75,12 @@ app.post("/api/signup", async (req, res) => {
 });
 
 // ---- stats (counts only) -------------------------------------------------
-const guard = (req, res, next) => (req.query.key === STATS_KEY ? next() : res.status(404).send("Not found"));
+const digest = (s) => crypto.createHash("sha256").update(s).digest();
+const sameKey = (given) => typeof given === "string" && crypto.timingSafeEqual(digest(given), digest(STATS_KEY));
+const guard = (req, res, next) => {
+  res.setHeader("Cache-Control", "no-store"); // these pages hold private data
+  return STATS_ON && sameKey(req.query.key) ? next() : res.status(404).send("Not found");
+};
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const pct = (a, b) => (b ? `${Math.round((100 * a) / b)}%` : "–");
 
