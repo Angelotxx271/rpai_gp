@@ -2,7 +2,8 @@
 
 ```
 rpai_gp/
-├── AGENTS.md                   Persona Agent instructions from the course (synthetic persona rehearsal)
+├── agents/
+│   └── persona-agent.md        Persona Agent instructions from the course (synthetic persona rehearsal). Not loaded automatically: ask the agent to read it
 ├── downloads/                  the 9 AI helpers from the course deck (inputs, do not edit)
 │   ├── SKILL.md                  helper that writes ai-usage-log.md
 │   ├── ai-prompt-opportunity.md

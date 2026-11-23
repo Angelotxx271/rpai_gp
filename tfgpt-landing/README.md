@@ -16,9 +16,10 @@ Storage: Postgres if `DATABASE_URL` is set, otherwise newline-delimited JSON fil
 
 ```
 npm install
-npm start            # http://localhost:3000
+npm start                                  # http://localhost:3000, stats off
+STATS_KEY=replace-with-your-own npm start  # same, with stats on (12 characters or more)
 ```
-Stats: http://localhost:3000/stats?key=tfg2026
+Stats: `http://localhost:3000/stats?key=` followed by that key
 
 ## Deploy on Railway (dashboard, ~5 minutes)
 
@@ -26,7 +27,7 @@ Stats: http://localhost:3000/stats?key=tfg2026
 2. railway.app → **New Project → Deploy from GitHub repo** → pick the repo. Railway detects Node and runs `npm start`.
 3. Click the service → **Settings → Volumes → Add Volume**, mount path `/data`.
    This is where signups are saved. Without it a redeploy wipes them.
-4. **Variables** → add `STATS_KEY` = any random string (this replaces the default `tfg2026`).
+4. **Variables** → add `STATS_KEY` = a private random string of at least 12 characters. There is no default: without it, `/stats` and `/export.csv` stay off and the page still works. Keep it out of the repo, which is public.
 5. **Settings → Networking → Generate Domain**. That URL is what goes in the QR code.
 6. Numbers: `https://<your-domain>/stats?key=<STATS_KEY>` · emails: `/export.csv?key=<STATS_KEY>`
 
