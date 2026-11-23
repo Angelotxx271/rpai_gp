@@ -26,6 +26,7 @@ Two team members checked their own TFG proposals two ways, judged by their own a
 | Test | Volunteers run their current TFG work through the stand-in before sending it. Their advisor's corrections are compared with the stand-in's flags, and with the corrections they got before using it, as in the field comparison |
 | Owner | Angelotxx271 (GitHub handles, since the repo is public), accepted on 2026-11-23 |
 | Scorer | adriFCM, scoring blind as set in spikes.md |
+| Second checker | kristgiuff05, accepted on 2026-11-23. Repeats the matching blind, as set in spikes.md |
 | Threshold | The stand-in misses at most 40% of what advisors flag, pooled over at least 15 advisor points (spikes.md rules), and advisors' corrections after using it are mostly minor |
 | Stop condition | The stand-in misses more than 40% of what advisors flag (falsifier 3): narrow the check, per the table below |
 | By | To set by the owner. The first proposed date, Friday 23 October 2026, passed with no result recorded |
