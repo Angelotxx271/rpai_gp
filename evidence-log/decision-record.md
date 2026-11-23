@@ -24,10 +24,11 @@ Two team members checked their own TFG proposals two ways, judged by their own a
 |---|---|
 | Question | Does the stand-in catch what advisors flag for students outside the team? (ERRC.md falsifier 3, validation point 3) |
 | Test | Volunteers run their current TFG work through the stand-in before sending it. Their advisor's corrections are compared with the stand-in's flags, and with the corrections they got before using it, as in the field comparison |
-| Owner | The team |
+| Owner | Angelotxx271 (GitHub handles, since the repo is public), accepted on 2026-11-23 |
+| Scorer | adriFCM, scoring blind as set in spikes.md |
 | Threshold | The stand-in misses at most 40% of what advisors flag, pooled over at least 15 advisor points (spikes.md rules), and advisors' corrections after using it are mostly minor |
 | Stop condition | The stand-in misses more than 40% of what advisors flag (falsifier 3): narrow the check, per the table below |
-| By | Proposed: Friday 23 October 2026 |
+| By | To set by the owner. The first proposed date, Friday 23 October 2026, passed with no result recorded |
 
 **2. Test the advisor-facing side, which has not been tested yet**
 
@@ -35,10 +36,10 @@ Two team members checked their own TFG proposals two ways, judged by their own a
 |---|---|
 | Question | Would advisors use a view of their students' TFGPT flags and progress? (the supervisor view ERRC.md set aside; ai-persona-04) |
 | Test | Proposed: show two or three advisors a mock-up of what they would see, and ask whether they would use it and what would make them refuse |
-| Owner | The team |
+| Owner | adriFCM, named on 2026-11-23 |
 | Threshold | Proposed: at least 2 of 3 advisors say they would use it |
 | Stop condition | Proposed: no advisor would use it, or they object to students' work being visible to them |
-| By | To set |
+| By | To set by the owner |
 
 **Still open:** the head-to-head against a student who pastes everything into a general AI (ERRC.md falsifier 4). In the field comparison the usual route had only part of the documents and no instructions, so falsifier 4 is untested; the protocol for it is in spikes.md
 
