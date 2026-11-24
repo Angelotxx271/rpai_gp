@@ -4,7 +4,7 @@
 rpai_gp/
 ├── agents/
 │   └── persona-agent.md        Persona Agent instructions from the course (synthetic persona rehearsal). Not loaded automatically: ask the agent to read it
-├── downloads/                  the 9 AI helpers from the course deck (inputs, do not edit)
+├── downloads/                  the 11 AI helpers from the course deck (inputs, do not edit)
 │   ├── SKILL.md                  helper that writes ai-usage-log.md
 │   ├── ai-prompt-opportunity.md
 │   ├── ai-prompt-assumptions.md
@@ -12,8 +12,10 @@ rpai_gp/
 │   ├── ai-prompt-experiment-card.md
 │   ├── ai-prompt-job-to-be-done.md
 │   ├── ai-prompt-persona-builder.md
-│   ├── ai-prompt-constitution.md
-│   └── ai-prompt-ERRC.md         writes ERRC.md and the proposed opportunity v02 from the market evidence
+│   ├── ai-prompt-constitution.md   writes specs/mission.md, tech-stack.md and roadmap.md (v4 from the deck)
+│   ├── ai-prompt-ERRC.md         writes ERRC.md and the proposed opportunity v02 from the market evidence
+│   ├── ai-prompt-feature-spec.md   writes one dated feature folder in specs/ and the root AGENTS.md for coding
+│   └── ai-prompt-build-loop.md     builds a reviewed feature in prototype/, one task group at a time, test first
 ├── evidence-log/               what we produced (outputs)
 │   ├── opportunity.md          v02 (team-accepted 2026-10-12): pain point, user, need, insight, HMW, alternatives, factors, value innovation, open gaps
 │   ├── assumptions.md          3 areas, riskiest assumption, evidence since v0 and since the Wizard-of-Oz test
