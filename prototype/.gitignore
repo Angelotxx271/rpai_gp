@@ -1,0 +1,38 @@
+# Secrets: never commit keys
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+*.pem
+*.key
+
+# Private material: the repo is public
+/guidelines/
+/private/
+/student-work/
+/uploads/
+/data/
+*.docx
+*.pdf
+!prototype-v0.pdf
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Node, if any tool needs it
+node_modules/
+
+# Local files
+*.log
+*.db
+*.sqlite
+*.sqlite3
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
