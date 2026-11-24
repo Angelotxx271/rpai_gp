@@ -40,6 +40,7 @@ rpai_gp/
 ├── prototype/
 │   ├── prototype-v0.pdf        Wizard-of-Oz kit: chat front, task brief, wizard protocol, observation sheet, exclusions
 │   └── prototype-v0-backup.png screenshot of the chat front (page 2), in case the live version fails
+├── group-project-1-presentation/  Group Project I slides (HTML) and script, 13 Oct 2026; a record, not the final
 ├── tfgpt-landing/              fake-door landing page and signup API (deployed on Railway)
 ├── tfgpt-pilot/                Wizard-of-Oz pilot: student chat + wizard console, answered live by the team (Railway)
 ├── venture-skeleton-v0.pptx    v0 presentation (table + rough test)
