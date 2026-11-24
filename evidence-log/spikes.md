@@ -87,6 +87,47 @@ Two team members, their own TFG proposals, over a two-week stretch before 2026-1
 
 Status: OBSERVED by the team on its own work, n = 2; evidence strength LOW as value evidence. Both runs are AI use on a TFG and go in each member's TFG AI declaration
 
+## Advisor comparison (protocol v2, accepted on 2026-11-24 before any run)
+
+Owner Angelotxx271; scorer and second checker as in decision-record.md. Results by Friday 27 November 2026. Reported separately from v1 runs. Proposed by AI, accepted by the student on 2026-11-24
+
+**Question:** on one real proposal with three rounds of written supervisor comments, how much of what the supervisor flagged does each route find, round by round? It reads falsifier 3 (the 40% miss rate) and the flags half of falsifier 4. The effort half (minutes) stays with Spike A
+
+**Material (private, team folder outside the repo):** four versions of one BDBA Full Proposal (rounds 1 to 3 and the approved version) and an answer key of 18 points written from the supervisor's written comments: 10 from round 1, 5 from round 2, 3 from round 3; 4 G and 14 C. The student confirmed the key before any run. The comments themselves never go into any tool, the judge included
+
+| Route | What the model gets | Maps to |
+|---|---|---|
+| C0, own AI as usual | The proposal and one plain request to check it before sending it to the supervisor, then one follow-up | The usual route, with no documents |
+| C1, own AI with everything pasted | Stand-in instructions v1, the merged guidelines (template, syllabus Full Proposal section and APA rule, Module 1 lessons 2 to 6), the topic sentence, the work, then the v1 follow-up | Arm B |
+| C2, TFGPT stand-in | Instructions v1 and every programme document preloaded, plus the student's two meeting summaries (names replaced by roles), then the topic, the work and the follow-up | Arm A |
+
+**Engines:** Claude Opus 5.5 (Claude Code CLI with no tools, project files or memory), GLM 5.3 and a Mistral model (Mistral's API), and a Qwen model on a team member's own computer. Same prompt text for every engine, default sampling, 3 repeats per cell: 144 runs. Each run records its model ID, prompt hash, tokens, seconds and cost
+
+**Scoring:** a blind first-pass judge (Claude Sonnet 5.5, one call per review, no engine or route label) matches each review's flags to the key points whose passage is in that version: same passage and same problem; when in doubt, no match. Every other flag is classed correct, wrong or taste. The scorer and second checker then score blind sheets; disagreements count as not matched. The headline counts are theirs. If the judge and the people disagree on more than 1 point in 5, only the runs people scored are reported
+
+**Decision rules:**
+- A point counts as caught in a cell when at least 2 of its 3 repeats catch it
+- **Falsifier 3:** pooled over rounds 1 to 3 (18 points), the stand-in (C2) on Claude Opus 5.5 misses more than 40% → falsifier 3 holds: narrow the check (decision-record.md). The G-only rate is reported beside it and not read alone (4 points)
+- **Falsifier 4, flags half:** per round, a general route (C0 or C1, any engine) gives the same flags as the stand-in when C(route) ≥ C(stand-in) − 1 and W(route) ≤ W(stand-in) + 1, with C = K + E as above. Same flags in at least 2 of 3 rounds → the flags half holds for that route, and falsifier 4 then turns on effort alone
+- **Noise:** if a cell's K varies by more than 1 across its repeats, a difference of 1 between routes counts as the same
+- **Approved version:** flags are counted with no threshold, to show how much a route over-flags work the supervisor accepted
+- Also reported: early catches (a point the supervisor raised in a later round whose passage was already there), and tokens, time and cost per run for the cost benchmark
+
+**Fingerprints:** SHA-256 of the private files, so anyone given them can check the rules and key came before the results
+
+| File | SHA-256 |
+|---|---|
+| answer-key.md | `ec2fc84eaf51ef5225187a376b42c94081b06592a0aef081b1e654d565592f6c` |
+| protocol-v2.md | `2681f93c6c16f9e9057c10c1f3e4c9b3b4453d1ba01310d551114286e68e3b99` |
+| Prompts, first 12 characters | C0: `1f5943b97318` `9cc36aa8441c` `36a59c87574a` `f9d0afe24506` · C1: `53ec74b8aff1` `0ef86fb3019f` `ece414baec1d` `bf1047281bba` · C2: `ce1a68528674` `60671ac4feb3` `e9d4289d472a` `1233ac6c3c58` (rounds 1, 2, 3, approved) |
+
+**What it can't show:** one student, one topic, one supervisor and one proposal, so the 18 points aren't independent. The supervisor's comments are a floor, not every problem in the text. It measures no effort, real use or demand, and says nothing about falsifiers 1 and 2. Claude Code built the key and the pipeline after reading the comments; the student confirmed the key, and the arm prompts come from text written before (instructions v1 above)
+
+### Results, protocol v2
+
+| Engine | Route | Caught round 1 / 2 / 3 | Pooled miss rate | Correct extra | Wrong | Flags on approved version | Tokens and cost per run | Label |
+|---|---|---|---|---|---|---|---|---|
+
 ## Results
 
 ### Spike C
