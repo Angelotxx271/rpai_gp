@@ -24,7 +24,9 @@
 - Evidence needed: Conversations with supervisors and IE staff about tailoring, investing and promoting
 
 ## Riskiest assumption
-Students will use it instead of their AI of choice. If this is false the tool is pointless: students keep the freedom to work as they please unless IE fully enforces it. IE approval is a gate, but adoption is the risk that survives the gate.
+**Current (team decision, recorded on 2026-11-24):** students' own AI and TFGPT will coexist. TFGPT is not meant to replace the AI they already use. Untested with a real tool
+
+**Earlier wording, kept as history:** Students will use it instead of their AI of choice. If this is false the tool is pointless: students keep the freedom to work as they please unless IE fully enforces it. IE approval is a gate, but adoption is the risk that survives the gate.
 
 Re-checked on 2026-09-21 after the JTBD and persona work: still the riskiest. Switching is what separates this from the other tools IE has shipped that students never moved to. The evidence so far ties it to Area 2: the one student asked would switch only if the tool keeps her context across sessions, and students worry university tools run outdated models.
 
