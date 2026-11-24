@@ -29,7 +29,8 @@ Two team members checked their own TFG proposals two ways, judged by their own a
 | Second checker | kristgiuff05, accepted on 2026-11-23. Repeats the matching blind, as set in spikes.md |
 | Threshold | The stand-in misses at most 40% of what advisors flag, pooled over at least 15 advisor points (spikes.md rules), and advisors' corrections after using it are mostly minor |
 | Stop condition | The stand-in misses more than 40% of what advisors flag (falsifier 3): narrow the check, per the table below |
-| By | To set by the owner. The first proposed date, Friday 23 October 2026, passed with no result recorded |
+| First run | The advisor comparison, protocol v2 in spikes.md: one team member's proposal across three rounds of written supervisor comments, accepted on 2026-11-24 before any run |
+| By | Friday 27 November 2026, set by the owner on 2026-11-24. The first proposed date, Friday 23 October 2026, passed with no result recorded |
 
 **2. Test the advisor-facing side, which has not been tested yet**
 
@@ -40,7 +41,7 @@ Two team members checked their own TFG proposals two ways, judged by their own a
 | Owner | adriFCM, named on 2026-11-23 |
 | Threshold | Proposed: at least 2 of 3 advisors say they would use it |
 | Stop condition | Proposed: no advisor would use it, or they object to students' work being visible to them |
-| By | To set by the owner |
+| By | Friday 27 November 2026, set by Angelotxx271 on 2026-11-24 for all of the team's next tests |
 
 **Still open:** the head-to-head against a student who pastes everything into a general AI (ERRC.md falsifier 4). In the field comparison the usual route had only part of the documents and no instructions, so falsifier 4 is untested; the protocol for it is in spikes.md
 
