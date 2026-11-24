@@ -72,11 +72,13 @@ Two team members, their own TFG proposals, over a two-week stretch before 2026-1
 | | Team member 1 (Data) | Team member 2 (Computer Science) |
 |---|---|---|
 | How the proposal was checked | TFGPT stand-in: a Claude project with all the programme documents and context, and instructions never to write sentences, only to give guidance and flag what might be wrong. All the text came from the student | The usual route: a plain Claude chat with no instructions, and only the documents she could find |
-| Advisor's corrections on the submitted proposal | 4, all minor: two punctuation fixes, one word choice, and one passage to simplify because it was too technical | 9, mostly major: the methodology, the research question and similar |
+| Advisor's corrections on the submitted proposal | 17 written comments over three rounds of drafts, then approved: 9 on draft 1, including one methodology point and the reference format; 5, all minor, on draft 2 (punctuation, one word, long sentences, layout); 3 on draft 3. Which drafts were checked with the stand-in before sending was not recorded | 9, mostly major: the methodology, the research question and similar |
 | Her original proposal run through the stand-in afterwards | | The stand-in flagged all 9 of the advisor's points |
-| Her advisor on the version revised with the stand-in | | Only small fixes, like team member 1's |
+| Her advisor on the version revised with the stand-in | | Only small fixes |
 
-**What it shows:** with the programme documents and fixed instructions preloaded, the stand-in caught every major point one advisor raised, and work checked with it came back from two advisors with only minor corrections. For ERRC.md falsifier 3, the stand-in missed 0 of 9 advisor points on one proposal
+**What it shows:** with the programme documents and fixed instructions preloaded, the stand-in caught every major point one advisor raised, and team member 2's version revised with it came back with only small fixes. For ERRC.md falsifier 3, the stand-in missed 0 of 9 advisor points on one proposal
+
+**Correction (2026-11-24):** this section first said team member 1's advisor made 4 corrections, all minor. The shared draft holds 17 written comments over three rounds, which the team member confirmed are the full set, so the claim that work checked with the stand-in came back from both advisors with only minor corrections is withdrawn. Protocol v2 below scores the stand-in against all three rounds
 
 **What it does not show:**
 - Two students, two programmes, two advisors and two topics: part of the difference can come from the person or the topic, not the tool
@@ -151,4 +153,4 @@ Owner Angelotxx271; scorer and second checker as in decision-record.md. Results 
 - Spike A: "It asks only whether plain ChatGPT, given the same instructions and guidelines, gives the same flags for the same effort. It is a feasibility check on our own work, not proof that students want TFGPT"
 - After one run: "Protocol and rules committed on [date]; one run done to test the procedure; results due 23 October; each outcome maps to continue, narrow, pivot or stop". One run is never shown as a pass or a stop
 - Spike C: "Findable by a student in [n] programmes; whether IE commits is a separate question"
-- Field comparison: "Two of us, two advisors: the stand-in caught all 9 of one advisor's points, and work checked with it came back with only minor corrections. Two people, so it shows the mechanism works, not that students want it"
+- Field comparison: "Two of us, two advisors: the stand-in caught all 9 of one advisor's points. Two people, so it shows the mechanism works, not that students want it" (the line first added that work checked with it came back with only minor corrections, withdrawn on 2026-11-24)

@@ -75,7 +75,7 @@ This remains a hypothesis, not a validated blue ocean or confirmed business mode
 - Late discovery at the meeting is REPORTED second-hand (interview-evidence.md 01)
 
 **Technical spikes (the team's own work, feasibility only)**
-- Field comparison (spikes.md): two team members, two advisors. Work checked with a TFGPT stand-in came back with 4 minor corrections; work checked in a plain Claude chat with part of the documents came back with 9, mostly major, and the stand-in then flagged all 9. n = 2, not blind, not a test of demand
+- Field comparison (spikes.md): two team members, two advisors. Work checked in a plain Claude chat with part of the documents came back with 9 corrections, mostly major, and the stand-in then flagged all 9. The other proposal got 17 written comments over three rounds of drafts; which drafts the stand-in checked was not recorded (corrected on 2026-11-24 from "4 minor corrections"). n = 2, not blind, not a test of demand
 
 **Based on Persona, team or AI inference**
 - The value-curve scores the moves start from (for example programme-guideline knowledge at 1 for the student's own AI), the new tenth factor and TFGPT's target line were proposed by AI; the student accepted them on 2026-10-12. They are judgements, not measurements

@@ -14,7 +14,7 @@
 
 ## Spike already run: field comparison
 
-Two team members checked their own TFG proposals two ways, judged by their own advisors (spikes.md). With the TFGPT stand-in (all programme documents and fixed instructions preloaded, guidance and flags only, no sentences written) the advisor made 4 minor corrections. With a plain Claude chat and only some of the documents, the advisor made 9, mostly major (methodology, research question). The stand-in then flagged all 9 of those points, and the version revised with it came back with only small fixes. This confirms CONTINUE as feasibility on the team's own work (n = 2), not as demand
+Two team members checked their own TFG proposals two ways, judged by their own advisors (spikes.md). With a plain Claude chat and only some of the documents, one advisor made 9 corrections, mostly major (methodology, research question). The TFGPT stand-in (all programme documents and fixed instructions preloaded, guidance and flags only, no sentences written) then flagged all 9 of those points, and the version revised with it came back with only small fixes. The other proposal got 17 written comments over three rounds of drafts; which drafts the stand-in checked was not recorded (corrected on 2026-11-24 from "4 minor corrections"; spikes.md). This confirms CONTINUE as feasibility on the team's own work (n = 2), not as demand
 
 ## Next tests (decided by the team on 2026-10-12)
 
@@ -54,7 +54,7 @@ Two team members checked their own TFG proposals two ways, judged by their own a
 | Students find out about drift at the meeting and redo the work | interview-evidence.md 01, one Computer Science graduate about his classmates | REPORTED, second-hand; no count of how often it happens |
 | Students will do the check in a tool like this instead of their own AI | experiment-card.md: 6 of 10 in one 20-minute session, exactly the bar | OBSERVED once; evidence strength MEDIUM |
 | Advisors with many TFGs lack time for each student | interview-evidence.md 05: about 10 TFGs, a few minutes per student, almost two weeks to a first reply (relayed by students); 06 is a contrast case with 2 TFGs | REPORTED, relayed by a team member; no advisor has been asked about TFGPT itself |
-| A preloaded setup catches what advisors flag | spikes.md field comparison: the stand-in flagged all 9 of one advisor's points, and work checked with it came back from two advisors with only minor corrections | OBSERVED by the team on its own work, n = 2; feasibility, not demand |
+| A preloaded setup catches what advisors flag | spikes.md field comparison: the stand-in flagged all 9 of one advisor's points, and that proposal, revised with it, came back with only small fixes. The second advisor's 17 comments are being scored against the stand-in in protocol v2 | OBSERVED by the team on its own work, n = 1 proposal for the catch rate; feasibility, not demand |
 | IE already provides AI to everyone | market-sources.md #1, #3, #181 (ChatGPT licences for all students, faculty and staff) | SUPPORTED; who pays is not stated, and whether IE would fund this tool is untested. The same licences are also the strongest argument against: if ChatGPT gives the same flags for the same effort, IE has no reason to fund a second tool (falsifier 4) |
 
 The yes holds only if IE commits to the full maintenance and adoption of the tool (ERRC.md falsifier 2) and the next test shows the same flags for less effort (falsifier 4). Nobody at IE has been asked yet, and money is not estimated (market-research.md section 1)
