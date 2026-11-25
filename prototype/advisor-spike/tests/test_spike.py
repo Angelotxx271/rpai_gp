@@ -588,8 +588,15 @@ def test_read_sheet_leaves_out_lists_not_marked_done_and_non_numbers(tmp_path):
     f.write_text("key,L01,L02\nK01,no,F1\nK02,-,\ndone,x,\n", encoding="utf-8")
     got, warnings = spike.read_sheet(f)
     assert got == {"L01": set()}  # L02 isn't marked done, so it is unscored, not zero catches
-    assert any("L02: not marked done" in w for w in warnings)
-    assert any("'no' has no flag number" in w for w in warnings)
+    assert warnings == ["sheet-v1.csv L02: not marked done, left out"]  # "no" and "-" are plain no-matches
+
+
+def test_read_sheet_takes_x_or_a_location_as_a_match(tmp_path):
+    f = tmp_path / "sheet-v1.csv"
+    f.write_text("key,L01,L02,L03\nK01,x,T1 3,maybe\nK02,Sí,0,\nK03,,T2 1 T2 4,\ndone,x,x,x\n", encoding="utf-8")
+    got, warnings = spike.read_sheet(f)
+    assert got == {"L01": {"K01", "K02"}, "L02": {"K01", "K03"}, "L03": set()}
+    assert warnings == ["sheet-v1.csv L03 K01: 'maybe' isn't a location or x, read as no match"]
 
 
 def test_decision_rules_follow_protocol_v2(ws):

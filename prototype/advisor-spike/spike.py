@@ -1135,9 +1135,11 @@ def cmd_sheets(args) -> None:
         pts = [k for k in key if st in k["present"]]
         md = [f"# Scoring sheet, version {st.upper()}", "",
               "Match each key point to the flags in each list. Same passage and same problem; when in doubt, no match.",
-              "Write the flag numbers in the CSV next to this file (several in one cell: separate them with spaces).",
-              "Leave a cell empty when nothing matches. When a list is fully scored, put an x in its 'done' row:",
-              "lists not marked done are left out. Do not open map.json.", "", "## Key points", ""]
+              "In the CSV next to this file, under the list's column, write where the review raises the point",
+              "(for example T1 3 for turn 1, point 3; several places separated by spaces), or just x.",
+              "Leave the cell empty when nothing matches. When a list is fully scored, put an x in its 'done' row:",
+              "lists not marked done are left out. Guide: prototype/advisor-spike/SCORING.md in the repo.",
+              "Never paste this sheet into an AI tool, and do not open map.json.", "", "## Key points", ""]
         md += [f"- **{k['id']}** ({k['tag']}): {k['passage']} — {k['point']}" for k in pts]
         grid = ["key," + ",".join(f"L{i + 1:02d}" for i in range(len(recs)))]
         grid += [k["id"] + "," * len(recs) for k in pts] + [DONE_ROW + "," * len(recs)]
@@ -1160,13 +1162,16 @@ def cmd_sheets(args) -> None:
 
 
 DONE_ROW = "done"  # the scorer marks this row under each list once it is fully scored
+MATCH_MARKS = {"x", "y", "yes", "si", "sí", "✓", "✔"}  # a match, when the scorer doesn't say where
+NO_MATCH_MARKS = {"0", "n", "no", "-", "–", "—"}  # an explicit "no match"; an empty cell means the same
 
 
 def read_sheet(path: pathlib.Path) -> tuple[dict[str, set[str]], list[str]]:
-    """A filled CSV: rows are key points, columns are lists; a flag number in a cell (3, F3, "F1 F4") means
-    matched. Only lists marked in the last row ("done") count as scored, so a list nobody scored never reads as
-    zero catches. Reads commas or semicolons (Excel in a Spanish locale saves with ';'), UTF-8 or Windows-1252.
-    Returns the scored lists and the warnings."""
+    """A filled CSV: rows are key points, columns are lists. A match is a cell saying where the review raises the
+    point (a number such as 3 or "T2 4") or just x. Empty, 0, no or - means no match; anything else is a warning
+    and reads as no match. Only lists marked in the last row ("done") count as scored, so a list nobody scored
+    never reads as zero catches. Reads commas or semicolons (Excel in a Spanish locale saves with ';'), UTF-8 or
+    Windows-1252. Returns the scored lists and the warnings."""
     raw = path.read_bytes()
     try:
         text = raw.decode("utf-8-sig")
@@ -1187,10 +1192,13 @@ def read_sheet(path: pathlib.Path) -> tuple[dict[str, set[str]], list[str]]:
         got[col] = set()
         for r in body:
             cell = r[i].strip() if i < len(r) else ""
-            if re.search(r"[1-9]", cell):
+            mark = cell.lower()
+            if not cell or mark in NO_MATCH_MARKS:
+                continue
+            if mark in MATCH_MARKS or re.search(r"[1-9]", cell):
                 got[col].add(r[0].strip())
-            elif cell:
-                warnings.append(f"{path.name} {col} {r[0].strip()}: {cell!r} has no flag number, read as no match")
+            else:
+                warnings.append(f"{path.name} {col} {r[0].strip()}: {cell!r} isn't a location or x, read as no match")
     return got, warnings
 
 

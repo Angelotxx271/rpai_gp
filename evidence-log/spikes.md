@@ -130,8 +130,32 @@ Owner Angelotxx271; scorer and second checker as in decision-record.md. Results 
 
 ### Results, protocol v2
 
+Run on 2026-11-25 on harness commit `8b8c8cf` (`prototype/advisor-spike/`). These are the blind judge's first-pass counts (Claude Sonnet 5.5); the scorer's and second checker's counts are the headline and are still to come. A point counts as caught when at least 2 of 3 repeats catch it. Correct extra and wrong are means per review over rounds 1 to 3; flags on the approved version are a mean per review. Tokens are both turns together. The Mistral API credits ran out during the C2 runs, so 7 runs failed with "API budget exhausted" and are not scored; the cells they leave short are marked and not read by the decision rules. Per-run detail: `prototype/advisor-spike/results/`
+
 | Engine | Route | Caught round 1 / 2 / 3 | Pooled miss rate | Correct extra | Wrong | Flags on approved version | Tokens and cost per run | Label |
 |---|---|---|---|---|---|---|---|---|
+| Claude Opus 5.5 | C0 own AI | 2 / 2 / 1 (of 10 / 5 / 3) | 72% (13 of 18) | 6.4 | 0.6 | 32 | 7k in / 8k out, $0.17 | Judge first pass; human scoring pending |
+| Claude Opus 5.5 | C1 everything pasted | 4 / 0 / 2 (of 10 / 5 / 3) | 67% (12 of 18) | 7.1 | 1.3 | 30 | 43k in / 21k out, $0.47 | Judge first pass; human scoring pending |
+| Claude Opus 5.5 | C2 stand-in | 3 / 2 / 2 (of 10 / 5 / 3) | 61% (11 of 18) | 8.6 | 1.1 | 29 | 103k in / 21k out, $0.54 | Judge first pass; human scoring pending |
+| Claude Sonnet 5.5 | C0 own AI | 3 / 2 / 3 (of 10 / 5 / 3) | 56% (10 of 18) | 6.4 | 0.7 | 36 | 7k in / 9k out, $0.10 | Judge first pass; human scoring pending |
+| Claude Sonnet 5.5 | C1 everything pasted | 3 / 1 / 1 (of 10 / 5 / 3) | 72% (13 of 18) | 6.4 | 0.9 | 24 | 42k in / 28k out, $0.30 | Judge first pass; human scoring pending |
+| Claude Sonnet 5.5 | C2 stand-in | 3 / 0 / 1 (of 10 / 5 / 3) | 78% (14 of 18) | 7.4 | 0.6 | 24 | 102k in / 34k out, $0.39 | Judge first pass; human scoring pending |
+| GLM 5.3 | C0 own AI | 3 / 0 / 1 (of 10 / 5 / 3) | 78% (14 of 18) | 4.2 | 1.3 | 35 | 5k in / 24k out, not yet priced | Judge first pass; human scoring pending |
+| GLM 5.3 | C1 everything pasted | 2 / 1 / 0 (of 10 / 5 / 3) | 83% (15 of 18) | 4.6 | 1.1 | 16 | 28k in / 70k out, not yet priced | Judge first pass; human scoring pending |
+| GLM 5.3 | C2 stand-in | 4 / 2 / 0 (of 10 / 5 / 3) | 67% (12 of 18) | 4.3 | 0.4 | – (1 of 3 repeats) | 66k in / 73k out, not yet priced | Judge first pass; approved version short: credits ran out |
+| Mistral Large 4 | C0 own AI | 4 / 1 / 1 (of 10 / 5 / 3) | 67% (12 of 18) | 1.8 | 3.9 | 25 | 5k in / 15k out, not yet priced | Judge first pass; human scoring pending |
+| Mistral Large 4 | C1 everything pasted | 1 / 0 / 0 (of 10 / 5 / 3) | 94% (17 of 18) | 4.4 | 3.6 | 19 | 28k in / 29k out, not yet priced | Judge first pass; human scoring pending |
+| Mistral Large 4 | C2 stand-in | 1 / 0 / – (of 10 / 5 / –) | 93% (14 of 15, rounds 1 and 2) | 4.2 | 2.5 | – (0 of 3 repeats) | 65k in / 31k out, not yet priced | Judge first pass; round 3 and approved version short: credits ran out |
+| Qwen 3.6 35B-A3B (local) | C0 own AI | 0 / 0 / 1 (of 10 / 5 / 3) | 94% (17 of 18) | 0.4 | 6.1 | 18 | 5k in / 7k out, $0 (local), 1.6 min | Judge first pass; human scoring pending |
+| Qwen 3.6 35B-A3B (local) | C1 everything pasted | 1 / 0 / 0 (of 10 / 5 / 3) | 94% (17 of 18) | 2.9 | 3.7 | 14 | 28k in / 13k out, $0 (local), 3.1 min | Judge first pass; human scoring pending |
+| Qwen 3.6 35B-A3B (local) | C2 stand-in | 1 / 1 / 0 (of 10 / 5 / 3) | 89% (16 of 18) | 2.3 | 3.3 | 11 | 68k in / 13k out, $0 (local), 3.5 min | Judge first pass; human scoring pending |
+
+**Reading, provisional (judge first pass only; it changes no decision until the people's counts are in):**
+- **Falsifier 3:** the stand-in (C2) on Claude Opus 5.5 missed 11 of the 18 points (61%), above the 40% line. If the people's counts agree, falsifier 3 holds and the check is narrowed (decision-record.md)
+- **Falsifier 4, flags half:** Claude Opus 5.5 with everything pasted (C1) and Claude Sonnet 5.5 used as usual (C0) gave the same flags as the stand-in in 2 of 3 rounds, so for those two routes the flags half holds and falsifier 4 would turn on effort alone. Opus used as usual (C0) and Sonnet with everything pasted (C1) matched in 1 round, and the GLM and Mistral routes in none
+- Every route also raised correct problems the supervisor didn't comment on (1.8 to 8.6 per review), and flagged the approved version 16 to 36 times per review
+- **Local engine:** Qwen 3.6 35B-A3B on one RTX 5070 (12 GB) caught 1 or 2 of the 18 points on every route (89 to 94% missed) and made the most wrong flags (3.3 to 6.1 per review). At about 1.6 to 3.5 minutes a run it costs nothing per call (1.7 hours for all 36), but on this proposal it is not a candidate engine for the check
+- Claude cost $23.80 for 72 runs; judging all 173 scored runs cost $13.13; GLM and Mistral costs come from the Mistral console
 
 ## Results
 
