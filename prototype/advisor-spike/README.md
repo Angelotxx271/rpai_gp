@@ -34,7 +34,7 @@ $py = "private\advisor-spike\.venv\Scripts\python.exe"
 & $py -I prototype\advisor-spike\spike.py report --engine api             # results/results-public.md and runs-public.csv
 ```
 
-`run` stops before sending anything if a committed hash differs or the harness has uncommitted changes. It skips finished runs, so an interrupted run resumes where it stopped. After all engines: `sheets` for the two scorers, `agree` on their filled sheets, then `report --source human` if the judge and the people differ on more than 1 point in 5.
+`run` stops before sending anything if a committed hash differs or the harness has uncommitted changes. It skips finished runs, so an interrupted run resumes where it stopped, and reruns runs that failed (for example when an API's credits ran out). After all engines: `sheets` writes the blind sheets for the two scorers (how they score: [SCORING.md](SCORING.md)), `agree` reads their filled sheets back, then `report --source human` if the judge and the people differ on more than 1 point in 5.
 
 ## Safeguards
 
@@ -51,6 +51,7 @@ $py = "private\advisor-spike\.venv\Scripts\python.exe"
 | `spike.py` | The harness; `--help` lists every command |
 | `engines.json` | Engines, groups, settings and prices ($ per million tokens; null = not yet known) |
 | `protocol-v2-amendment-1.md` | The engines, their settings and how the decision rules are read, accepted before run 1 |
+| `SCORING.md` | How the scorer and the second checker fill in the blind sheets |
 | `tests/test_spike.py` | Offline tests with fake providers and a synthetic answer key |
 | `results/` | Public counts: `results-public.md` and `runs-public.csv` (tokens, seconds, cost and counts per run) |
 | `requirements.txt` | Pinned Python packages |
