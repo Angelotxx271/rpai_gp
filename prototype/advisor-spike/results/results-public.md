@@ -1,6 +1,6 @@
 # Advisor spike results (public: counts only)
 
-Matches from: judge judge-sonnet, a first pass: the human scores are the headline. Generated 2026-11-25T09:38. Engines: glm, mistral, opus, sonnet. Harness commit: 8b8c8cfbbf75. A point counts as caught in a cell when a majority of repeats caught it. Failed runs not scored: 7. Notes on runs left out: 0.
+Matches from: judge judge-sonnet, a first pass: the human scores are the headline. Generated 2026-11-25T09:49. Engines: glm, mistral, opus, qwen-local, sonnet. Harness commit: 8b8c8cfbbf75. A point counts as caught in a cell when a majority of repeats caught it. Failed runs not scored: 7. Notes on runs left out: 0.
 
 | Engine | Cond | Version | Repeats | Caught / raised (majority) | K per repeat | G caught | Early (mean) | Carry (mean) | Flags (mean) | Correct extra | Wrong | Taste | Tokens in/out (mean) | s (mean) | $ (mean) |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -39,6 +39,18 @@ Matches from: judge judge-sonnet, a first pass: the human scores are the headlin
 | opus | C2 | v2 | 3 | 2 / 5 | 3, 2, 1 | 0 / 0 | 2.0 | 0.0 | 29.0 | 9.3 | 0.3 | 15.3 | 103254 / 22279 | 194 | 0.561 |
 | opus | C2 | v3 | 3 | 2 / 3 | 1, 2, 3 | 0 / 0 | 0.0 | 0.0 | 26.7 | 9.3 | 1.7 | 13.3 | 103044 / 19037 | 170 | 0.496 |
 | opus | C2 | final | 3 | 0 / 0 | 0, 0, 0 | 0 / 0 | 0.0 | 0.3 | 29.3 | 14.0 | 0.0 | 15.0 | 103036 / 22828 | 199 | 0.572 |
+| qwen-local | C0 | v1 | 3 | 0 / 10 | 0, 0, 3 | 0 / 4 | 0.3 | 0.0 | 21.7 | 0.3 | 6.0 | 14.0 | 4607 / 6466 | 98 | 0.000 |
+| qwen-local | C0 | v2 | 3 | 0 / 5 | 0, 0, 0 | 0 / 0 | 0.7 | 0.0 | 22.3 | 1.0 | 6.0 | 14.7 | 5707 / 6814 | 102 | 0.000 |
+| qwen-local | C0 | v3 | 3 | 1 / 3 | 1, 1, 1 | 0 / 0 | 0.0 | 0.0 | 19.7 | 0.0 | 6.3 | 12.3 | 5371 / 6118 | 92 | 0.000 |
+| qwen-local | C0 | final | 3 | 0 / 0 | 0, 0, 0 | 0 / 0 | 0.0 | 0.7 | 18.3 | 0.3 | 6.3 | 11.0 | 5494 / 6783 | 103 | 0.000 |
+| qwen-local | C1 | v1 | 3 | 1 / 10 | 1, 1, 1 | 1 / 4 | 0.0 | 0.0 | 9.7 | 1.7 | 4.0 | 3.0 | 27381 / 14608 | 205 | 0.000 |
+| qwen-local | C1 | v2 | 3 | 0 / 5 | 0, 1, 0 | 0 / 0 | 0.3 | 0.0 | 10.7 | 1.7 | 4.0 | 4.3 | 28520 / 12759 | 179 | 0.000 |
+| qwen-local | C1 | v3 | 3 | 0 / 3 | 0, 0, 0 | 0 / 0 | 0.0 | 0.0 | 12.3 | 5.3 | 3.0 | 4.0 | 28537 / 11539 | 167 | 0.000 |
+| qwen-local | C1 | final | 3 | 0 / 0 | 0, 0, 0 | 0 / 0 | 0.0 | 0.0 | 14.3 | 6.0 | 3.0 | 5.3 | 28640 / 12777 | 200 | 0.000 |
+| qwen-local | C2 | v1 | 3 | 1 / 10 | 1, 1, 1 | 1 / 4 | 0.0 | 0.0 | 8.0 | 1.3 | 3.3 | 2.3 | 66707 / 12341 | 212 | 0.000 |
+| qwen-local | C2 | v2 | 3 | 1 / 5 | 1, 2, 1 | 0 / 0 | 0.7 | 0.3 | 12.7 | 2.3 | 3.3 | 4.7 | 68199 / 13650 | 212 | 0.000 |
+| qwen-local | C2 | v3 | 3 | 0 / 3 | 0, 0, 0 | 0 / 0 | 0.0 | 0.0 | 10.0 | 3.3 | 3.3 | 3.3 | 68096 / 11893 | 202 | 0.000 |
+| qwen-local | C2 | final | 3 | 0 / 0 | 0, 0, 0 | 0 / 0 | 0.0 | 0.0 | 11.0 | 2.7 | 5.0 | 3.3 | 67922 / 13110 | 210 | 0.000 |
 | sonnet | C0 | v1 | 3 | 3 / 10 | 3, 3, 3 | 2 / 4 | 2.7 | 0.0 | 39.0 | 6.0 | 0.3 | 25.7 | 6029 / 8196 | 69 | 0.091 |
 | sonnet | C0 | v2 | 3 | 2 / 5 | 2, 2, 2 | 0 / 0 | 2.0 | 0.0 | 40.0 | 5.7 | 0.7 | 29.0 | 7525 / 9460 | 76 | 0.103 |
 | sonnet | C0 | v3 | 3 | 3 / 3 | 3, 2, 3 | 0 / 0 | 0.0 | 0.0 | 35.0 | 7.7 | 1.0 | 23.7 | 7516 / 9405 | 76 | 0.103 |
@@ -67,6 +79,9 @@ Complete cells only (3 scored repeats); a row with fewer than three rounds shows
 | opus | C0 | 5 / 18 | 13 | 72% | 2 / 4 |
 | opus | C1 | 6 / 18 | 12 | 67% | 3 / 4 |
 | opus | C2 | 7 / 18 | 11 | 61% | 2 / 4 |
+| qwen-local | C0 | 1 / 18 | 17 | 94% | 0 / 4 |
+| qwen-local | C1 | 1 / 18 | 17 | 94% | 1 / 4 |
+| qwen-local | C2 | 2 / 18 | 16 | 89% | 1 / 4 |
 | sonnet | C0 | 8 / 18 | 10 | 56% | 2 / 4 |
 | sonnet | C1 | 5 / 18 | 13 | 72% | 2 / 4 |
 | sonnet | C2 | 4 / 18 | 14 | 78% | 2 / 4 |
@@ -87,7 +102,9 @@ Cells not read yet, scored repeats in brackets: glm/C2/final (1), mistral/C2/v3 
 | mistral | C1 | 5.33/3.00 vs 10.00/1.33 differs | 3.67/3.67 vs 11.33/0.33 differs (noisy) | 5.33/4.00 vs 11.33/1.67 differs (noisy) | 0 of 3 | does not hold |
 | opus | C0 | 10.00/0.00 vs 10.00/1.33 same | 8.33/1.33 vs 11.33/0.33 differs (noisy) | 6.00/0.33 vs 11.33/1.67 differs (noisy) | 1 of 3 | does not hold |
 | opus | C1 | 9.67/1.67 vs 10.00/1.33 same | 5.33/1.33 vs 11.33/0.33 differs (noisy) | 12.33/1.00 vs 11.33/1.67 same (noisy) | 2 of 3 | holds |
+| qwen-local | C0 | 0.33/6.00 vs 10.00/1.33 differs (noisy) | 1.00/6.00 vs 11.33/0.33 differs (noisy) | 1.00/6.33 vs 11.33/1.67 differs (noisy) | 0 of 3 | does not hold |
+| qwen-local | C1 | 2.67/4.00 vs 10.00/1.33 differs | 1.67/4.00 vs 11.33/0.33 differs (noisy) | 5.33/3.00 vs 11.33/1.67 differs (noisy) | 0 of 3 | does not hold |
 | sonnet | C0 | 9.00/0.33 vs 10.00/1.33 same | 7.67/0.67 vs 11.33/0.33 differs (noisy) | 10.67/1.00 vs 11.33/1.67 same (noisy) | 2 of 3 | holds |
 | sonnet | C1 | 8.00/1.33 vs 10.00/1.33 differs | 7.00/0.67 vs 11.33/0.33 differs (noisy) | 9.33/0.67 vs 11.33/1.67 same (noisy) | 1 of 3 | does not hold |
 
-Per-run tokens, time, cost and counts: runs-public.csv (137 runs, 7 failed and not saved). The proposal text, the answer key and the reviews stay private.
+Per-run tokens, time, cost and counts: runs-public.csv (173 runs, 7 failed and not saved). The proposal text, the answer key and the reviews stay private.
