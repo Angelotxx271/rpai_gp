@@ -1,0 +1,4 @@
+-r ../shared/requirements.txt
+python-multipart==0.0.34  # file uploads
+python-docx==1.2.0  # text out of .docx uploads
+pymupdf==2.1  # text out of .pdf uploads

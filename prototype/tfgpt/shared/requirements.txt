@@ -1,0 +1,8 @@
+# Shared by every service: web framework, database, migrations, HTTP between services
+fastapi==0.165.0
+uvicorn[standard]==0.54.0
+SQLAlchemy==2.1.9
+alembic==1.20.1
+psycopg[binary]==3.3.9
+pydantic==2.14.4
+httpx==0.28.1

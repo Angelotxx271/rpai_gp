@@ -1,0 +1,2 @@
+-r ../shared/requirements.txt
+anthropic==2.14.0  # the Claude adapter, as in the spike harness
