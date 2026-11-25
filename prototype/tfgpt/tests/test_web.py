@@ -54,3 +54,15 @@ def test_the_engine_list_shows_model_and_vendor(stack):
     assert names["fake-a"]["label"] == "Fake A" and names["fake-a"]["vendor"] == "Test Vendor 1"
     assert stack.post("/api/engine", json={"name": "fake-a"}).json() == {"chosen": "fake-a"}
     assert stack.web.get("/api/engines").json()["chosen"] == "fake-a"
+
+
+def test_the_pack_loader_is_hidden_without_the_admin_token(stack, monkeypatch):
+    files = {"file": ("pack.md", "# Rules" + chr(10) + "A rule that is long enough to count as a document. " * 5)}
+    assert stack.post("/api/admin/pack", files=files).status_code == 404  # no ADMIN_TOKEN set: no loader at all
+    monkeypatch.setenv("ADMIN_TOKEN", "a-long-admin-token-for-tests")
+    wrong = stack.web.post("/api/admin/pack", files=files, headers={"X-TFGPT": "1", "X-Admin-Token": "wrong"})
+    assert wrong.status_code == 404
+    r = stack.web.post("/api/admin/pack", files=files,
+                       headers={"X-TFGPT": "1", "X-Admin-Token": "a-long-admin-token-for-tests", "X-Pack-Title": "Test"})
+    assert r.status_code == 200 and r.json()["sections"] == 1
+    assert stack.advisor.get("/healthz").json()["pack"] == r.json()["sha12"]

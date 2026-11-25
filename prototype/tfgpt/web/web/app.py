@@ -1,6 +1,7 @@
 """Web service, the only public one: the chat page, the student's cookie, and the browser API in API.md."""
 import base64
 import hashlib
+import hmac
 import secrets
 import threading
 import time
@@ -333,6 +334,21 @@ def create_app(database: Database | None = None, advisor: httpx.Client | None = 
                 r.close()
 
         return StreamingResponse(gen(), media_type="text/event-stream", headers={"Cache-Control": "no-store"})
+
+    # ------------------------------------------------------------------ loading the programme's documents
+
+    @app.post("/api/admin/pack")
+    async def load_pack(request: Request, file: UploadFile = File(...)):
+        """For the team only: the documents go straight to the database, never into the repository."""
+        expected, given = env("ADMIN_TOKEN"), request.headers.get("x-admin-token") or ""
+        if not expected or not hmac.compare_digest(given, expected):
+            raise ApiError(404, "not_found", "Not found.")
+        data = await file.read(2_000_001)
+        if len(data) > 2_000_000:
+            raise ApiError(413, "too_long", "Pack over 2 MB.")
+        title = request.headers.get("x-pack-title") or (file.filename or "pack")
+        return advisor_call("POST", "/internal/packs", json={"title": title, "markdown": data.decode("utf-8")},
+                            timeout=120)
 
     app.mount("/", StaticFiles(directory=STATIC, html=True), name="static")
     return app

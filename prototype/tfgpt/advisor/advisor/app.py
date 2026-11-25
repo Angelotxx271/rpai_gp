@@ -38,6 +38,11 @@ class AskBody(BaseModel):
     engine: str | None = None
 
 
+class PackBody(BaseModel):
+    title: str = Field(min_length=3, max_length=200)
+    markdown: str = Field(min_length=100, max_length=2_000_000)
+
+
 class Owner(BaseModel):
     student_ref: str
 
@@ -74,6 +79,12 @@ def create_app(database: Database | None = None, harness: Harness | None = None,
         with database.session() as db:
             p = packs.active(db)
         return {"ok": True, "service": "advisor", "version": version(), "pack": p.sha12 if p else None}
+
+    @app.post("/internal/packs", dependencies=guard)
+    def load_pack(body: PackBody):
+        with database.session() as db:
+            p = packs.load(db, body.markdown, body.title)
+            return {"id": p.id, "sha12": p.sha12, "sections": p.sections}
 
     @app.get("/internal/threads/{student_ref}", dependencies=guard)
     def thread(student_ref: str):
