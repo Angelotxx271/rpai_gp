@@ -1,0 +1,18 @@
+{
+  "providers": {
+    "fake1": {"kind": "fake"},
+    "fake2": {"kind": "fake"}
+  },
+  "engines": {
+    "fake-a": {"provider": "fake1", "model": "fake-model-a", "label": "Fake A", "vendor": "Test Vendor 1",
+               "offered": true, "enabled": true, "price": {"input": 1.0, "output": 2.0}, "fallback": ["fake-b"]},
+    "fake-b": {"provider": "fake2", "model": "fake-model-b", "label": "Fake B", "vendor": "Test Vendor 2",
+               "offered": true, "enabled": true, "price": {"input": 1.0, "output": 2.0}, "fallback": []},
+    "fake-off": {"provider": "fake2", "model": "fake-model-off", "label": "Fake Off", "vendor": "Test Vendor 2",
+                 "offered": true, "enabled": false, "note": "Credits exhausted", "fallback": []},
+    "fake-keyed": {"provider": "fake2", "model": "fake-model-keyed", "label": "Fake Keyed", "vendor": "Test Vendor 2",
+                   "offered": true, "enabled": true, "key_env": "TFGPT_TEST_MISSING_KEY", "fallback": []},
+    "fake-compact": {"provider": "fake1", "model": "fake-model-c", "label": "Fake Compact", "vendor": "Test Vendor 1",
+                     "offered": false, "enabled": true, "price": {"input": 0.1, "output": 0.5}, "fallback": []}
+  }
+}

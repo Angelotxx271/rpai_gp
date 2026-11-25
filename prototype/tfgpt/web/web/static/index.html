@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>TFGPT</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="bar">
+      <div class="brand">
+        <span class="brand-name">TFGPT</span>
+        <span class="badge">Data and Business Analytics · Full Proposal</span>
+      </div>
+      <div class="bar-tools" id="barTools" hidden>
+        <div class="picker">
+          <label for="engine" class="sr-only">Model</label>
+          <select id="engine"></select>
+          <span class="assigned" id="assigned" hidden></span>
+        </div>
+        <details class="menu" id="menu">
+          <summary>Menu</summary>
+          <div class="menu-panel">
+            <p class="menu-label" id="codeLabel">Your resume code</p>
+            <div class="code-row">
+              <code id="code" aria-labelledby="codeLabel"></code>
+              <button type="button" class="btn" id="copyCode">Copy</button>
+            </div>
+            <p class="menu-note" id="copyNote" role="status"></p>
+            <hr>
+            <form id="topicForm" class="stack">
+              <label for="topicEdit">Your topic</label>
+              <textarea id="topicEdit" rows="3" maxlength="600" required></textarea>
+              <div class="row-end">
+                <button type="submit" class="btn primary">Change topic</button>
+              </div>
+              <p class="menu-note" id="topicNote" role="status"></p>
+            </form>
+          </div>
+        </details>
+      </div>
+    </header>
+
+    <p class="topic-line" id="topicLine" hidden></p>
+
+    <main class="stage">
+      <section id="onboard" class="card onboard" hidden aria-labelledby="onTitle">
+        <h1 id="onTitle">Welcome to TFGPT</h1>
+        <p class="lede">Paste your thesis proposal and get a list of possible issues, each tied to the guideline behind it. You can also ask questions about the guidelines.</p>
+        <form id="startForm" class="stack">
+          <label for="alias">First name or alias <span class="opt">(optional)</span></label>
+          <input id="alias" type="text" maxlength="40" autocomplete="off">
+          <label for="topic">What is your TFG about?</label>
+          <textarea id="topic" rows="3" maxlength="600" required placeholder="One or two sentences"></textarea>
+          <p class="fixed">Programme: Data and Business Analytics · Full Proposal</p>
+          <button type="submit" class="btn primary big">Start</button>
+        </form>
+        <p class="err" id="startErr" role="alert" hidden></p>
+        <p class="resume-link"><button type="button" class="linkbtn" id="resumeToggle" aria-expanded="false" aria-controls="resumeForm">Have a resume code?</button></p>
+        <form id="resumeForm" class="stack" hidden>
+          <label for="resumeCode">Resume code</label>
+          <input id="resumeCode" type="text" maxlength="14" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX">
+          <button type="submit" class="btn">Resume</button>
+          <p class="err" id="resumeErr" role="alert" hidden></p>
+        </form>
+      </section>
+
+      <section id="chatView" class="chat" hidden>
+        <p class="summary-note" id="summaryNote" hidden></p>
+        <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
+      </section>
+    </main>
+
+    <section class="dock" id="dock" hidden aria-label="Message composer">
+      <p class="err" id="err" role="alert" hidden>
+        <span id="errText"></span>
+        <button type="button" class="btn small" id="errRetry" hidden>Retry</button>
+      </p>
+      <div class="modes" role="tablist" aria-label="Composer mode">
+        <button type="button" role="tab" id="tabAsk" aria-selected="true" aria-controls="askPanel">Ask</button>
+        <button type="button" role="tab" id="tabCheck" aria-selected="false" aria-controls="checkPanel" tabindex="-1">Check my proposal</button>
+      </div>
+
+      <form id="askPanel" class="panel ask" role="tabpanel" aria-labelledby="tabAsk">
+        <label for="question" class="sr-only">Your question</label>
+        <textarea id="question" rows="1" maxlength="2000" placeholder="Ask about the TFG guidelines…"></textarea>
+        <button type="submit" class="btn primary send" id="send">Send</button>
+      </form>
+
+      <form id="checkPanel" class="panel check" role="tabpanel" aria-labelledby="tabCheck" hidden>
+        <label for="work" class="sr-only">Your proposal text</label>
+        <textarea id="work" rows="8" placeholder="Paste your proposal here, or upload a file."></textarea>
+        <div class="check-row">
+          <input type="file" id="file" class="sr-only" tabindex="-1" aria-label="Upload a proposal file" accept=".docx,.pdf,.md,.txt">
+          <button type="button" class="btn" id="upload">Upload .docx, .pdf, .md or .txt</button>
+          <span class="words" id="words" aria-live="polite">0 words</span>
+          <button type="submit" class="btn primary" id="checkBtn">Check</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="foot">
+      <p>TFGPT flags possible issues and cites the guideline behind each one. It gives no grade: your supervisor decides. Your uploaded work is deleted when you leave; flags keep short quotes. <span id="version"></span></p>
+    </footer>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

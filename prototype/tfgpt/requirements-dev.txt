@@ -1,0 +1,6 @@
+# Everything, for running the tests and the eval CLI locally
+-r web/requirements.txt
+-r advisor/requirements.txt
+-r harness/requirements.txt
+pytest==9.2.0
+-e shared
