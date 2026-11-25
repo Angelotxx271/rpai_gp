@@ -94,7 +94,7 @@ The programme's documents are loaded from your own machine, from the git-exclude
 
 ```powershell
 $env:ADMIN_TOKEN = (railway variables --service web --json | ConvertFrom-Json).ADMIN_TOKEN
-cd advisor; ..\.venv\Scripts\python -m advisor.loadpack ..\..\..\privatedvisor-spike\context\standin.md --title "BDBA TFG Full Proposal documents 2026-27" --until "# The student's kept context" --url https://web-production-6bb30ece.up.railway.app
+cd advisor; ..\.venv\Scripts\python -m advisor.loadpack ..\..\..\private\advisor-spike\context\standin.md --title "BDBA TFG Full Proposal documents 2026-27" --until "# The student's kept context" --url https://web-production-6bb30ece.up.railway.app
 ```
 
 The cut leaves out the stand-in's "student's kept context" (one student's own meeting notes): the product keeps each student's context in their own thread.
