@@ -105,6 +105,8 @@ Owner Angelotxx271; scorer and second checker as in decision-record.md. Results 
 
 **Engines:** Claude Opus 5.5 (Claude Code CLI with no tools, project files or memory), GLM 5.3 and a Mistral model (Mistral's API), and a Qwen model on a team member's own computer. Same prompt text for every engine, default sampling, 3 repeats per cell: 144 runs. Each run records its model ID, prompt hash, tokens, seconds and cost
 
+**Amendment 1 (accepted by Angelotxx271 on 2026-11-25, before any run):** five engines, 180 runs. Claude Opus 5.5 (effort medium) and Claude Sonnet 5.5 through the Anthropic API instead of the CLI; GLM 5.3 (`zai-glm-5-3`) and Mistral Large 4 (`mistral-large-4`) on Mistral's API; Qwen 3.6 35B-A3B through Ollama on the team member's RTX 5070. A truncated, refused or empty answer is a failed run, rerun and never scored. It also writes down how the harness reads the decision rules where this protocol leaves them open, for example that falsifier 4's stand-in is C2 on Claude Opus 5.5 for every route. The harness, its tests and the amendment are public in `prototype/advisor-spike/`; the material stays private
+
 **Scoring:** a blind first-pass judge (Claude Sonnet 5.5, one call per review, no engine or route label) matches each review's flags to the key points whose passage is in that version: same passage and same problem; when in doubt, no match. Every other flag is classed correct, wrong or taste. The scorer and second checker then score blind sheets; disagreements count as not matched. The headline counts are theirs. If the judge and the people disagree on more than 1 point in 5, only the runs people scored are reported
 
 **Decision rules:**
@@ -121,6 +123,7 @@ Owner Angelotxx271; scorer and second checker as in decision-record.md. Results 
 |---|---|
 | answer-key.md | `ec2fc84eaf51ef5225187a376b42c94081b06592a0aef081b1e654d565592f6c` |
 | protocol-v2.md | `2681f93c6c16f9e9057c10c1f3e4c9b3b4453d1ba01310d551114286e68e3b99` |
+| protocol-v2-amendment-1.md (public, `prototype/advisor-spike/`) | `f30501b1b0a8ac4830b8df95eabf2c4380b39830d25836865b7d9c593668ead6` |
 | Prompts, first 12 characters | C0: `1f5943b97318` `9cc36aa8441c` `36a59c87574a` `f9d0afe24506` · C1: `53ec74b8aff1` `0ef86fb3019f` `ece414baec1d` `bf1047281bba` · C2: `ce1a68528674` `60671ac4feb3` `e9d4289d472a` `1233ac6c3c58` (rounds 1, 2, 3, approved) |
 
 **What it can't show:** one student, one topic, one supervisor and one proposal, so the 18 points aren't independent. The supervisor's comments are a floor, not every problem in the text. It measures no effort, real use or demand, and says nothing about falsifiers 1 and 2. Claude Code built the key and the pipeline after reading the comments; the student confirmed the key, and the arm prompts come from text written before (instructions v1 above)
