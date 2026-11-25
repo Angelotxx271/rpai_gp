@@ -1,0 +1,2 @@
+# Keep these files byte-identical on every checkout: spikes.md commits the SHA-256 of the amendment
+* text=auto eol=lf

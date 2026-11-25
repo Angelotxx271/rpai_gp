@@ -1,0 +1,4 @@
+# Python 3.12; install into private/advisor-spike/.venv (uv venv, then uv pip install -r this file)
+anthropic==2.14.0
+requests==2.34.2
+pytest==9.2.0
