@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TFGPT · Advisor View Mock-Up (Test 2 Validation)</title>
+  <style>
+    :root {
+      --bg: #0b1020; --surface: #121a30; --card: #ffffff; --plane: #f4f6fb;
+      --ink: #0f172a; --muted: #52607a; --line: #dce2ee;
+      --accent: #2563eb; --accent-soft: #eff6ff;
+      --ok: #15803d; --ok-bg: #ecfdf5; --warn: #b45309; --warn-bg: #fffbeb;
+      --danger: #b91c1c; --danger-bg: #fef2f2;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Instrument Sans", system-ui, -apple-system, sans-serif; background: var(--plane); color: var(--ink); line-height: 1.5; }
+    .banner { background: linear-gradient(135deg, #0b1020 0%, #172554 60%, #1d4ed8 100%); color: #fff; padding: 20px 28px; }
+    .banner-inner { max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.28); }
+    .banner h1 { margin: 6px 0 2px; font-size: 24px; letter-spacing: -0.01em; }
+    .banner p { margin: 0; font-size: 14px; color: #dbeafe; }
+    .notice-bar { background: #fffbeb; border-bottom: 1px solid #fde68a; color: #92400e; padding: 10px 28px; font-size: 13.5px; }
+    .notice-bar > div { max-width: 1080px; margin: 0 auto; }
+    .wrap { max-width: 1080px; margin: 24px auto; padding: 0 20px 48px; display: grid; gap: 20px; }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 2px 10px rgba(15,23,42,0.04); }
+    .kpi span { font-size: 12.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .kpi strong { display: block; margin-top: 6px; font-size: 28px; color: var(--ink); }
+    .grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: start; }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(15,23,42,0.05); }
+    .panel-head { padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #f8fafc; }
+    .panel-head h2 { margin: 0; font-size: 16px; }
+    .privacy-pill { font-size: 12px; font-weight: 600; color: var(--ok); background: var(--ok-bg); padding: 4px 10px; border-radius: 999px; border: 1px solid #bbf7d0; }
+    .list { list-style: none; margin: 0; padding: 0; }
+    .row { width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--line); background: #fff; padding: 14px 18px; cursor: pointer; display: grid; gap: 6px; transition: background 0.15s; font: inherit; }
+    .row:last-child { border-bottom: 0; }
+    .row:hover { background: #f8fafc; }
+    .row[aria-current="true"] { background: var(--accent-soft); box-shadow: inset 4px 0 0 var(--accent); }
+    .row-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .student-name { font-weight: 700; font-size: 15px; }
+    .meta { font-size: 13px; color: var(--muted); }
+    .pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pill { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; }
+    .pill.open { background: var(--danger-bg); color: var(--danger); }
+    .pill.solved { background: var(--ok-bg); color: var(--ok); }
+    .pill.dismissed { background: #f1f5f9; color: var(--muted); }
+    .pill.none { background: var(--warn-bg); color: var(--warn); }
+    .detail { padding: 18px; display: grid; gap: 14px; }
+    .topic-box { padding: 12px 14px; background: #f8fafc; border: 1px solid var(--line); border-radius: 10px; font-size: 13.5px; }
+    .flag-item { padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--danger); border-radius: 10px; background: #fff; }
+    .flag-item.solved { border-left-color: var(--ok); opacity: 0.85; }
+    .flag-item .sec { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: var(--ink); color: #fff; margin-right: 6px; }
+    .flag-item p { margin: 6px 0 0; font-size: 13.5px; color: var(--ink); }
+    .privacy-box { padding: 12px 14px; border-radius: 10px; background: #ecfdf5; border: 1px solid #bbf7d0; font-size: 13px; color: #166534; }
+    .interview { background: var(--card); border: 1px dashed #94a3b8; border-radius: 16px; padding: 18px 20px; }
+    .interview h2 { margin: 0 0 8px; font-size: 16px; }
+    .interview ol { margin: 0; padding-left: 20px; font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
+  </style>
+</head>
+<body>
+  <header class="banner">
+    <div class="banner-inner">
+      <div>
+        <span class="tag">TEST 2 CONCEPT MOCK-UP · NOT BUILT INTO PHASE 1</span>
+        <h1>TFGPT · Supervisor Pre-Meeting Summary</h1>
+        <p>BDBA Full Proposal cohort overview · Designed to test whether supervisors want flag visibility before 15-minute meetings (`ai-persona-04`)</p>
+      </div>
+      <span class="tag">Fictional Demo Data Only</span>
+    </div>
+  </header>
+
+  <div class="notice-bar">
+    <div><strong>Validation Mock-Up (decision-record.md · Test 2, owner adriFCM):</strong> Show this screen to 2–3 TFG advisors. Threshold: at least 2 of 3 say they would use it before supervision meetings. Stop if advisors reject visibility or say it creates policing friction.</div>
+  </div>
+
+  <main class="wrap">
+    <section class="kpis" aria-label="Cohort summary">
+      <div class="kpi"><span>Assigned Supervisees</span><strong>4</strong></div>
+      <div class="kpi"><span>Checked Before Meeting</span><strong>3 / 4</strong></div>
+      <div class="kpi"><span>Flags Resolved by Students</span><strong>7</strong></div>
+      <div class="kpi"><span>Still Open (Needs Discussion)</span><strong>4</strong></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Supervisees · Full Proposal Stage</h2>
+          <span class="privacy-pill">Flags only · No raw drafts shown</span>
+        </div>
+        <div class="list" id="studentList" role="listbox" aria-label="Students"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2 id="detailTitle">Select a student</h2>
+          <span class="meta" id="detailMeta"></span>
+        </div>
+        <div class="detail" id="detailBody"></div>
+      </div>
+    </section>
+
+    <section class="interview" aria-label="Test 2 advisor interview protocol">
+      <h2>Questions to Ask the Advisor (Test 2 Protocol)</h2>
+      <ol>
+        <li><strong>Usefulness:</strong> Before a 15-minute proposal check-in, would seeing these open/solved guideline flags save you time, or would you ignore it and just read the draft?</li>
+        <li><strong>Trust &amp; refusal boundary:</strong> What would make you tell students <em>not</em> to use TFGPT, or refuse to open this dashboard?</li>
+        <li><strong>Concealment trade-off:</strong> Notice raw drafts and private AI chats are hidden here — would you want an opt-in AI disclosure summary, or does any supervisor visibility push students away from using the checker honestly?</li>
+        <li><strong>Decision rule (`decision-record.md`):</strong> Record exact advisor role (no real name) and verdict in <code>evidence-log/interview-evidence.md</code> and <code>evidence-log/decision-record.md</code>.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script>
+    const STUDENTS = [
+      {
+        id: "A", name: "Student A (Fictional)", stage: "Full Proposal · Re-checked 2 days ago",
+        topic: "Forecasting weekly fresh-produce demand for a 9-store regional grocery chain.",
+        open: 1, solved: 2, dismissed: 0, checks: 2,
+        disclosure: "Opted-in check summary shared by student · 0 text generated by TFGPT",
+        flags: [
+          { status: "open", sec: "S07", title: "Preliminary timeline", text: "Mandatory milestones M1–M4 dates still need to be mapped to work packages." },
+          { status: "solved", sec: "S05", title: "Data access & ethics", text: "Signed partner agreement added in v2." },
+          { status: "solved", sec: "S08", title: "References", text: "Expanded from 3 to 6 peer-reviewed forecasting sources in APA format." }
+        ]
+      },
+      {
+        id: "B", name: "Student B (Fictional)", stage: "Full Proposal · Checked 1 day ago",
+        topic: "Reducing warehouse order-picking walking time via discrete-event simulation.",
+        open: 2, solved: 2, dismissed: 1, checks: 2,
+        disclosure: "Opted-in check summary shared by student · 0 text generated by TFGPT",
+        flags: [
+          { status: "open", sec: "S06", title: "Evaluation metric", text: "Evaluation currently states 'judge whether results look sensible' instead of a measurable KPI." },
+          { status: "open", sec: "S08", title: "Source quality", text: "Two references are non-peer-reviewed blog posts; needs academic grounding." },
+          { status: "solved", sec: "S04", title: "Pathway alignment", text: "Explicitly linked to Process & Operations Analytics pathway." }
+        ]
+      },
+      {
+        id: "C", name: "Student C (Fictional)", stage: "Full Proposal · Re-checked today",
+        topic: "Survey-based churn drivers in subscription meal-kit cancellations.",
+        open: 1, solved: 3, dismissed: 0, checks: 3,
+        disclosure: "Opted-in check summary shared by student · 0 text generated by TFGPT",
+        flags: [
+          { status: "open", sec: "S08", title: "Citation style", text: "In-text citations still use numbered brackets [2], [3] instead of APA author-year." },
+          { status: "solved", sec: "S05", title: "Ethics timeline", text: "Ethics submission milestone added before January fieldwork." }
+        ]
+      },
+      {
+        id: "D", name: "Student D (Fictional)", stage: "Full Proposal · No TFGPT check run yet",
+        topic: "Topic registered · Student has not opted in to share a pre-meeting check.",
+        open: 0, solved: 0, dismissed: 0, checks: 0,
+        disclosure: "Not shared (student controls whether to run or share checks).",
+        flags: []
+      }
+    ];
+
+    let activeId = "A";
+    function render() {
+      const list = document.getElementById("studentList");
+      list.textContent = "";
+      STUDENTS.forEach((s) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "row";
+        btn.setAttribute("aria-current", String(s.id === activeId));
+        btn.innerHTML =
+          `<div class="row-top"><span class="student-name">${s.name}</span><span class="meta">${s.checks} check(s)</span></div>` +
+          `<div class="meta">${s.stage}</div>` +
+          `<div class="pills">` +
+            (s.checks === 0
+              ? `<span class="pill none">No check shared yet</span>`
+              : `<span class="pill open">${s.open} open</span><span class="pill solved">${s.solved} solved</span><span class="pill dismissed">${s.dismissed} dismissed</span>`) +
+          `</div>`;
+        btn.addEventListener("click", () => { activeId = s.id; render(); });
+        list.appendChild(btn);
+      });
+
+      const cur = STUDENTS.find((x) => x.id === activeId);
+      document.getElementById("detailTitle").textContent = cur.name;
+      document.getElementById("detailMeta").textContent = cur.stage;
+      const body = document.getElementById("detailBody");
+      body.textContent = "";
+
+      const topic = document.createElement("div");
+      topic.className = "topic-box";
+      topic.innerHTML = `<strong>Topic:</strong> ${cur.topic}<br><span class="meta">${cur.disclosure}</span>`;
+      body.appendChild(topic);
+
+      if (!cur.flags.length) {
+        const empty = document.createElement("p");
+        empty.className = "meta";
+        empty.textContent = "No guideline flags shared yet. Student owns their drafts and chooses whether to share a pre-meeting check summary.";
+        body.appendChild(empty);
+      } else {
+        cur.flags.forEach((f) => {
+          const card = document.createElement("div");
+          card.className = "flag-item" + (f.status === "solved" ? " solved" : "");
+          const badge = f.status === "solved" ? "✓ Solved · " : "Open · ";
+          card.innerHTML = `<div><span class="sec">${f.sec}</span><strong>${badge}${f.title}</strong></div><p>${f.text}</p>`;
+          body.appendChild(card);
+        });
+      }
+
+      const priv = document.createElement("div");
+      priv.className = "privacy-box";
+      priv.textContent = "Privacy boundary: No grade, no overall verdict, and no access to raw proposal drafts or student chat prompts. Only opt-in guideline flag counts are shown.";
+      body.appendChild(priv);
+    }
+    render();
+  </script>
+</body>
+</html>
