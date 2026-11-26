@@ -4,34 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>TFGPT · Pre-Meeting Guideline Checker</title>
+  <title>TFGPT · Thesis Proofing Desk</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/app.css">
 </head>
 <body>
-  <div class="ambient" aria-hidden="true"></div>
   <div class="shell">
     <header class="bar">
       <div class="brand">
-        <span class="brand-mark" aria-hidden="true">T</span>
+        <img src="/logo.png" class="brand-logo" width="40" height="40" alt="TFGPT emblem">
         <div class="brand-copy">
           <div class="brand-row">
             <span class="brand-name">TFGPT</span>
-            <span class="live-pill"><span class="live-dot" aria-hidden="true"></span>Source-verified</span>
+            <span class="edition">FOLIO // BDBA FULL PROPOSAL · 2026&ndash;27</span>
           </div>
-          <span class="badge">Data and Business Analytics · Full Proposal</span>
+          <span class="badge">Pre-meeting guideline proofing desk &middot; Citations verified in code</span>
         </div>
       </div>
       <div class="bar-tools" id="barTools" hidden>
         <div class="picker">
-          <label for="engine" class="sr-only">Model</label>
+          <label for="engine" class="picker-label">ENGINE //</label>
           <select id="engine"></select>
           <span class="assigned" id="assigned" hidden></span>
         </div>
         <details class="menu" id="menu">
-          <summary>Thread &amp; Code</summary>
+          <summary>[Thread &amp; Code]</summary>
           <div class="menu-panel">
-            <p class="menu-label" id="codeLabel">Your resume code</p>
+            <p class="menu-label" id="codeLabel">Resume code</p>
             <div class="code-row">
               <code id="code" aria-labelledby="codeLabel"></code>
               <button type="button" class="btn small" id="copyCode">Copy</button>
@@ -39,10 +38,10 @@
             <p class="menu-note" id="copyNote" role="status"></p>
             <hr>
             <form id="topicForm" class="stack">
-              <label for="topicEdit">Your topic</label>
+              <label for="topicEdit">Thesis topic</label>
               <textarea id="topicEdit" rows="3" maxlength="600" required></textarea>
               <div class="row-end">
-                <button type="submit" class="btn primary small">Update topic</button>
+                <button type="submit" class="btn primary small">Save topic</button>
               </div>
               <p class="menu-note" id="topicNote" role="status"></p>
             </form>
@@ -51,109 +50,153 @@
       </div>
     </header>
 
-    <div class="topic-bar" id="topicBar" hidden>
-      <p class="topic-line" id="topicLine" hidden></p>
-      <span class="open-pill" id="openCount" hidden></span>
-    </div>
-
     <main class="stage">
-      <section id="onboard" class="card onboard" hidden aria-labelledby="onTitle">
-        <div class="hero-kicker">IE Capstone · Pre-Meeting Failsafe</div>
-        <h1 id="onTitle">Know what doesn&rsquo;t fit <em>before</em> your advisor meeting.</h1>
-        <p class="lede">Paste or upload your Full Proposal and get point-by-point flags backed by exact quotes from your draft and the BDBA guideline behind each one. No grades, no verdicts, no rewriting.</p>
-
-        <ul class="pill-strip" aria-label="Core guarantees">
-          <li>Cited flags verified in code</li>
-          <li>Re-check to track what&rsquo;s solved</li>
-          <li>Uploads purged when you leave</li>
-        </ul>
-
-        <form id="startForm" class="stack hero-form">
-          <div class="field">
-            <label for="alias">First name or alias <span class="opt">(optional)</span></label>
-            <input id="alias" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Alex">
-          </div>
-          <div class="field">
-            <label for="topic">What is your TFG about?</label>
-            <textarea id="topic" rows="3" maxlength="600" required placeholder="One or two sentences describing your problem, data, and research question…"></textarea>
-          </div>
-          <p class="fixed"><span class="fixed-dot" aria-hidden="true"></span>Active pack: <strong>Data and Business Analytics · Full Proposal</strong></p>
-          <button type="submit" class="btn primary big glow">Start my TFG thread</button>
-        </form>
-
-        <p class="err" id="startErr" role="alert" hidden></p>
-
-        <div class="resume-wrap">
-          <p class="resume-link"><button type="button" class="linkbtn" id="resumeToggle" aria-expanded="false" aria-controls="resumeForm">Already have a resume code?</button></p>
-          <form id="resumeForm" class="stack resume-box" hidden>
-            <label for="resumeCode">Resume code</label>
-            <div class="resume-row">
-              <input id="resumeCode" type="text" maxlength="19" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX">
-              <button type="submit" class="btn primary">Resume</button>
+      <!-- ONBOARDING: Editorial Monograph Cover / Intake Desk -->
+      <section id="onboard" class="cover" hidden aria-labelledby="onTitle">
+        <div class="cover-left">
+          <div class="cover-emblem">
+            <img src="/logo.png" width="68" height="68" alt="" aria-hidden="true">
+            <div class="cover-meta">
+              <span class="mono-kicker">IE UNIVERSITY &middot; GROUP 5</span>
+              <span class="mono-sub">PROOFING INSTRUMENT // PHASE 01</span>
             </div>
-            <p class="err" id="resumeErr" role="alert" hidden></p>
+          </div>
+          <h1 id="onTitle">Know what doesn&rsquo;t fit &mdash; <em>before</em> the advisor meeting.</h1>
+          <p class="lede">Submit your Full Proposal and receive margin-style proofing flags tied verbatim to your own passages and the exact BDBA guideline section behind each point. Never a grade, never a verdict, never rewritten prose.</p>
+          <ol class="manifesto" aria-label="Operating principles">
+            <li>
+              <span class="num">01</span>
+              <div><strong>Code-checked citations</strong><span>Any flag whose quote is absent from your draft or whose section is not in the loaded pack is hidden and counted.</span></div>
+            </li>
+            <li>
+              <span class="num">02</span>
+              <div><strong>Continuous revision ledger</strong><span>Revise in your own editor and re-check to separate <em>Solved</em>, <em>Still open</em>, and <em>New</em> issues.</span></div>
+            </li>
+            <li>
+              <span class="num">03</span>
+              <div><strong>Ephemeral drafts</strong><span>Your uploaded manuscript is deleted 30 minutes after your session ends; only short flag quotes remain in your ledger.</span></div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="cover-right">
+          <p class="panel-eyebrow">OPEN NEW FOLIO // BDBA FULL PROPOSAL</p>
+          <form id="startForm" class="stack">
+            <div class="field">
+              <label for="alias">Alias or first name <span class="opt">(optional)</span></label>
+              <input id="alias" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Alex">
+            </div>
+            <div class="field">
+              <label for="topic">What is your TFG about?</label>
+              <textarea id="topic" rows="4" maxlength="600" required placeholder="State your problem, dataset or method, and research question in one or two sentences."></textarea>
+            </div>
+            <p class="fixed">PACK LOADED // <strong>Data &amp; Business Analytics &middot; Full Proposal</strong></p>
+            <button type="submit" class="btn primary big">Open proofing desk &rarr;</button>
           </form>
+          <p class="err" id="startErr" role="alert" hidden></p>
+
+          <div class="resume-wrap">
+            <p class="resume-link"><button type="button" class="linkbtn" id="resumeToggle" aria-expanded="false" aria-controls="resumeForm">[Already have a resume code?]</button></p>
+            <form id="resumeForm" class="stack resume-box" hidden>
+              <label for="resumeCode">16-character resume code</label>
+              <div class="resume-row">
+                <input id="resumeCode" type="text" maxlength="19" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX">
+                <button type="submit" class="btn primary">Resume</button>
+              </div>
+              <p class="err" id="resumeErr" role="alert" hidden></p>
+            </form>
+          </div>
         </div>
       </section>
 
-      <section id="chatView" class="chat" hidden>
-        <p class="summary-note" id="summaryNote" hidden></p>
-        <div class="empty-guide" id="emptyGuide" hidden>
-          <div class="empty-head">
-            <h2>Your continuous TFG thread is ready</h2>
-            <p>Choose a model above, then check a draft or ask anything covered by the BDBA Full Proposal guidelines.</p>
+      <!-- WORKSPACE: Asymmetric Swiss 2-Column Proofing Desk -->
+      <section id="chatView" class="workspace" hidden>
+        <aside class="rail" aria-label="Thesis dossier">
+          <div class="rail-block">
+            <p class="rail-label">01 // THESIS DOSSIER</p>
+            <p class="topic-line" id="topicLine" hidden></p>
           </div>
-          <div class="quick-grid" aria-label="Suggested starting actions">
-            <button type="button" class="quick-chip" data-action="check">
-              <strong>Check my Full Proposal</strong>
-              <span>Paste or drop .docx, .pdf, .md, .txt for cited flags</span>
-            </button>
-            <button type="button" class="quick-chip" data-ask="What are the required sections and word limits for the Full Proposal?">
-              <strong>Ask: Proposal sections &amp; length</strong>
-              <span>Answered strictly from the loaded guidelines</span>
-            </button>
-            <button type="button" class="quick-chip" data-ask="What citation format and minimum references are required?">
-              <strong>Ask: References &amp; APA rules</strong>
-              <span>Every quote checked against the source pack</span>
-            </button>
+          <div class="rail-block ledger-block">
+            <p class="rail-label">02 // OPEN FLAG LEDGER</p>
+            <div class="ledger-readout">
+              <span class="ledger-num" id="openNum">&mdash;</span>
+              <span class="ledger-caption" id="openCount">No check run yet</span>
+            </div>
           </div>
+          <div class="rail-block rail-rules">
+            <p class="rail-label">03 // PROOFING RULES</p>
+            <ul>
+              <li>No grade or pass/fail verdict</li>
+              <li>No generated or rewritten thesis prose</li>
+              <li>Every quote &amp; section verified in code</li>
+              <li>Uploads deleted 30 min after exit</li>
+            </ul>
+          </div>
+        </aside>
+
+        <div class="manuscript">
+          <p class="summary-note" id="summaryNote" hidden></p>
+
+          <div class="empty-guide" id="emptyGuide" hidden>
+            <p class="panel-eyebrow">DESK INDEX // START HERE</p>
+            <h2>Choose an engine above, then proof a draft or query the guidelines.</h2>
+            <div class="index-list" aria-label="Suggested starting actions">
+              <button type="button" class="index-row" data-action="check">
+                <span class="idx-num">01</span>
+                <span class="idx-main"><strong>Check a Full Proposal draft</strong><span>Paste text or drop a .docx, .pdf, .md, or .txt manuscript for verbatim flags</span></span>
+                <span class="idx-arrow" aria-hidden="true">&nearr;</span>
+              </button>
+              <button type="button" class="index-row" data-ask="What are the required sections and word limits for the Full Proposal?">
+                <span class="idx-num">02</span>
+                <span class="idx-main"><strong>Query: Required sections &amp; word budget</strong><span>Answered strictly from the loaded BDBA Full Proposal pack</span></span>
+                <span class="idx-arrow" aria-hidden="true">&nearr;</span>
+              </button>
+              <button type="button" class="index-row" data-ask="What citation format and minimum references are required?">
+                <span class="idx-num">03</span>
+                <span class="idx-main"><strong>Query: References &amp; APA citation rules</strong><span>Every source quote verified against the programme documents</span></span>
+                <span class="idx-arrow" aria-hidden="true">&nearr;</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
+
+          <section class="dock" id="dock" hidden aria-label="Message composer">
+            <p class="err" id="err" role="alert" hidden>
+              <span id="errText"></span>
+              <button type="button" class="btn small" id="errRetry" hidden>Retry</button>
+            </p>
+            <div class="modes" role="tablist" aria-label="Composer mode">
+              <button type="button" role="tab" id="tabAsk" aria-selected="true" aria-controls="askPanel">01 &middot; Ask the guidelines</button>
+              <button type="button" role="tab" id="tabCheck" aria-selected="false" aria-controls="checkPanel" tabindex="-1">02 &middot; Check a draft</button>
+            </div>
+
+            <form id="askPanel" class="panel ask" role="tabpanel" aria-labelledby="tabAsk">
+              <label for="question" class="sr-only">Your question</label>
+              <textarea id="question" rows="1" maxlength="2000" placeholder="Ask about sections, word budget, APA format, or milestone dates…"></textarea>
+              <button type="submit" class="btn primary send" id="send">Ask &rarr;</button>
+            </form>
+
+            <form id="checkPanel" class="panel check" role="tabpanel" aria-labelledby="tabCheck" hidden>
+              <div class="dropzone" id="dropzone">
+                <label for="work" class="sr-only">Your proposal text</label>
+                <textarea id="work" rows="7" placeholder="Paste your proposal manuscript here — or drag &amp; drop a .docx, .pdf, .md, or .txt file onto this sheet."></textarea>
+              </div>
+              <div class="check-row">
+                <input type="file" id="file" class="sr-only" tabindex="-1" aria-label="Upload a proposal file" accept=".docx,.pdf,.md,.txt">
+                <button type="button" class="btn" id="upload">[+ Upload .docx / .pdf / .md / .txt]</button>
+                <span class="words" id="words" aria-live="polite">0 words</span>
+                <button type="submit" class="btn primary" id="checkBtn">Check proposal &rarr;</button>
+              </div>
+            </form>
+          </section>
         </div>
-        <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
       </section>
     </main>
 
-    <section class="dock" id="dock" hidden aria-label="Message composer">
-      <p class="err" id="err" role="alert" hidden>
-        <span id="errText"></span>
-        <button type="button" class="btn small" id="errRetry" hidden>Retry</button>
-      </p>
-      <div class="modes" role="tablist" aria-label="Composer mode">
-        <button type="button" role="tab" id="tabAsk" aria-selected="true" aria-controls="askPanel">Ask the documents</button>
-        <button type="button" role="tab" id="tabCheck" aria-selected="false" aria-controls="checkPanel" tabindex="-1">Check my proposal</button>
-      </div>
-
-      <form id="askPanel" class="panel ask" role="tabpanel" aria-labelledby="tabAsk">
-        <label for="question" class="sr-only">Your question</label>
-        <textarea id="question" rows="1" maxlength="2000" placeholder="Ask about requirements, structure, citations, or milestones…"></textarea>
-        <button type="submit" class="btn primary send" id="send">Send</button>
-      </form>
-
-      <form id="checkPanel" class="panel check" role="tabpanel" aria-labelledby="tabCheck" hidden>
-        <div class="dropzone" id="dropzone">
-          <label for="work" class="sr-only">Your proposal text</label>
-          <textarea id="work" rows="7" placeholder="Paste your proposal draft here — or drag &amp; drop a .docx, .pdf, .md, or .txt file directly onto this box."></textarea>
-        </div>
-        <div class="check-row">
-          <input type="file" id="file" class="sr-only" tabindex="-1" aria-label="Upload a proposal file" accept=".docx,.pdf,.md,.txt">
-          <button type="button" class="btn ghost" id="upload">Upload .docx, .pdf, .md or .txt</button>
-          <span class="words" id="words" aria-live="polite">0 words</span>
-          <button type="submit" class="btn primary glow" id="checkBtn">Check</button>
-        </div>
-      </form>
-    </section>
-
     <footer class="foot">
-      <p>TFGPT flags possible issues with code-verified citations. No grades, no verdicts, no rewriting: your supervisor decides. Uploaded work is deleted when you leave. <span id="version"></span></p>
+      <span>TFGPT &mdash; Guideline proofing instrument. Your supervisor decides; you own every word.</span>
+      <span class="foot-ver" id="version"></span>
     </footer>
   </div>
   <script src="/app.js"></script>

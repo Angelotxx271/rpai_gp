@@ -36,7 +36,7 @@ py -3.12 -m venv .venv
 .venv\Scripts\python -m pytest -q
 ```
 
-80 offline tests, no model calls, no network. To run them on Postgres with the real migrations:
+81 offline tests, no model calls, no network. To run them on Postgres with the real migrations:
 
 ```powershell
 docker run -d --name tfgpt-pg -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=tfgpt_test -p 55432:5432 postgres:17

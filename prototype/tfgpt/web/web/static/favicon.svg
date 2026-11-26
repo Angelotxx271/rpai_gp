@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#1b2437"/><text x="16" y="22" text-anchor="middle" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#ffffff">T</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#141923"/>
+  <path d="M12 24V12H24M40 12H52V24M12 40V52H24M52 38V44M40 52H46" fill="none" stroke="#F6F3EC" stroke-width="3.5" stroke-linecap="square"/>
+  <path d="M21 21H43V26.5H40.5L38.5 23.5H34.5V41.5L38 43V45H26V43L29.5 41.5V23.5H25.5L23.5 26.5H21Z" fill="#F6F3EC"/>
+  <path d="M39 46L44 51L55 39" fill="none" stroke="#C23B22" stroke-width="4.5" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>
