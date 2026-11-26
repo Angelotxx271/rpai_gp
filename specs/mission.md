@@ -1,6 +1,6 @@
 # Mission
 
-Version 0.2, 2026-11-24. Status: draft, team review pending
+Version 0.3, 2026-11-26. Status: updated with Phase 1 continuous thread memory (team lock-in pending)
 
 ## Purpose
 Help final-year IE students know, before each deliverable meeting, whether their TFG still fits its requirements and scope [Evidence-supported, one graduate: jtbd.md]. Some find out there and redo the work [Evidence-supported, second-hand: interview-evidence.md 01]. Why now: an ongoing problem that we, as fourth-year students, have experienced first hand and can now act on [Team decision: own experience]
@@ -8,7 +8,7 @@ Help final-year IE students know, before each deliverable meeting, whether their
 ## Promise
 - Like an advisor, it flags problems and suggests possible routes; every answer and flag cites its source [Team decision: ERRC.md]
 - Guidelines preloaded, starting with the Data and Business Analytics proposal [Team decision: ERRC.md]
-- Topic and work kept between sessions, from Phase 2 [Team decision: ERRC.md]
+- Continuous thread memory (topic, flag ledger, rolling summary) from Phase 1; uploaded proposal text is deleted at session end (keeping full drafts between sessions deferred to Phase 2) [Team decision: tech-stack.md, 2026-11-25]
 
 ## Core flow
 Give topic and work; see what doesn't fit, point by point; revise; recheck; ask about their stage [Team decision: tech-stack.md]

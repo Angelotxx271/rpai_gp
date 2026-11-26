@@ -12,8 +12,8 @@ The riskiest unknown is whether students' own AI and TFGPT coexist (`../roadmap.
 | Q2 | Decisions | Which instructions does the check use? | The frozen stand-in instructions v1 (spikes.md), plus an output format so code can check every flag | Team decision for v1 (spikes.md); output format AI-proposed |
 | Q3 | Decisions | Which model runs by default? | None until Angelotxx271 names one: the student picks from the offered list, or an active experiment assigns one | Team decision: tech-stack.md |
 | Q4 | Context | Does the check take two turns, as in the spike? | Yes: the check, then "Anything else that doesn't fit the guidelines?", so the product matches what the spike measured | AI-proposed |
-| Q5 | Limits | Daily caps per student and in total? | 10 checks and 1.5M tokens per student per day, $15 a day in total, all Railway variables | AI-proposed, team to confirm |
-| Q6 | Privacy | May students' work go to an outside model? | Open: the syllabus allows AI use with disclosure; sending students' work to a vendor is not yet cleared | Missing: tech-stack.md Blockers |
+| Q5 | Limits | Daily caps per student and in total? | 10 checks and 1.5M tokens per student per day, $15 a day in total, all Railway variables | Team decision: confirmed by Angelotxx271 (2026-11-26) |
+| Q6 | Privacy | May students' work go to an outside model? | Cleared for this internal university course prototype; formal IE institutional clearance stays part of Falsifier 2 before any real campus rollout | Team decision: Angelotxx271 (2026-11-26) |
 
 ## Included behaviour
 - A student opens one page, says their topic once, and stays in one continuous thread from then on [Team decision: tech-stack.md, memory row]

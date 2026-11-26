@@ -66,3 +66,23 @@ def test_the_pack_loader_is_hidden_without_the_admin_token(stack, monkeypatch):
                        headers={"X-TFGPT": "1", "X-Admin-Token": "a-long-admin-token-for-tests", "X-Pack-Title": "Test"})
     assert r.status_code == 200 and r.json()["sections"] == 1
     assert stack.advisor.get("/healthz").json()["pack"] == r.json()["sha12"]
+
+
+def test_woff2_fonts_serve_with_font_woff2_content_type(stack):
+    r = stack.web.get("/fonts/newsreader-latin-500-normal.woff2")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("font/woff2")
+
+
+def test_resume_code_input_accepts_full_19_char_code_and_page_meets_a11y_csp(stack):
+    r = stack.web.get("/")
+    assert r.status_code == 200
+    assert "default-src 'self'" in r.headers["content-security-policy"]
+    assert r.headers["x-frame-options"] == "DENY"
+    html = r.text
+    assert 'id="resumeCode"' in html
+    assert 'maxlength="14"' not in html
+    assert 'placeholder="XXXX-XXXX-XXXX-XXXX"' in html
+    assert 'aria-live="polite"' in html and 'role="tablist"' in html and 'role="log"' in html
+    assert "<script>" not in html  # strict CSP: external /app.js only
+

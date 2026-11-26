@@ -1,9 +1,12 @@
 # Roadmap
 
-Version 0.1, 2026-11-24. Status: preliminary, to be revisited
+Version 0.2, 2026-11-26. Status: updated for Phase 1 build (team lock-in pending)
 
 ## Current behaviour
-- Nothing built yet. The landing page and the Wizard-of-Oz pilot are tests, with no AI behind them
+- A Data and Business Analytics student gives their topic once and checks their Full Proposal (pasted or uploaded as `.docx`, `.pdf`, `.md`, `.txt`) against the loaded BDBA documents and gets cited flags whose quotes and sections are verified in code
+- They check again after revising to see what is Solved, Still open, and New, or dismiss flags that do not apply
+- They ask questions about their stage and receive streamed, source-verified answers or "That one is for your supervisor", with automatic Haiku thread compaction and 30-minute upload deletion
+- Verification status: offline test suites pass (SQLite & PostgreSQL 17 migrations) and live Railway smoke checks ran on Sonnet; full scored synthetic evaluation (`tfgpt_eval`) and real-user testing rounds (`evidence-log/user-feedback.md`) are still pending
 
 The phases say what we plan to build; this section says what the product does today. It changes only when a feature passes its validation
 
@@ -24,7 +27,7 @@ Entry check: the stand-in misses at most 40% of advisor points (decision-record.
 Validation, "coexist": 10 final-year Data and Business Analytics students check their own work with their own AI free to use [Team decision]. At least 6 finish the check in TFGPT and change something because of a flag. Opening their own AI doesn't count against us; doing the whole check there does. We record what each tool was used for. Fewer than 10 students: no decision yet [AI-proposed: commit the rule before the test]
 
 ## Later phases (outline) [Team decision]
-- Phase 2: Remembers. Topic and work kept between sessions, a student's stated condition for switching (interview-evidence.md 03). Validation, "second visit": a student returns another day and checks new work without giving the topic again
+- Phase 2: Full draft persistence. Phase 1 already remembers topic, flag ledger, and a rolling conversation summary across visits via a resume code; Phase 2 adds persistent storage of the student's draft between sessions (once institutional privacy clearance is confirmed). Validation, "second visit": a student returns another day and checks revised work without re-uploading from scratch
 - Phase 3: Starts itself. A check before a deliverable without being asked; needs Phase 2. Validation, "unasked flag": a student opens an unrequested flag and changes their work because of it
 - Phase 4: Second programme. Validation, "right rules": for a student of that programme, every flag cites only that programme's documents
 

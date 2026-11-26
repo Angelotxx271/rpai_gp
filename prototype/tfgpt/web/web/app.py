@@ -2,10 +2,13 @@
 import base64
 import hashlib
 import hmac
+import mimetypes
 import secrets
 import threading
 import time
 import uuid
+
+mimetypes.add_type("font/woff2", ".woff2")
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from datetime import timedelta

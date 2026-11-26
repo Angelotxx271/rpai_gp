@@ -1,6 +1,6 @@
 # Tech stack
 
-Version 0.4, 2026-11-25. Status: preliminary, to be revisited. The build started on 2026-11-25 on Angelotxx271's call; team lock-in of each line is still pending
+Version 0.5, 2026-11-26. Status: Phase 1 built & live on Railway; team lock-in of final default engine and post-spike narrowing still pending. Decisions confirmed by Angelotxx271 on 2026-11-26: Phase 1 stack choices as built, daily caps (`10 checks`, `1.5M tokens/student/day`, `$15/day`), automatic Haiku compaction (`COMPACT_ENGINE=haiku`), syllabus privacy cleared for internal course prototype, OpenRouter/Mistral keys deferred until uploaded.
 
 ## First prototype
 A Data and Business Analytics student checks their TFG work against the rubric, sees whether they're on track with their topic and requirements, gets comments on their work, and can ask for general information about the stage they're in [Team decision]
@@ -115,14 +115,21 @@ Source: spikes.md, Results protocol v2 (PR #31, #32; scorer and second checker b
 - Deliberately absent: Redis (Postgres queue is enough), a vector database (pack injection fits), LiteLLM, an npm pipeline (static pages), any vendor SDK other than Anthropic's
 
 ## Blockers
-- Team lock-in of this write-down, line by line. Owner: the team, next meeting
-- Model choice waits for the protocol v2 human counts (scorer adriFCM, second checker kristgiuff05, by Friday 27 November)
-- Two checks before building: does the Data and Business Analytics TFG syllabus allow student work in an AI model, and do we have the rubric (spikes.md protocol v2 doesn't list it)? Owners Angelotxx271 and adriFCM
-- Key to create: OpenRouter. Mistral credits to refill. Owner Angelotxx271
-- After the counts: the narrowing decision (decision-record.md), which shapes the check prompt. Owner: the team
+- Team review of this write-down and the three Phase 1 feature specs (`specs/2026-11-25-*/`). Owner: the team
+- Model choice (`DEFAULT_ENGINE`) waits for the protocol v2 human counts (scorer `adriFCM`, second checker `kristgiuff05`, due Friday 27 November)
+- Resolved (2026-11-26, Angelotxx271): syllabus external-AI check is treated as cleared for this internal university course prototype (institutional clearance stays part of Falsifier 2 before any real IE rollout). Rubric check (`spikes.md` Spike C): full BDBA TFG syllabus 2026-27 (including evaluation criteria references) is loaded in the pack; a separate standalone rubric file is not separately listed
+- Keys/credits to upload later (non-blocking — harness adapters & registry stay ready to flip on via Railway variables without code changes): `OPENROUTER_API_KEY` and `MISTRAL_API_KEY` credit refill. Owner: `Angelotxx271`
+- After the counts: the narrowing decision (`decision-record.md`), which shapes the check prompt. Owner: the team
 
 ## AI Fit Decision
-AI does the check and the answers [Team decision: press-release.md]. The assessment itself is TBD. If a general AI gives the same flags for the same effort, TFGPT has no value (ERRC.md falsifier 4) [Missing]
+- **Where AI fits (`Team decision: press-release.md, tech-stack.md`):** Comparing unstructured student thesis prose against 22k words of programme guidelines, mapping revised prose to previously open flags (`recheck`), answering open-ended stage questions (`ask`), and folding quiet conversation tails into a 250-word rolling summary (`compact` via Claude Haiku 5.5, running automatically in the `advisor` background worker through the existing Anthropic API key — no separate Haiku deployment needed).
+- **Where deterministic Python replaces AI (`Team decision: tech-stack.md`):** Verifying that every returned flag quote exists verbatim in the student's text and every `section_id` exists in the active pack (hiding unverified flags), enforcing the `"That one is for your supervisor"` refusal when zero verified citations hold, storing flag status rows (`open`/`solved`/`dismissed`), enforcing daily spend/token/check caps, routing retries/circuit breakers, and scoring the public synthetic eval set.
+- **Open falsifier (`Missing`):** If a general AI with everything pasted in gives the same flags for the same effort, TFGPT has no value (`ERRC.md` falsifier 4; flags half provisionally held on 2 routes in spike v2, so value turns on preloaded zero-effort context, continuous memory, and the re-check loop).
 
 ## Architecture Decision Record log
-No entries yet. Entries start with the feature specification: date, decision, why, rejected alternative, revisit if
+| Date | Decision | Why | Rejected alternative | Revisit if |
+|---|---|---|---|---|
+| 2026-11-25 | Store thread messages in the `advisor` schema rather than `app` | `advisor` builds every model prompt context and runs compaction sweeps; keeping messages in `app` would force cyclic HTTP calls between `web` and `advisor` | Storing messages in `app` and fetching them from `advisor` | A second non-advisor product feature needs independent message ownership |
+| 2026-11-25 | Expose a token-protected pack upload endpoint (`POST /api/admin/pack`, returning `404` unless `ADMIN_TOKEN` matches) on `web` | Railway PostgreSQL has no public network address, so `advisor.loadpack --url` needs a secure path from the team's machine without ever committing IE documents to git | Opening Postgres to the public internet or committing IE guidelines to the public repo | IE supplies an authenticated Blackboard/Campus Online API feed |
+| 2026-11-25 | Bind each FastAPI service on one dual-stack IPv6/IPv4 socket (`::`) via `tfgpt_shared.serve` | Railway's private internal network (`*.railway.internal`) resolves to IPv6; binding `0.0.0.0` alone breaks service-to-service calls on Railway | Separate IPv4 and IPv6 listeners or public inter-service HTTP calls | Migrating to an AWS VPC configured strictly for IPv4 |
+| 2026-11-26 | Keep automatic thread compaction on `claude-haiku-5-5` inside `advisor`'s existing background sweep | Costs ~\$0.00035 per compaction via the existing `ANTHROPIC_API_KEY` and `harness` service; requires zero extra container deployment | Deploying a separate local/hosted compaction model or skipping summaries | Haiku pricing/availability changes or local IE cluster hosts all tasks |

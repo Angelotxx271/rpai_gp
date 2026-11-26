@@ -1,7 +1,7 @@
 """The evaluation's scoring is code: check it against the synthetic set's own answers."""
 from conftest import CASES
 
-from tfgpt_eval.__main__ import score_check, score_question, summarise
+from tfgpt_eval.__main__ import jsonl, score_check, score_question, score_recheck, summarise
 
 
 def as_flags(case, planted):
@@ -42,3 +42,20 @@ def test_summary_counts():
                       {"error": "x", "held_out": False, "seconds": 1, "cost_usd": None}], "questions": []}
     s = summarise(out)
     assert s["catch_rate"] == 0.5 and s["failed_runs"] == 1 and s["wrong_flags"] == 1 and s["cost_usd"] == 0.1
+
+
+def test_recheck_scoring_tracks_fixed_and_still_open_issues():
+    cases_by_id = {c["id"]: c for c in CASES}
+    pairs = jsonl("rechecks.jsonl")
+    assert len(pairs) == 4
+    for pair in pairs:
+        base = cases_by_id[pair["case"]]
+        open_planted = [p for p in base["planted"] if p["id"] in pair["still_open"]]
+        fixed_planted = [p for p in base["planted"] if p["id"] in pair["fixed"]]
+        ok = score_recheck(pair, base, as_flags(base, open_planted))
+        assert ok["pass"] and ok["still_flagged_fixed"] == [] and ok["missed_open"] == [], pair["id"]
+        bad = score_recheck(pair, base, as_flags(base, fixed_planted))
+        assert not bad["pass"] and bad["still_flagged_fixed"] == pair["fixed"], pair["id"]
+    summary = summarise({"checks": [], "questions": [], "rechecks": [{"pass": True, "cost_usd": 0.05}, {"pass": False, "cost_usd": 0.05}]})
+    assert summary["rechecks_passed"] == "1/2"
+

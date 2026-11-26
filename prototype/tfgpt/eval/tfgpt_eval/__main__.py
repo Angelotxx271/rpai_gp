@@ -67,6 +67,30 @@ def score_question(q: dict, answer: str, cites: list[dict], sup: bool) -> dict:
     return {"pass": ok, "for_supervisor": sup, "citations": len(cites)}
 
 
+def score_recheck(pair: dict, base_case: dict, active_flags: list[dict]) -> dict:
+    """Score a re-check pair: fixed planted issues should disappear; still_open issues should remain flagged."""
+    from tfgpt_shared import textmatch
+
+    planted_by_id = {p["id"]: p for p in base_case["planted"]}
+
+    def matched(pid: str) -> bool:
+        p = planted_by_id[pid]
+        for f in active_flags:
+            if f.get("section") != p["section"]:
+                continue
+            if p["passage"] is None:
+                if f.get("missing") or not f.get("quote"):
+                    return True
+            elif textmatch.overlaps(f.get("quote"), p["passage"]):
+                return True
+        return False
+
+    still_flagged_fixed = [pid for pid in pair["fixed"] if matched(pid)]
+    missed_open = [pid for pid in pair["still_open"] if not matched(pid)]
+    ok = not still_flagged_fixed and not missed_open
+    return {"pass": ok, "still_flagged_fixed": still_flagged_fixed, "missed_open": missed_open, "active_flags": len(active_flags)}
+
+
 # ------------------------------------------------------------------ the in-process product
 
 class Product:
@@ -128,11 +152,14 @@ class Product:
 
 def cmd_run(args) -> None:
     product = Product()
-    cases = [c for c in jsonl("cases.jsonl") if args.held_out or not c["held_out"]]
+    all_cases = jsonl("cases.jsonl")
+    cases_by_id = {c["id"]: c for c in all_cases}
+    cases = [c for c in all_cases if args.held_out or not c["held_out"]]
     if args.cases:
         cases = [c for c in cases if c["id"] in args.cases.split(",")]
     out = {"label": args.label, "engine": args.engine, "commit": commit(), "date": datetime.now(timezone.utc).isoformat(),
-           "repeats": args.repeats, "held_out_included": args.held_out, "threshold": None, "checks": [], "questions": []}
+           "repeats": args.repeats, "held_out_included": args.held_out, "threshold": None,
+           "checks": [], "rechecks": [], "questions": []}
     for case in cases:
         for rep in range(1, args.repeats + 1):
             res, secs = product.check(args.engine, case["topic"], case["work"], f"eval-{case['id']}-{rep}")
@@ -145,6 +172,28 @@ def cmd_run(args) -> None:
             out["checks"].append(row)
             print(f"{case['id']} r{rep}: {row.get('caught', '-')} missed {row.get('missed', '-')} "
                   f"wrong {row.get('wrong', '-')} {row['seconds']} s", flush=True)
+    if args.rechecks:
+        for pair in jsonl("rechecks.jsonl"):
+            base = cases_by_id[pair["case"]]
+            for rep in range(1, args.repeats + 1):
+                ref = f"eval-recheck-{pair['id']}-{rep}"
+                first, s1 = product.check(args.engine, base["topic"], base["work"], ref, kind="check")
+                if "error" in first:
+                    out["rechecks"].append({"recheck": pair["id"], "case": pair["case"], "repeat": rep,
+                                            "seconds": round(s1, 1), "cost_usd": first.get("cost"),
+                                            "error": first["error"], "pass": False})
+                    continue
+                second, s2 = product.check(args.engine, base["topic"], pair["revised_work"], ref, kind="recheck")
+                cost = (first.get("cost") or 0) + (second.get("cost") or 0)
+                row = {"recheck": pair["id"], "case": pair["case"], "repeat": rep,
+                       "seconds": round(s1 + s2, 1), "cost_usd": round(cost, 6) if cost else None}
+                if "error" in second:
+                    row.update(error=second["error"], **{"pass": False})
+                else:
+                    active = (second["data"].get("remaining") or []) + (second["data"].get("new") or [])
+                    row.update(score_recheck(pair, base, active), hidden=second["data"].get("hidden", 0))
+                out["rechecks"].append(row)
+                print(f"{pair['id']} r{rep}: pass={row.get('pass')} {row['seconds']} s", flush=True)
     if args.questions:
         for q in jsonl("questions.jsonl"):
             for rep in range(1, args.repeats + 1):
@@ -163,13 +212,15 @@ def summarise(out: dict) -> dict:
     rows = [r for r in out["checks"] if "error" not in r]
     planted = sum(len(r["caught"]) + len(r["missed"]) for r in rows)
     caught = sum(len(r["caught"]) for r in rows)
-    costs = [r["cost_usd"] for r in out["checks"] if r.get("cost_usd") is not None]
-    qs = out["questions"]
+    qs = out.get("questions") or []
+    rcs = out.get("rechecks") or []
+    costs = [r["cost_usd"] for r in (out["checks"] + rcs + qs) if r.get("cost_usd") is not None]
     return {"check_runs": len(out["checks"]), "failed_runs": len(out["checks"]) - len(rows),
             "planted": planted, "caught": caught, "catch_rate": round(caught / planted, 3) if planted else None,
             "wrong_flags": sum(r["wrong"] for r in rows),
             "injection_obeyed": sum(1 for r in rows if r.get("injection_obeyed")),
             "held_out_catch_rate": rate([r for r in rows if r["held_out"]]),
+            "rechecks_passed": f"{sum(r.get('pass', False) for r in rcs)}/{len(rcs)}" if rcs else None,
             "questions_passed": f"{sum(q['pass'] for q in qs)}/{len(qs)}" if qs else None,
             "cost_usd": round(sum(costs), 4) if costs else None,
             "mean_seconds": round(sum(r["seconds"] for r in out["checks"]) / len(out["checks"]), 1) if out["checks"] else None}
@@ -245,6 +296,7 @@ def main(argv=None) -> None:
     r.add_argument("--repeats", type=int, default=3)
     r.add_argument("--label", default="synthetic")
     r.add_argument("--held-out", action="store_true", help="include the 3 held-out cases (never tune on them)")
+    r.add_argument("--rechecks", action="store_true", help="also score the re-check pairs (rechecks.jsonl)")
     r.add_argument("--questions", action="store_true", help="also score the question set")
     r.add_argument("--cases", help="comma-separated case ids, for a smoke run")
     r.set_defaults(fn=cmd_run)

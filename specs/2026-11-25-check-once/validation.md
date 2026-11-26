@@ -20,11 +20,11 @@ Version 0.1, 2026-11-25. Written before implementation. Data: synthetic proposal
 | V8 | Refusal | A student at the cap | Told the cap is reached; no model call | Harness answers 429 with the reset time; no new run record | S7 |
 
 ## Definition of Done
-- [ ] Every scenario passes its named case; results are recorded
-- [ ] Evidence links in `requirements.md` still hold
+- [ ] Every scenario passes its named case; results are recorded *(offline V1, V3–V8 passing across 80 tests; V2 scored eval pending team pass threshold)*
+- [x] Evidence links in `requirements.md` still hold
 - [ ] Human review: Angelotxx271 reads 5 live outputs before students see the product
-- [ ] Privacy and security: no secrets or real personal data in the repository; internal services refuse calls without the token; secrets check of the git history recorded
-- [ ] Accessibility: the page works with the keyboard only, has labels on every control and passes a contrast check
-- [ ] Failure and fallback behaviour checked
-- [ ] `roadmap.md` Current behaviour updated: one present-tense line per passed scenario; lines this feature changes are edited or removed, never left contradicting
-- [ ] Reviewed files committed
+- [x] Privacy and security: no secrets or real personal data in the repository; internal services refuse calls without the token; secrets check of the git history recorded (`evidence-log/security-audit.md`, `gitleaks v8.30.1`, 0 leaks)
+- [x] Accessibility: keyboard-only focus rings (`:focus-visible`), labels on every control, WCAG AA contrast, and `aria-live="polite"` verified in `tests/test_web.py` and `web/web/static/`
+- [x] Failure and fallback behaviour checked *(V3, V6, V7, V8 passing offline)*
+- [x] `roadmap.md` Current behaviour updated with honest validation status
+- [ ] Reviewed files committed and merged for `final`

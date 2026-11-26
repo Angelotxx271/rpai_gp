@@ -6,6 +6,7 @@ const JOB_KEY = "tfgpt.job";
 
 const state = {
   messages: [],      // messages currently in the thread
+  openFlags: 0,
   maxWords: 3000,
   busy: false,       // an ask or a job is running
   retry: null,       // function re-running the last failed action
@@ -79,6 +80,7 @@ function showOnboarding() {
   $("chatView").hidden = true;
   $("dock").hidden = true;
   $("barTools").hidden = true;
+  $("topicBar").hidden = true;
   $("topicLine").hidden = true;
   sset(JOB_KEY, null);
 }
@@ -88,6 +90,7 @@ function showChat() {
   $("chatView").hidden = false;
   $("dock").hidden = false;
   $("barTools").hidden = false;
+  $("topicBar").hidden = false;
 }
 
 function showError(text, retryFn) {
@@ -124,15 +127,30 @@ function setBusy(b) {
   $("upload").disabled = b;
 }
 
+function updateOpenBadge(n) {
+  state.openFlags = n;
+  const pill = $("openCount");
+  if (!hasCheck()) { pill.hidden = true; return; }
+  pill.hidden = false;
+  pill.classList.toggle("clear", n === 0);
+  pill.textContent = n === 0 ? "✓ 0 open flags" : plural(n, "open flag", "open flags");
+}
+
+function updateEmptyGuide() {
+  const empty = $("emptyGuide");
+  if (empty) empty.hidden = state.messages.length > 0;
+}
+
 /* ---------- session ---------- */
 
 function applyMe(me) {
   if (!me || !me.student) { showOnboarding(); return false; }
   $("code").textContent = me.resume_code || "";
   $("topicEdit").value = me.student.topic || "";
-  const who = me.student.alias ? me.student.alias + ". " : "";
+  const who = me.student.alias ? me.student.alias + " · " : "";
   $("topicLine").textContent = who + "Topic: " + me.student.topic;
   $("topicLine").hidden = false;
+  $("topicBar").hidden = false;
   return true;
 }
 
@@ -230,7 +248,7 @@ function renderEngines(data) {
   const hint = $("assigned");
   if (data.assigned) {
     const found = data.engines.find((e) => e.name === data.assigned);
-    hint.textContent = "Assigned by an experiment: " + (found ? found.label : data.assigned);
+    hint.textContent = "Experiment arm: " + (found ? found.label : data.assigned);
     hint.hidden = false;
   } else {
     hint.hidden = true;
@@ -255,7 +273,7 @@ function setupHeader() {
     const note = $("copyNote");
     try {
       await navigator.clipboard.writeText($("code").textContent);
-      note.textContent = "Copied. Keep it somewhere safe: it brings your thread back on another device.";
+      note.textContent = "Copied. Keep it safe to restore your thread on another device.";
     } catch (e) {
       const range = document.createRange();
       range.selectNodeContents($("code"));
@@ -290,6 +308,7 @@ async function loadThread() {
     note.textContent = t.summary_note || "";
     note.hidden = !t.summary_note;
     renderThread(t.messages);
+    updateOpenBadge(t.open_flags || 0);
   } catch (e) {
     handleError(e);
   }
@@ -301,12 +320,13 @@ function renderThread(messages) {
   log.textContent = "";
   messages.forEach((m) => log.appendChild(renderMessage(m)));
   updateCheckLabel();
+  updateEmptyGuide();
   scrollEnd();
 }
 
 function updateCheckLabel() {
   const has = state.messages.some((m) => m.kind === "check" || m.kind === "recheck");
-  $("checkBtn").textContent = has ? "Check again" : "Check";
+  $("checkBtn").textContent = has ? "Check again" : "Check proposal";
 }
 
 function hasCheck() {
@@ -319,7 +339,7 @@ function renderMessage(m) {
     case "check": node = renderCheck(m); break;
     case "recheck": node = renderRecheck(m); break;
     case "answer": node = renderAnswer(m); break;
-    case "work": node = el("div", "chip", "You added your proposal · " + workWords(m)); break;
+    case "work": node = el("div", "chip", "Proposal submitted · " + workWords(m)); break;
     case "notice": node = renderNotice(m); break;
     default: node = el("div", "msg " + (m.role === "student" ? "student" : "tfgpt"), m.text);
   }
@@ -334,10 +354,11 @@ function workWords(m) {
 
 function addMessage(m) {
   const log = $("log");
-  if (log.querySelector('[data-id="' + m.id + '"]')) return; // already shown
+  if (log.querySelector('[data-id="' + m.id + '"]')) return;
   state.messages.push(m);
   log.appendChild(renderMessage(m));
   updateCheckLabel();
+  updateEmptyGuide();
   scrollEnd();
 }
 
@@ -348,6 +369,7 @@ function replaceWithMessage(node, m) {
   state.messages.push(m);
   node.replaceWith(renderMessage(m));
   updateCheckLabel();
+  updateEmptyGuide();
   scrollEnd();
 }
 
@@ -361,15 +383,23 @@ function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
 
 function hiddenNote(n) {
   const word = n === 1 ? "flag was" : "flags were";
-  return el("p", "hidden-note", n + " " + word + " hidden because their quote or section couldn't be found.");
+  return el("p", "hidden-note", n + " " + word + " hidden by code verification because their quote or guideline section couldn't be found.");
 }
 
 function renderCheck(m) {
   const d = m.data || {};
   const flags = d.flags || [];
   const box = el("section", "msg tfgpt wide");
-  box.appendChild(el("h2", null, plural(flags.length, "point", "points") + " to look at"));
-  box.appendChild(engineLine(d));
+  const top = el("div", "card-top");
+  top.appendChild(el("h2", null, plural(flags.length, "point", "points") + " to review"));
+  top.appendChild(engineLine(d));
+  box.appendChild(top);
+
+  const kpis = el("div", "kpi-strip");
+  kpis.appendChild(el("span", "kpi-pill open", plural(flags.length, "flagged point", "flagged points")));
+  kpis.appendChild(el("span", "kpi-pill verified", d.hidden > 0 ? d.hidden + " unverified hidden" : "✓ 100% quotes verified"));
+  box.appendChild(kpis);
+
   flags.forEach((f) => box.appendChild(renderFlag(f)));
   if (d.hidden > 0) box.appendChild(hiddenNote(d.hidden));
   return box;
@@ -386,12 +416,25 @@ function flagList(title, flags, compact) {
 function renderRecheck(m) {
   const d = m.data || {};
   const box = el("section", "msg tfgpt wide");
-  box.appendChild(el("h2", null, "Check again"));
-  box.appendChild(engineLine(d));
+  const top = el("div", "card-top");
+  top.appendChild(el("h2", null, "Check again"));
+  top.appendChild(engineLine(d));
+  box.appendChild(top);
+
   const solved = (d.solved || []).map((f) => Object.assign({}, f, { status: "solved" }));
+  const remaining = d.remaining || [];
+  const added = d.new || [];
+
+  const kpis = el("div", "kpi-strip");
+  kpis.appendChild(el("span", "kpi-pill solved", "✓ " + solved.length + " solved"));
+  kpis.appendChild(el("span", "kpi-pill open", remaining.length + " still open"));
+  kpis.appendChild(el("span", "kpi-pill new", added.length + " new"));
+  kpis.appendChild(el("span", "kpi-pill verified", d.hidden > 0 ? d.hidden + " hidden" : "✓ Sources verified"));
+  box.appendChild(kpis);
+
   box.appendChild(flagList("Solved", solved, true));
-  box.appendChild(flagList("Still open", d.remaining || [], false));
-  box.appendChild(flagList("New", d.new || [], false));
+  box.appendChild(flagList("Still open", remaining, false));
+  box.appendChild(flagList("New", added, false));
   if (d.hidden > 0) box.appendChild(hiddenNote(d.hidden));
   return box;
 }
@@ -441,6 +484,7 @@ async function dismissFlag(card, f, btn) {
   try {
     const res = await api("/api/flags/" + f.id + "/dismiss", { method: "POST" });
     fillFlag(card, res.flag);
+    updateOpenBadge(Math.max(0, state.openFlags - 1));
   } catch (e) {
     btn.disabled = false;
     handleError(e);
@@ -457,7 +501,7 @@ function renderAnswer(m) {
   const cites = d.citations || [];
   if (cites.length) {
     const src = el("div", "sources");
-    src.appendChild(el("h3", null, "Sources"));
+    src.appendChild(el("h3", null, "Verified guideline sources"));
     const ul = el("ul");
     cites.forEach((c) => {
       const li = el("li");
@@ -477,8 +521,8 @@ function renderAnswer(m) {
 
 function renderFeedback(m) {
   const row = el("div", "fb");
-  const up = el("button", null, "👍");
-  const down = el("button", null, "👎");
+  const up = el("button", null, "👍 Helpful");
+  const down = el("button", null, "👎 Not helpful");
   up.type = down.type = "button";
   up.setAttribute("aria-label", "This answer helped");
   down.setAttribute("aria-label", "This answer did not help");
@@ -493,7 +537,7 @@ function renderFeedback(m) {
     try {
       await api("/api/messages/" + m.id + "/feedback", { method: "POST", body: { value: v } });
       mark(v);
-      note.textContent = "Thanks.";
+      note.textContent = "Feedback saved.";
     } catch (e) { handleError(e); }
   };
   up.addEventListener("click", () => send("up"));
@@ -573,13 +617,43 @@ function setupComposer() {
   $("work").addEventListener("input", updateWords);
   $("checkPanel").addEventListener("submit", (ev) => { ev.preventDefault(); runCheck(hasCheck()); });
   $("upload").addEventListener("click", () => $("file").click());
-  $("file").addEventListener("change", uploadFile);
+  $("file").addEventListener("change", () => uploadFile($("file").files && $("file").files[0]));
   $("errRetry").addEventListener("click", () => { const fn = state.retry; clearError(); if (fn) fn(); });
+
+  // Drag-and-drop extraction onto the proposal dropzone.
+  const dz = $("dropzone");
+  if (dz) {
+    ["dragenter", "dragover"].forEach((evName) => dz.addEventListener(evName, (ev) => {
+      ev.preventDefault();
+      dz.classList.add("drag");
+    }));
+    ["dragleave", "drop"].forEach((evName) => dz.addEventListener(evName, (ev) => {
+      ev.preventDefault();
+      dz.classList.remove("drag");
+    }));
+    dz.addEventListener("drop", (ev) => {
+      const f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
+      if (f) uploadFile(f);
+    });
+  }
+
+  // Quick-start chips in empty thread state.
+  document.querySelectorAll(".quick-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      if (chip.dataset.action === "check") {
+        setMode("check");
+        $("work").focus();
+      } else if (chip.dataset.ask) {
+        setMode("ask");
+        $("question").value = chip.dataset.ask;
+        autoGrow($("question"));
+        sendQuestion();
+      }
+    });
+  });
 }
 
-async function uploadFile() {
-  const input = $("file");
-  const file = input.files && input.files[0];
+async function uploadFile(file) {
   if (!file) return;
   clearError();
   const form = new FormData();
@@ -595,13 +669,12 @@ async function uploadFile() {
     handleError(e);
   } finally {
     $("upload").disabled = state.busy;
-    input.value = "";
+    $("file").value = "";
   }
 }
 
 /* ---------- ask (SSE over POST) ---------- */
 
-// Split an SSE text buffer into complete events; returns the unfinished remainder.
 function drainSSE(buffer, onEvent) {
   buffer = buffer.replace(/\r\n/g, "\n");
   let i;
@@ -627,6 +700,7 @@ async function sendQuestion() {
   if (!question || state.busy) return;
   clearError();
   setBusy(true);
+  if ($("emptyGuide")) $("emptyGuide").hidden = true;
 
   const mine = el("div", "msg student", question);
   $("log").appendChild(mine);
@@ -634,7 +708,7 @@ async function sendQuestion() {
   autoGrow(q);
 
   const draft = el("div", "msg tfgpt");
-  const label = el("span", "draft-label", "Checking sources…");
+  const label = el("span", "draft-label", "Checking guideline sources…");
   const body = el("span", "draft-text");
   draft.append(label, body);
   $("log").appendChild(draft);
@@ -644,6 +718,7 @@ async function sendQuestion() {
     draft.remove();
     mine.remove();
     q.value = question;
+    updateEmptyGuide();
     handleError(err, () => { q.value = question; sendQuestion(); });
   };
 
@@ -689,7 +764,7 @@ async function runCheck(isRecheck) {
   setBusy(true);
   try {
     const res = await api(isRecheck ? "/api/recheck" : "/api/check", { method: "POST", body: { work } });
-    await loadThread(); // shows the "work" chip the server recorded
+    await loadThread();
     watchJob(res.job_id);
   } catch (e) {
     setBusy(false);
@@ -701,8 +776,8 @@ async function runCheck(isRecheck) {
 function progressCard() {
   const card = el("div", "progress");
   card.setAttribute("role", "status");
-  card.appendChild(el("strong", null, "Checking… 0 s · usually 2 to 4 minutes"));
-  card.appendChild(el("span", "step", "Waiting to start"));
+  card.appendChild(el("strong", null, "Checking against guidelines… 0 s · usually 1 to 3 minutes"));
+  card.appendChild(el("span", "step", "Waiting in queue"));
   const track = el("div", "bar-track");
   track.appendChild(el("span"));
   card.appendChild(track);
@@ -721,18 +796,22 @@ function watchJob(jobId) {
     src.close();
     sset(JOB_KEY, null);
     setBusy(false);
-    if (m) replaceWithMessage(card, m);
-    else { card.remove(); loadThread(); }
+    if (m) {
+      replaceWithMessage(card, m);
+      loadThread(); // refresh live open-flag count
+    } else {
+      card.remove();
+      loadThread();
+    }
   };
   src.addEventListener("progress", (ev) => {
     const d = JSON.parse(ev.data);
-    card.firstChild.textContent = "Checking… " + d.seconds + " s · usually 2 to 4 minutes";
-    card.querySelector(".step").textContent = d.status === "queued" ? "Waiting in the queue" : (d.step || "Working");
+    card.firstChild.textContent = "Checking against guidelines… " + d.seconds + " s · usually 1 to 3 minutes";
+    card.querySelector(".step").textContent = d.status === "queued" ? "Waiting in queue" : (d.step || "Verifying quotes and sections");
   });
   src.addEventListener("done", (ev) => finish(JSON.parse(ev.data).message));
   src.addEventListener("failed", (ev) => finish(JSON.parse(ev.data).message));
   src.onerror = () => {
-    // The browser retries by itself; give up only when it has closed the stream.
     if (src.readyState === EventSource.CLOSED) finish(null);
   };
 }
