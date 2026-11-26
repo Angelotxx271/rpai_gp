@@ -159,15 +159,15 @@ Run on 2026-11-25 on harness commit `8b8c8cf` (`prototype/advisor-spike/`). Thes
 
 ## Results
 
-### Spike C
+### Spike C (Getting the guidelines)
 
 | Run | Programme | Guidelines | Rubric | Dates | Format | Version | Minutes to find |
 |---|---|---|---|---|---|---|---|
+| 1 | BDBA (Data and Business Analytics) | Found on Blackboard / self-paced Capstone course: Module 1 (L1–L6, Exercise Handouts, Student Planning Toolkit), Official Full Proposal template, BDBA TFG syllabus 2026-27 (full), Capstone topics guide (DBA) — 13 sections (~22.2k words) | Evaluation/grading criteria appear inside the full BDBA TFG syllabus (7 references in `standin.md`); no separate standalone rubric file was separately collected | Deliverable milestones & dates found in syllabus and Module 1 / supervisor kick-off summary | Copyable text (exported to Markdown in private pack `standin.md`; loaded into Phase 1 DB via `advisor.loadpack`) | `2026-27` (Module 1 released 15 Sep 2026 for all 6 SST programmes) | Not timed (collected prior to protocol v2; not invented retroactively) |
 
-### Spikes A and B
+### Spikes A and B (v1 manual stopwatch table — superseded by Protocol v2)
 
-| Run | Programme | Model | Stand-in | Order | Key points G / C | K A / B | E A / B | W A / B | M A / B (B with find) | Steps A / B | Label |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+*Protocol v1's manual stopwatch runs were superseded on 2026-11-24 by **Protocol v2** (173 automated runs across 5 engines × 3 routes × 4 proposal versions, reported in the **Results, protocol v2** table above and `prototype/advisor-spike/results/`). What remains open from Spike A is the **student-active effort (minutes)** half of Falsifier 4; the flags half and Falsifier 3 miss rate are covered by Protocol v2 (human blind scoring due 2026-11-27).*
 
 ## What goes where
 
@@ -175,7 +175,7 @@ Run on 2026-11-25 on harness commit `8b8c8cf` (`prototype/advisor-spike/`). Thes
 - **Private, a team folder outside the repo:** the work, the supervisor's comments, the answer key, the flag lists and the screenshots, available to the professor on request
 - **AI use:** each run is AI use on your TFG. Add a line to your own TFG AI declaration (tool, model, flags only, no text adopted) and a row to ai-usage-log.md
 
-## How to present it on Tuesday
+## Group Project I presentation notes (historical, 13 Oct 2026)
 
 - Spike A: "It asks only whether plain ChatGPT, given the same instructions and guidelines, gives the same flags for the same effort. It is a feasibility check on our own work, not proof that students want TFGPT"
 - After one run: "Protocol and rules committed on [date]; one run done to test the procedure; results due 23 October; each outcome maps to continue, narrow, pivot or stop". One run is never shown as a pass or a stop

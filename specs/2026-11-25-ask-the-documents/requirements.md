@@ -11,8 +11,8 @@ Students ask about their stage between checks; the Wizard-of-Oz pilot answered o
 | Q1 | Scope | Where may answers come from? | Only the loaded documents; otherwise "that one is for your supervisor" | Team decision: tech-stack.md |
 | Q2 | Decisions | How is "only the documents" enforced? | The answer cites sections with a short quote; code checks each quote is in that section, and an answer with no checked source becomes the supervisor line | AI-proposed |
 | Q3 | Memory | What does the model see of the thread? | Topic, open flags, the rolling summary and the recent tail | Team decision: tech-stack.md, memory |
-| Q4 | Memory | When is the thread compacted? | After 5 minutes without a message, by a cheap engine (Claude Haiku 5.5); both are Railway variables | AI-proposed, team to confirm |
-| Q5 | Privacy | When is the uploaded work deleted? | When the session ends: 30 minutes without activity | AI-proposed, from tech-stack.md memory row |
+| Q4 | Memory | When is the thread compacted? | After 5 minutes without a message, by Claude Haiku 5.5 (`COMPACT_ENGINE=haiku`, automatic sweep in `advisor` worker via Anthropic API — no separate deploy); both are Railway variables | Team decision: confirmed by Angelotxx271 (2026-11-26) |
+| Q5 | Privacy | When is the uploaded work deleted? | When the session ends: 30 minutes without activity | Team decision: confirmed by Angelotxx271 (2026-11-26) |
 
 ## Included behaviour
 - A student types a question and the answer streams into the thread, with its sources under it [Team decision: tech-stack.md]

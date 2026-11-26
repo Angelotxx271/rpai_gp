@@ -37,8 +37,9 @@ Two team members checked their own TFG proposals two ways, judged by their own a
 | Field | Content |
 |---|---|
 | Question | Would advisors use a view of their students' TFGPT flags and progress? (the supervisor view ERRC.md set aside; ai-persona-04) |
-| Test | Proposed: show two or three advisors a mock-up of what they would see, and ask whether they would use it and what would make them refuse |
+| Test | Proposed: show two or three advisors the clickable mock-up (`prototype/advisor-view-mockup.html`, fictional cohort data, flags-only privacy view), and ask whether they would use it and what would make them refuse |
 | Owner | adriFCM, named on 2026-11-23 |
+| Status | Mock-up ready (`prototype/advisor-view-mockup.html`, 2026-11-26); advisor interviews pending |
 | Threshold | Proposed: at least 2 of 3 advisors say they would use it |
 | Stop condition | Proposed: no advisor would use it, or they object to students' work being visible to them |
 | By | Friday 27 November 2026, set by Angelotxx271 on 2026-11-24 for all of the team's next tests |
