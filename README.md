@@ -1,3 +1,7 @@
+<p align="left">
+  <img src="assets/tfgpt-logo.png" alt="TFGPT emblem" width="76" height="76">
+</p>
+
 # TFGPT — Pre-Meeting TFG Guideline & Scope Checker
 
 **Rapid Prototyping with AI · Group 5 · IE University**

@@ -74,6 +74,13 @@ def test_woff2_fonts_serve_with_font_woff2_content_type(stack):
     assert r.headers["content-type"].startswith("font/woff2")
 
 
+def test_brand_logo_and_favicon_are_served(stack):
+    logo = stack.web.get("/logo.png")
+    assert logo.status_code == 200 and logo.headers["content-type"].startswith("image/png")
+    fav = stack.web.get("/favicon.svg")
+    assert fav.status_code == 200 and "image/svg+xml" in fav.headers["content-type"]
+
+
 def test_resume_code_input_accepts_full_19_char_code_and_page_meets_a11y_csp(stack):
     r = stack.web.get("/")
     assert r.status_code == 200
