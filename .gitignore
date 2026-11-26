@@ -1,0 +1,26 @@
+# Private team material: never committed (the answer key, the supervisor's
+# comments, the private bundle). Protection used to depend on each machine's
+# .git/info/exclude; this makes it shared.
+private/
+.secrets.env
+.env*
+*.key
+*.pem
+
+# Installer / tooling junk caught in the tree before (MetaTrader + Wine, 2026-10-15)
+*.exe
+wget-log
+mt5*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node (tfgpt-landing and tfgpt-pilot also have their own .gitignore)
+node_modules/
+
+# Local service data (Railway volume contents; anchored so the tracked
+# prototype/tfgpt/eval/data/ files are untouched — found by the safety check)
+/tfgpt-pilot/data/
+/tfgpt-landing/data/
