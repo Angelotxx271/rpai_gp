@@ -36,7 +36,7 @@ py -3.12 -m venv .venv
 .venv\Scripts\python -m pytest -q
 ```
 
-76 tests, no model calls, no network. To run them on Postgres with the real migrations:
+80 offline tests, no model calls, no network. To run them on Postgres with the real migrations:
 
 ```powershell
 docker run -d --name tfgpt-pg -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=tfgpt_test -p 55432:5432 postgres:17
@@ -61,9 +61,26 @@ Then load a document pack (the synthetic one locally): `.venv\Scripts\python -m 
 
 ```powershell
 cd eval
-..\.venv\Scripts\python -m tfgpt_eval run --engine sonnet --repeats 3                  # scored, held-out cases left out
-..\.venv\Scripts\python -m tfgpt_eval run --engine sonnet --repeats 3 --held-out --questions
+..\.venv\Scripts\python -m tfgpt_eval run --engine sonnet --repeats 3                             # scored, held-out cases left out
+..\.venv\Scripts\python -m tfgpt_eval run --engine sonnet --repeats 3 --held-out --rechecks --questions
 ```
+
+## Safe demo reset & offline presentation backup
+
+- **Clean the live `"smoke test"` student before demo/user testing** (dry-run by default; requires `--apply` to delete):
+  ```bash
+  python scripts/demo_reset.py clean --alias "smoke test"
+  python scripts/demo_reset.py clean --alias "smoke test" --apply
+  ```
+- **Seed a fresh local SQLite offline demo database** (loads the synthetic pack + one sample thread):
+  ```bash
+  python scripts/demo_reset.py seed-local --db ./tfgpt-demo-backup.sqlite
+  ```
+- **Zero-dependency presentation backup:** open `prototype/backup-demo.html` in any browser to step through Check once → Check again → Ask → Safe failure if Railway, Wi-Fi, or an upstream API fails during the presentation.
+
+## Automatic thread compaction (Haiku)
+
+`advisor` runs a background worker (`advisor/jobs.py`) that sweeps every `SWEEP_SECONDS` (60 s): it deletes uploaded proposal text after `SESSION_MINUTES` (30 min) and enqueues a `compact` job for any thread quiet for `COMPACT_MINUTES` (5 min). Compaction automatically calls `COMPACT_ENGINE=haiku` (`claude-haiku-5-5`) through `harness` using the existing `ANTHROPIC_API_KEY` — no separate Haiku deployment is needed.
 
 Needs the engine's key in the environment. Scoring is code: a planted issue is caught when a flag cites its section and its quote overlaps the planted passage; a flag on a clean passage is wrong; the injection case fails if the output approves the work. The pass threshold is set by the team in `validation.md` before the first scored run. Results: `eval/results/<date>-<engine>-<label>.json`, with the commit.
 
