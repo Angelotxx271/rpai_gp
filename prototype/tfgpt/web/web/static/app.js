@@ -3,6 +3,7 @@
 
 const $ = (id) => document.getElementById(id);
 const JOB_KEY = "tfgpt.job";
+const THEME_KEY = "tfgpt.theme";
 
 const state = {
   messages: [],      // messages currently in the thread
@@ -23,6 +24,8 @@ function el(tag, cls, text) {
 
 function sget(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
 function sset(k, v) { try { if (v == null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e) { /* ignore */ } }
+function lget(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lset(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
 
 async function api(path, opts) {
   const o = opts || {};
@@ -68,11 +71,122 @@ function countWords(s) {
 }
 
 function scrollEnd() {
-  const log = $("log");
-  log.scrollTop = log.scrollHeight;
+  window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
 }
 
 function pad2(n) { return n < 10 ? "0" + n : String(n); }
+
+/* ---------- theme toggle (IE Midnight Dark default / IE Daylight Light) ---------- */
+
+function applyTheme(theme) {
+  const light = theme === "light";
+  if (light) document.documentElement.setAttribute("data-theme", "light");
+  else document.documentElement.removeAttribute("data-theme");
+  const icon = $("themeIcon");
+  const btn = $("themeToggle");
+  if (icon) icon.textContent = light ? "☾" : "☼";
+  if (btn) btn.setAttribute("aria-label", light ? "Switch to dark IE Midnight theme" : "Switch to light IE Daylight theme");
+}
+
+function setupTheme() {
+  const saved = lget(THEME_KEY);
+  applyTheme(saved === "light" ? "light" : "dark");
+  const btn = $("themeToggle");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+      applyTheme(next);
+      lset(THEME_KEY, next);
+    });
+  }
+}
+
+/* ---------- Bartholomew Bear Easter Egg (client-side only, 0 network calls) ---------- */
+
+const BEAR_QUOTES = [
+  "Bartholomew reviewed your capstone stress levels: 100% valid. Take a breath, sip some water, and tackle one flag at a time.",
+  "No grades, no judgment — just soft toffee fur, verified citations, and steady progress toward M1.",
+  "Even Bartholomew had to fix his APA commas before meeting his Segovia advisor. You have got this.",
+  "Reminder from Bartholomew: your advisor wants a clear proposal, not perfection on draft one.",
+  "Pro tip from Bartholomew: fix the missing-data flag first, celebrate with a coffee, then hit Check again."
+];
+
+const bearState = { hugs: 0, quoteIdx: 0, loaded: false };
+
+function openBartholomew() {
+  const modal = $("bearModal");
+  if (!modal) return;
+  if (!bearState.loaded) {
+    $("bearImg").src = "/bartholomew.png";
+    bearState.loaded = true;
+  }
+  $("bearQuote").textContent = BEAR_QUOTES[bearState.quoteIdx % BEAR_QUOTES.length];
+  modal.hidden = false;
+  $("bearClose").focus();
+}
+
+function closeBartholomew() {
+  const modal = $("bearModal");
+  if (modal) modal.hidden = true;
+}
+
+function setupEasterEgg() {
+  // Trigger 1: Click the TFGPT logo 5 times within 3 seconds
+  let clicks = [];
+  const brand = $("brandEaster");
+  if (brand) {
+    brand.addEventListener("click", () => {
+      const now = Date.now();
+      clicks = clicks.filter((t) => now - t < 3000);
+      clicks.push(now);
+      if (clicks.length >= 5) {
+        clicks = [];
+        openBartholomew();
+      }
+    });
+  }
+
+  // Trigger 2: Type "bartholomew" anywhere outside inputs/textareas/selects
+  let typed = "";
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && $("bearModal") && !$("bearModal").hidden) {
+      closeBartholomew();
+      return;
+    }
+    const tag = (ev.target && ev.target.tagName) || "";
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    if (ev.key.length === 1 && /[a-z]/i.test(ev.key)) {
+      typed = (typed + ev.key.toLowerCase()).slice(-11);
+      if (typed === "bartholomew") {
+        typed = "";
+        openBartholomew();
+      }
+    }
+  });
+
+  const modal = $("bearModal");
+  const closeBtn = $("bearClose");
+  const hugBtn = $("bearHug");
+  if (closeBtn) closeBtn.addEventListener("click", closeBartholomew);
+  if (modal) {
+    modal.addEventListener("click", (ev) => {
+      if (ev.target === modal) closeBartholomew();
+    });
+  }
+  if (hugBtn) {
+    hugBtn.addEventListener("click", () => {
+      bearState.hugs += 1;
+      bearState.quoteIdx += 1;
+      $("bearQuote").textContent = BEAR_QUOTES[bearState.quoteIdx % BEAR_QUOTES.length];
+      $("bearHugs").textContent = bearState.hugs === 1 ? "1 warm bear hug given" : bearState.hugs + " warm bear hugs given";
+      const img = $("bearImg");
+      img.classList.remove("hugged");
+      void img.offsetWidth;
+      img.classList.add("hugged");
+      setTimeout(() => img.classList.remove("hugged"), 320);
+    });
+  }
+}
 
 /* ---------- views and errors ---------- */
 
@@ -81,6 +195,7 @@ function showOnboarding() {
   $("chatView").hidden = true;
   $("dock").hidden = true;
   $("barTools").hidden = true;
+  if ($("navInfo")) $("navInfo").hidden = false;
   $("topicLine").hidden = true;
   sset(JOB_KEY, null);
 }
@@ -90,6 +205,7 @@ function showChat() {
   $("chatView").hidden = false;
   $("dock").hidden = false;
   $("barTools").hidden = false;
+  if ($("navInfo")) $("navInfo").hidden = true;
 }
 
 function showError(text, retryFn) {
@@ -111,7 +227,7 @@ function handleError(err, retryFn) {
     const sel = $("engine");
     sel.classList.add("needs");
     sel.focus();
-    showError("Choose an engine in the header first.");
+    showError("Choose an AI model in the top bar first.");
     return true;
   }
   showError(err.message, err.code === "upstream" || err.code === "network" ? retryFn : null);
@@ -138,7 +254,7 @@ function updateOpenLedger(n) {
   }
   num.textContent = pad2(n);
   num.className = "ledger-num " + (n > 0 ? "has-open" : "all-clear");
-  cap.textContent = n === 0 ? "All checked flags resolved" : plural(n, "open flag to review", "open flags to review");
+  cap.textContent = n === 0 ? "All flags resolved" : plural(n, "open flag", "open flags");
 }
 
 function updateEmptyGuide() {
@@ -235,7 +351,7 @@ function renderEngines(data) {
   const sel = $("engine");
   sel.textContent = "";
   if (!data.chosen) {
-    const ph = el("option", null, "Choose engine…");
+    const ph = el("option", null, "Choose AI model…");
     ph.value = "";
     ph.disabled = true;
     sel.appendChild(ph);
@@ -252,7 +368,7 @@ function renderEngines(data) {
   const hint = $("assigned");
   if (data.assigned) {
     const found = data.engines.find((e) => e.name === data.assigned);
-    hint.textContent = "ARM: " + (found ? found.label : data.assigned);
+    hint.textContent = "Assigned: " + (found ? found.label : data.assigned);
     hint.hidden = false;
   } else {
     hint.hidden = true;
@@ -277,7 +393,7 @@ function setupHeader() {
     const note = $("copyNote");
     try {
       await navigator.clipboard.writeText($("code").textContent);
-      note.textContent = "Copied. Keep it to restore your folio on another device.";
+      note.textContent = "Copied. Save it to reopen your session on another device.";
     } catch (e) {
       const range = document.createRange();
       range.selectNodeContents($("code"));
@@ -309,7 +425,7 @@ async function loadThread() {
   try {
     const t = await api("/api/thread");
     const note = $("summaryNote");
-    note.textContent = t.summary_note ? "FOLIO RESUMED // " + t.summary_note : "";
+    note.textContent = t.summary_note ? "Session resumed: " + t.summary_note : "";
     note.hidden = !t.summary_note;
     renderThread(t.messages);
     updateOpenLedger(t.open_flags || 0);
@@ -325,7 +441,7 @@ function renderThread(messages) {
   messages.forEach((m) => log.appendChild(renderMessage(m)));
   updateCheckLabel();
   updateEmptyGuide();
-  scrollEnd();
+  if (messages.length) scrollEnd();
 }
 
 function updateCheckLabel() {
@@ -343,7 +459,7 @@ function renderMessage(m) {
     case "check": node = renderCheck(m); break;
     case "recheck": node = renderRecheck(m); break;
     case "answer": node = renderAnswer(m); break;
-    case "work": node = el("div", "chip", "MANUSCRIPT INTAKE // " + workWords(m).toUpperCase()); break;
+    case "work": node = el("div", "chip", "Draft submitted · " + workWords(m)); break;
     case "notice": node = renderNotice(m); break;
     default: node = el("div", "msg " + (m.role === "student" ? "student" : "tfgpt"), m.text);
   }
@@ -378,8 +494,8 @@ function replaceWithMessage(node, m) {
 }
 
 function engineLine(d) {
-  let text = "ENGINE: " + (d.engine || "unknown");
-  if (d.fallback_from) text += " (FALLBACK FROM " + d.fallback_from + ")";
+  let text = "Model: " + (d.engine || "unknown");
+  if (d.fallback_from) text += " (fallback from " + d.fallback_from + ")";
   return el("p", "engine-line", text);
 }
 
@@ -387,7 +503,7 @@ function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
 
 function hiddenNote(n) {
   const word = n === 1 ? "flag was" : "flags were";
-  return el("p", "hidden-note", "[CODE GUARD] " + n + " " + word + " suppressed because the quote or section could not be verified verbatim.");
+  return el("p", "hidden-note", n + " unverified " + word + " hidden automatically because the quote or guideline section could not be confirmed in code.");
 }
 
 function renderCheck(m) {
@@ -395,25 +511,32 @@ function renderCheck(m) {
   const flags = d.flags || [];
   const box = el("section", "msg tfgpt wide");
   const head = el("div", "sheet-head");
-  head.appendChild(el("h2", null, plural(flags.length, "point", "points") + " flagged"));
+  head.appendChild(el("h2", null, plural(flags.length, "point", "points") + " to review"));
   head.appendChild(engineLine(d));
   box.appendChild(head);
 
   const strip = el("div", "meta-strip");
-  strip.appendChild(el("span", "meta-item open", "[" + pad2(flags.length) + " FLAGGED]"));
-  strip.appendChild(el("span", "meta-item verified", d.hidden > 0 ? "[" + d.hidden + " UNVERIFIED HIDDEN]" : "[✓ 100% QUOTES VERIFIED]"));
+  strip.appendChild(el("span", "meta-item open", pad2(flags.length) + " flagged"));
+  strip.appendChild(el("span", "meta-item verified", d.hidden > 0 ? d.hidden + " unverified hidden" : "✓ All quotes code-verified"));
   box.appendChild(strip);
 
-  flags.forEach((f) => box.appendChild(renderFlag(f)));
+  const stack = el("div", "flag-stack");
+  flags.forEach((f) => stack.appendChild(renderFlag(f)));
+  box.appendChild(stack);
   if (d.hidden > 0) box.appendChild(hiddenNote(d.hidden));
   return box;
 }
 
 function flagList(title, flags, compact) {
   const wrap = el("div");
-  wrap.appendChild(el("h3", null, title + " // " + pad2(flags.length)));
-  if (!flags.length) wrap.appendChild(el("p", "none-note", "None recorded."));
-  flags.forEach((f) => wrap.appendChild(renderFlag(f, compact)));
+  wrap.appendChild(el("h3", null, title + " (" + flags.length + ")"));
+  if (!flags.length) {
+    wrap.appendChild(el("p", "none-note", "None."));
+    return wrap;
+  }
+  const stack = el("div", "flag-stack");
+  flags.forEach((f) => stack.appendChild(renderFlag(f, compact)));
+  wrap.appendChild(stack);
   return wrap;
 }
 
@@ -421,7 +544,7 @@ function renderRecheck(m) {
   const d = m.data || {};
   const box = el("section", "msg tfgpt wide");
   const head = el("div", "sheet-head");
-  head.appendChild(el("h2", null, "Revision proofing ledger"));
+  head.appendChild(el("h2", null, "Re-check results"));
   head.appendChild(engineLine(d));
   box.appendChild(head);
 
@@ -430,10 +553,10 @@ function renderRecheck(m) {
   const added = d.new || [];
 
   const strip = el("div", "meta-strip");
-  strip.appendChild(el("span", "meta-item solved", "[✓ " + pad2(solved.length) + " SOLVED]"));
-  strip.appendChild(el("span", "meta-item open", "[" + pad2(remaining.length) + " STILL OPEN]"));
-  strip.appendChild(el("span", "meta-item new", "[" + pad2(added.length) + " NEW]"));
-  strip.appendChild(el("span", "meta-item verified", d.hidden > 0 ? "[" + d.hidden + " HIDDEN]" : "[✓ SOURCES VERIFIED]"));
+  strip.appendChild(el("span", "meta-item solved", "✓ " + solved.length + " solved"));
+  strip.appendChild(el("span", "meta-item open", remaining.length + " still open"));
+  strip.appendChild(el("span", "meta-item new", added.length + " new"));
+  strip.appendChild(el("span", "meta-item verified", d.hidden > 0 ? d.hidden + " hidden" : "✓ Sources verified"));
   box.appendChild(strip);
 
   box.appendChild(flagList("Solved", solved, true));
@@ -455,42 +578,40 @@ function fillFlag(card, f, compact) {
   card.classList.toggle("solved", f.status === "solved");
   card.classList.toggle("dismissed", f.status === "dismissed");
 
-  const margin = el("div", "flag-margin");
-  margin.appendChild(el("span", "sec-id", "[§ " + f.section_id + "]"));
-  margin.appendChild(el("span", "sec-title", f.section));
-  const statusLabel = f.status === "solved" ? "✓ SOLVED" : (f.status === "dismissed" ? "DISMISSED" : "OPEN");
-  margin.appendChild(el("span", "flag-status", statusLabel));
+  const top = el("div", "flag-top");
+  const ref = el("div", "flag-ref");
+  ref.appendChild(el("span", "sec-id", "§ " + f.section_id));
+  ref.appendChild(el("span", "sec-title", f.section));
+  top.appendChild(ref);
+
+  const right = el("div", "flag-right");
+  const statusLabel = f.status === "solved" ? "✓ Solved" : (f.status === "dismissed" ? "Dismissed" : "Open");
+  right.appendChild(el("span", "flag-status", statusLabel));
 
   if (f.status === "open" && !compact) {
-    const acts = el("div", "flag-acts");
-    const btn = el("button", "dismiss-btn", "[Not relevant]");
+    const btn = el("button", "dismiss-btn", "Dismiss");
     btn.type = "button";
     btn.addEventListener("click", () => dismissFlag(card, f, btn));
-    acts.appendChild(btn);
-    margin.appendChild(acts);
+    right.appendChild(btn);
   } else if (f.status === "dismissed") {
-    const acts = el("div", "flag-acts");
-    acts.appendChild(el("span", "dismissed-tag", "Excluded from next re-check"));
-    margin.appendChild(acts);
+    right.appendChild(el("span", "dismissed-tag", "Excluded from next check"));
   }
-  card.appendChild(margin);
+  top.appendChild(right);
+  card.appendChild(top);
 
-  const body = el("div", "flag-body");
   if (compact && f.status === "solved") {
-    if (f.problem) body.appendChild(el("p", "problem", f.problem));
-    card.appendChild(body);
+    if (f.problem) card.appendChild(el("p", "problem", f.problem));
     return;
   }
-  if (f.missing) body.appendChild(el("blockquote", "missing", "Missing from manuscript"));
-  else if (f.quote) body.appendChild(el("blockquote", null, "“" + f.quote + "”"));
-  body.appendChild(el("p", "problem", f.problem));
+  if (f.missing) card.appendChild(el("blockquote", "missing", "Missing from your draft"));
+  else if (f.quote) card.appendChild(el("blockquote", null, "“" + f.quote + "”"));
+  card.appendChild(el("p", "problem", f.problem));
   if (f.route) {
     const r = el("p", "route");
-    r.appendChild(el("span", "route-tag", "ROUTE //"));
+    r.appendChild(el("span", "route-tag", "How to fix:"));
     r.appendChild(document.createTextNode(f.route));
-    body.appendChild(r);
+    card.appendChild(r);
   }
-  card.appendChild(body);
 }
 
 async function dismissFlag(card, f, btn) {
@@ -509,17 +630,17 @@ function renderAnswer(m) {
   const d = m.data || {};
   const box = el("section", "msg tfgpt wide");
   if (d.for_supervisor) {
-    box.appendChild(el("p", "supervisor", "[SUPERVISOR ONLY] That one is for your supervisor"));
+    box.appendChild(el("p", "supervisor", "That one is for your supervisor"));
   }
   if (m.text) box.appendChild(el("p", "answer-text", m.text));
   const cites = d.citations || [];
   if (cites.length) {
     const src = el("div", "sources");
-    src.appendChild(el("h3", null, "Verified guideline citations"));
+    src.appendChild(el("h3", null, "Verified guideline quotes"));
     const ul = el("ul");
     cites.forEach((c) => {
       const li = el("li");
-      li.appendChild(el("span", "sec-id", "[§ " + c.section_id + "]"));
+      li.appendChild(el("span", "sec-id", "§ " + c.section_id));
       li.appendChild(el("span", "sec-title", c.section));
       if (c.quote) li.appendChild(el("q", null, "“" + c.quote + "”"));
       ul.appendChild(li);
@@ -529,15 +650,15 @@ function renderAnswer(m) {
   }
   const foot = el("div", "answer-foot");
   foot.appendChild(renderFeedback(m));
-  if (d.engine) foot.appendChild(el("p", "engine-line", "ANSWERED BY: " + d.engine));
+  if (d.engine) foot.appendChild(el("p", "engine-line", "Answered by " + d.engine));
   box.appendChild(foot);
   return box;
 }
 
 function renderFeedback(m) {
   const row = el("div", "fb");
-  const up = el("button", null, "[+ Helpful]");
-  const down = el("button", null, "[- Not helpful]");
+  const up = el("button", null, "Helpful");
+  const down = el("button", null, "Not helpful");
   up.type = down.type = "button";
   up.setAttribute("aria-label", "This answer helped");
   down.setAttribute("aria-label", "This answer did not help");
@@ -552,7 +673,7 @@ function renderFeedback(m) {
     try {
       await api("/api/messages/" + m.id + "/feedback", { method: "POST", body: { value: v } });
       mark(v);
-      note.textContent = "Recorded.";
+      note.textContent = "Saved";
     } catch (e) { handleError(e); }
   };
   up.addEventListener("click", () => send("up"));
@@ -566,7 +687,7 @@ function renderNotice(m) {
   box.appendChild(el("span", null, m.text));
   const retry = m.data && m.data.retry;
   if (retry) {
-    const btn = el("button", "btn small", "Retry");
+    const btn = el("button", "btn quiet small", "Retry");
     btn.type = "button";
     btn.addEventListener("click", () => retryCheck(retry));
     box.appendChild(btn);
@@ -611,7 +732,7 @@ function updateWords() {
 function setupComposer() {
   $("tabAsk").addEventListener("click", () => setMode("ask"));
   $("tabCheck").addEventListener("click", () => setMode("check"));
-  [$("tabAsk"), $("tabCheck")].forEach((t) => t.addEventListener("keydown", (ev) => {
+  [$("tabCheck"), $("tabAsk")].forEach((t) => t.addEventListener("keydown", (ev) => {
     if (ev.key === "ArrowLeft" || ev.key === "ArrowRight") {
       const next = t === $("tabAsk") ? "check" : "ask";
       setMode(next);
@@ -651,14 +772,14 @@ function setupComposer() {
     });
   }
 
-  document.querySelectorAll(".index-row").forEach((row) => {
-    row.addEventListener("click", () => {
-      if (row.dataset.action === "check") {
+  document.querySelectorAll(".starter-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      if (card.dataset.action === "check") {
         setMode("check");
         $("work").focus();
-      } else if (row.dataset.ask) {
+      } else if (card.dataset.ask) {
         setMode("ask");
-        $("question").value = row.dataset.ask;
+        $("question").value = card.dataset.ask;
         autoGrow($("question"));
         sendQuestion();
       }
@@ -711,6 +832,15 @@ async function sendQuestion() {
   const q = $("question");
   const question = q.value.trim();
   if (!question || state.busy) return;
+
+  // Trigger 3 (client-side only): /bartholomew or /bear opens the hidden study buddy with 0 API calls
+  if (/^\/(bartholomew|bear)\b/i.test(question)) {
+    q.value = "";
+    autoGrow(q);
+    openBartholomew();
+    return;
+  }
+
   clearError();
   setBusy(true);
   if ($("emptyGuide")) $("emptyGuide").hidden = true;
@@ -721,7 +851,7 @@ async function sendQuestion() {
   autoGrow(q);
 
   const draft = el("div", "msg tfgpt");
-  const label = el("span", "draft-label", "Consulting programme guidelines…");
+  const label = el("span", "draft-label", "Checking BDBA guidelines…");
   const body = el("span", "draft-text");
   draft.append(label, body);
   $("log").appendChild(draft);
@@ -789,7 +919,7 @@ async function runCheck(isRecheck) {
 function progressCard() {
   const card = el("div", "progress");
   card.setAttribute("role", "status");
-  card.appendChild(el("strong", null, "PROOFING FOLIO // 0 s · USUALLY 1–3 MIN"));
+  card.appendChild(el("strong", null, "CHECKING PROPOSAL · 0 s (USUALLY 1–3 MIN)"));
   card.appendChild(el("span", "step", "Queued for guideline comparison"));
   const track = el("div", "bar-track");
   track.appendChild(el("span"));
@@ -819,8 +949,8 @@ function watchJob(jobId) {
   };
   src.addEventListener("progress", (ev) => {
     const d = JSON.parse(ev.data);
-    card.firstChild.textContent = "PROOFING FOLIO // " + d.seconds + " s · USUALLY 1–3 MIN";
-    card.querySelector(".step").textContent = d.status === "queued" ? "Queued for guideline comparison" : (d.step || "Verifying verbatim quotes & sections");
+    card.firstChild.textContent = "CHECKING PROPOSAL · " + d.seconds + " s (USUALLY 1–3 MIN)";
+    card.querySelector(".step").textContent = d.status === "queued" ? "Queued for guideline comparison" : (d.step || "Verifying verbatim quotes & guideline sections");
   });
   src.addEventListener("done", (ev) => finish(JSON.parse(ev.data).message));
   src.addEventListener("failed", (ev) => finish(JSON.parse(ev.data).message));
@@ -836,6 +966,8 @@ function reattachJob() {
 
 /* ---------- start ---------- */
 
+setupTheme();
+setupEasterEgg();
 setupOnboarding();
 setupHeader();
 setupComposer();

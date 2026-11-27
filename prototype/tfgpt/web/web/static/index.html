@@ -4,104 +4,137 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>TFGPT · Thesis Proofing Desk</title>
+  <title>TFGPT · IE Capstone Proposal Checker</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/app.css">
 </head>
 <body>
+  <div class="ambient" aria-hidden="true"></div>
   <div class="shell">
-    <header class="bar">
-      <div class="brand">
-        <img src="/logo.png" class="brand-logo" width="40" height="40" alt="TFGPT emblem">
-        <div class="brand-copy">
-          <div class="brand-row">
+    <header class="topbar-wrap">
+      <div class="topbar">
+        <button type="button" class="brand" id="brandEaster" aria-label="TFGPT — IE Capstone Proposal Checker">
+          <img src="/logo.png" class="brand-logo" width="34" height="34" alt="TFGPT logo">
+          <span class="brand-text">
             <span class="brand-name">TFGPT</span>
-            <span class="edition">FOLIO // BDBA FULL PROPOSAL · 2026&ndash;27</span>
-          </div>
-          <span class="badge">Pre-meeting guideline proofing desk &middot; Citations verified in code</span>
-        </div>
-      </div>
-      <div class="bar-tools" id="barTools" hidden>
-        <div class="picker">
-          <label for="engine" class="picker-label">ENGINE //</label>
-          <select id="engine"></select>
-          <span class="assigned" id="assigned" hidden></span>
-        </div>
-        <details class="menu" id="menu">
-          <summary>[Thread &amp; Code]</summary>
-          <div class="menu-panel">
-            <p class="menu-label" id="codeLabel">Resume code</p>
-            <div class="code-row">
-              <code id="code" aria-labelledby="codeLabel"></code>
-              <button type="button" class="btn small" id="copyCode">Copy</button>
+            <span class="brand-tag">IE &middot; BDBA</span>
+          </span>
+        </button>
+
+        <div class="nav-right">
+          <span class="nav-pill" id="navInfo">BDBA Capstone &middot; Proposal Checker</span>
+
+          <div class="bar-tools" id="barTools" hidden>
+            <div class="picker">
+              <label for="engine" class="picker-label">Model</label>
+              <select id="engine"></select>
+              <span class="assigned" id="assigned" hidden></span>
             </div>
-            <p class="menu-note" id="copyNote" role="status"></p>
-            <hr>
-            <form id="topicForm" class="stack">
-              <label for="topicEdit">Thesis topic</label>
-              <textarea id="topicEdit" rows="3" maxlength="600" required></textarea>
-              <div class="row-end">
-                <button type="submit" class="btn primary small">Save topic</button>
+            <details class="menu" id="menu">
+              <summary>Session &amp; code</summary>
+              <div class="menu-panel">
+                <p class="menu-label" id="codeLabel">Your resume code</p>
+                <div class="code-row">
+                  <code id="code" aria-labelledby="codeLabel"></code>
+                  <button type="button" class="btn quiet small" id="copyCode">Copy</button>
+                </div>
+                <p class="menu-note" id="copyNote" role="status"></p>
+                <hr>
+                <form id="topicForm" class="stack">
+                  <label for="topicEdit">Capstone topic</label>
+                  <textarea id="topicEdit" rows="3" maxlength="600" required></textarea>
+                  <div class="row-end">
+                    <button type="submit" class="btn primary small">Save topic</button>
+                  </div>
+                  <p class="menu-note" id="topicNote" role="status"></p>
+                </form>
               </div>
-              <p class="menu-note" id="topicNote" role="status"></p>
-            </form>
+            </details>
           </div>
-        </details>
+
+          <button type="button" class="theme-btn" id="themeToggle" aria-label="Switch color theme" title="Switch color theme">
+            <span class="theme-icon" id="themeIcon" aria-hidden="true">&#9788;</span>
+          </button>
+        </div>
       </div>
     </header>
 
     <main class="stage">
-      <!-- ONBOARDING: Editorial Monograph Cover / Intake Desk -->
-      <section id="onboard" class="cover" hidden aria-labelledby="onTitle">
-        <div class="cover-left">
-          <div class="cover-emblem">
-            <img src="/logo.png" width="68" height="68" alt="" aria-hidden="true">
-            <div class="cover-meta">
-              <span class="mono-kicker">IE UNIVERSITY &middot; GROUP 5</span>
-              <span class="mono-sub">PROOFING INSTRUMENT // PHASE 01</span>
-            </div>
+      <!-- ONBOARDING: IE University x Xenex Precision Hero & Start Card -->
+      <section id="onboard" class="hero" hidden aria-labelledby="onTitle">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            <span>IE SCHOOL OF SCIENCE &amp; TECHNOLOGY &middot; BDBA CAPSTONE</span>
           </div>
-          <h1 id="onTitle">Know what doesn&rsquo;t fit &mdash; <em>before</em> the advisor meeting.</h1>
-          <p class="lede">Submit your Full Proposal and receive margin-style proofing flags tied verbatim to your own passages and the exact BDBA guideline section behind each point. Never a grade, never a verdict, never rewritten prose.</p>
-          <ol class="manifesto" aria-label="Operating principles">
-            <li>
-              <span class="num">01</span>
-              <div><strong>Code-checked citations</strong><span>Any flag whose quote is absent from your draft or whose section is not in the loaded pack is hidden and counted.</span></div>
-            </li>
-            <li>
-              <span class="num">02</span>
-              <div><strong>Continuous revision ledger</strong><span>Revise in your own editor and re-check to separate <em>Solved</em>, <em>Still open</em>, and <em>New</em> issues.</span></div>
-            </li>
-            <li>
-              <span class="num">03</span>
-              <div><strong>Ephemeral drafts</strong><span>Your uploaded manuscript is deleted 30 minutes after your session ends; only short flag quotes remain in your ledger.</span></div>
-            </li>
-          </ol>
+          <h1 id="onTitle">Check your TFG proposal <span class="accent-text">before</span> you meet your advisor.</h1>
+          <p class="lede">Upload or paste your Full Proposal draft to get exact guideline flags tied verbatim to your own words. Fix issues in your editor, check again, or ask any guideline question.</p>
+
+          <figure class="schematic" aria-label="How TFGPT works">
+            <figcaption class="schematic-cap">
+              <span class="fig-id">HOW IT WORKS</span>
+              <span>One proposal, verified against the BDBA guidelines.</span>
+            </figcaption>
+            <div class="schematic-grid">
+              <div class="sch-box">
+                <span class="sch-title">Your draft</span>
+                <span class="sch-meta">Full Proposal</span>
+                <span class="sch-meta">.docx &middot; .pdf &middot; .md &middot; .txt</span>
+                <span class="sch-sub">Auto-deleted 30 min after exit</span>
+              </div>
+              <span class="sch-arrow" aria-hidden="true">&rarr;</span>
+              <div class="sch-box sch-mid">
+                <span class="sch-pill"><span class="chk" aria-hidden="true">&#10003;</span> quote in your text</span>
+                <span class="sch-pill"><span class="chk" aria-hidden="true">&#10003;</span> &sect; rule in pack</span>
+                <span class="sch-pill"><span class="chk" aria-hidden="true">&#10003;</span> no grades or rewrites</span>
+                <span class="sch-label">VERIFIED IN CODE</span>
+              </div>
+              <span class="sch-arrow" aria-hidden="true">&rarr;</span>
+              <div class="sch-box">
+                <span class="sch-title">Clear action list</span>
+                <div class="sch-statuses">
+                  <span class="st-solved">Solved</span>
+                  <span class="st-open">Still open</span>
+                  <span class="st-new">New</span>
+                </div>
+                <span class="sch-sub">Or ask rules &rarr; cited &sect; answer</span>
+              </div>
+            </div>
+          </figure>
         </div>
 
-        <div class="cover-right">
-          <p class="panel-eyebrow">OPEN NEW FOLIO // BDBA FULL PROPOSAL</p>
+        <div class="start-card">
+          <div class="card-head">
+            <h2>Start checking your proposal</h2>
+            <p class="card-sub">No account needed. You get a 16-character code to resume anytime.</p>
+          </div>
+
           <form id="startForm" class="stack">
             <div class="field">
-              <label for="alias">Alias or first name <span class="opt">(optional)</span></label>
+              <label for="alias">First name or nickname <span class="opt">(optional)</span></label>
               <input id="alias" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Alex">
             </div>
             <div class="field">
-              <label for="topic">What is your TFG about?</label>
-              <textarea id="topic" rows="4" maxlength="600" required placeholder="State your problem, dataset or method, and research question in one or two sentences."></textarea>
+              <label for="topic">What is your capstone (TFG) about?</label>
+              <textarea id="topic" rows="4" maxlength="600" required placeholder="Briefly describe your problem, dataset or method, and research question."></textarea>
             </div>
-            <p class="fixed">PACK LOADED // <strong>Data &amp; Business Analytics &middot; Full Proposal</strong></p>
-            <button type="submit" class="btn primary big">Open proofing desk &rarr;</button>
+            <div class="pack-bar">
+              <span class="pack-dot" aria-hidden="true"></span>
+              <span>Guidelines loaded: <strong>IE BDBA &middot; Full Proposal</strong></span>
+            </div>
+            <button type="submit" class="btn primary big">Open proposal checker &rarr;</button>
           </form>
           <p class="err" id="startErr" role="alert" hidden></p>
 
           <div class="resume-wrap">
-            <p class="resume-link"><button type="button" class="linkbtn" id="resumeToggle" aria-expanded="false" aria-controls="resumeForm">[Already have a resume code?]</button></p>
+            <p class="resume-link">
+              <button type="button" class="linkbtn" id="resumeToggle" aria-expanded="false" aria-controls="resumeForm">Already have a resume code?</button>
+            </p>
             <form id="resumeForm" class="stack resume-box" hidden>
               <label for="resumeCode">16-character resume code</label>
               <div class="resume-row">
                 <input id="resumeCode" type="text" maxlength="19" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX">
-                <button type="submit" class="btn primary">Resume</button>
+                <button type="submit" class="btn primary small">Resume</button>
               </div>
               <p class="err" id="resumeErr" role="alert" hidden></p>
             </form>
@@ -109,96 +142,107 @@
         </div>
       </section>
 
-      <!-- WORKSPACE: Asymmetric Swiss 2-Column Proofing Desk -->
+      <!-- WORKSPACE: Clean Student-Focused Proposal Checker & Guidelines Q&A -->
       <section id="chatView" class="workspace" hidden>
-        <aside class="rail" aria-label="Thesis dossier">
-          <div class="rail-block">
-            <p class="rail-label">01 // THESIS DOSSIER</p>
+        <div class="context-bar" aria-label="Session overview">
+          <div class="ctx-topic">
+            <span class="ctx-label">CAPSTONE TOPIC</span>
             <p class="topic-line" id="topicLine" hidden></p>
           </div>
-          <div class="rail-block ledger-block">
-            <p class="rail-label">02 // OPEN FLAG LEDGER</p>
-            <div class="ledger-readout">
+          <div class="ctx-right">
+            <div class="ctx-stat" aria-live="polite">
               <span class="ledger-num" id="openNum">&mdash;</span>
               <span class="ledger-caption" id="openCount">No check run yet</span>
             </div>
           </div>
-          <div class="rail-block rail-rules">
-            <p class="rail-label">03 // PROOFING RULES</p>
-            <ul>
-              <li>No grade or pass/fail verdict</li>
-              <li>No generated or rewritten thesis prose</li>
-              <li>Every quote &amp; section verified in code</li>
-              <li>Uploads deleted 30 min after exit</li>
-            </ul>
-          </div>
-        </aside>
-
-        <div class="manuscript">
-          <p class="summary-note" id="summaryNote" hidden></p>
-
-          <div class="empty-guide" id="emptyGuide" hidden>
-            <p class="panel-eyebrow">DESK INDEX // START HERE</p>
-            <h2>Choose an engine above, then proof a draft or query the guidelines.</h2>
-            <div class="index-list" aria-label="Suggested starting actions">
-              <button type="button" class="index-row" data-action="check">
-                <span class="idx-num">01</span>
-                <span class="idx-main"><strong>Check a Full Proposal draft</strong><span>Paste text or drop a .docx, .pdf, .md, or .txt manuscript for verbatim flags</span></span>
-                <span class="idx-arrow" aria-hidden="true">&nearr;</span>
-              </button>
-              <button type="button" class="index-row" data-ask="What are the required sections and word limits for the Full Proposal?">
-                <span class="idx-num">02</span>
-                <span class="idx-main"><strong>Query: Required sections &amp; word budget</strong><span>Answered strictly from the loaded BDBA Full Proposal pack</span></span>
-                <span class="idx-arrow" aria-hidden="true">&nearr;</span>
-              </button>
-              <button type="button" class="index-row" data-ask="What citation format and minimum references are required?">
-                <span class="idx-num">03</span>
-                <span class="idx-main"><strong>Query: References &amp; APA citation rules</strong><span>Every source quote verified against the programme documents</span></span>
-                <span class="idx-arrow" aria-hidden="true">&nearr;</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
-
-          <section class="dock" id="dock" hidden aria-label="Message composer">
-            <p class="err" id="err" role="alert" hidden>
-              <span id="errText"></span>
-              <button type="button" class="btn small" id="errRetry" hidden>Retry</button>
-            </p>
-            <div class="modes" role="tablist" aria-label="Composer mode">
-              <button type="button" role="tab" id="tabAsk" aria-selected="true" aria-controls="askPanel">01 &middot; Ask the guidelines</button>
-              <button type="button" role="tab" id="tabCheck" aria-selected="false" aria-controls="checkPanel" tabindex="-1">02 &middot; Check a draft</button>
-            </div>
-
-            <form id="askPanel" class="panel ask" role="tabpanel" aria-labelledby="tabAsk">
-              <label for="question" class="sr-only">Your question</label>
-              <textarea id="question" rows="1" maxlength="2000" placeholder="Ask about sections, word budget, APA format, or milestone dates…"></textarea>
-              <button type="submit" class="btn primary send" id="send">Ask &rarr;</button>
-            </form>
-
-            <form id="checkPanel" class="panel check" role="tabpanel" aria-labelledby="tabCheck" hidden>
-              <div class="dropzone" id="dropzone">
-                <label for="work" class="sr-only">Your proposal text</label>
-                <textarea id="work" rows="7" placeholder="Paste your proposal manuscript here — or drag &amp; drop a .docx, .pdf, .md, or .txt file onto this sheet."></textarea>
-              </div>
-              <div class="check-row">
-                <input type="file" id="file" class="sr-only" tabindex="-1" aria-label="Upload a proposal file" accept=".docx,.pdf,.md,.txt">
-                <button type="button" class="btn" id="upload">[+ Upload .docx / .pdf / .md / .txt]</button>
-                <span class="words" id="words" aria-live="polite">0 words</span>
-                <button type="submit" class="btn primary" id="checkBtn">Check proposal &rarr;</button>
-              </div>
-            </form>
-          </section>
         </div>
+
+        <p class="summary-note" id="summaryNote" hidden></p>
+
+        <div class="empty-guide" id="emptyGuide" hidden>
+          <p class="empty-eyebrow">START HERE</p>
+          <h2>Drop your proposal draft below, or ask a guideline question.</h2>
+          <p class="empty-sub">Choose an AI model in the top bar, then pick where to start. TFGPT never grades or rewrites your text.</p>
+          <div class="starter-grid" aria-label="Suggested starting actions">
+            <button type="button" class="starter-card" data-action="check">
+              <span class="st-idx">01 &middot; PROPOSAL CHECK</span>
+              <strong>Check my Full Proposal draft</strong>
+              <span>Upload a .docx, .pdf, .md, or .txt file or paste your draft to get verbatim guideline flags.</span>
+            </button>
+            <button type="button" class="starter-card" data-ask="What are the required sections and word limits for the Full Proposal?">
+              <span class="st-idx">02 &middot; GUIDELINES</span>
+              <strong>Required sections &amp; word limits</strong>
+              <span>Get the exact BDBA Full Proposal structure and word budget with citations.</span>
+            </button>
+            <button type="button" class="starter-card" data-ask="What citation format and minimum references are required?">
+              <span class="st-idx">03 &middot; CITATIONS</span>
+              <strong>References &amp; APA rules</strong>
+              <span>Check minimum peer-reviewed sources and formatting rules straight from the pack.</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
+
+        <section class="dock" id="dock" hidden aria-label="Proposal and question composer">
+          <p class="err" id="err" role="alert" hidden>
+            <span id="errText"></span>
+            <button type="button" class="btn quiet small" id="errRetry" hidden>Retry</button>
+          </p>
+
+          <div class="dock-head">
+            <div class="modes" role="tablist" aria-label="Composer mode">
+              <button type="button" role="tab" id="tabCheck" aria-selected="true" aria-controls="checkPanel">Check my proposal</button>
+              <button type="button" role="tab" id="tabAsk" aria-selected="false" aria-controls="askPanel" tabindex="-1">Ask the guidelines</button>
+            </div>
+            <span class="dock-guard">Verified in code &middot; Uploads deleted after 30 min</span>
+          </div>
+
+          <form id="checkPanel" class="panel check" role="tabpanel" aria-labelledby="tabCheck">
+            <div class="dropzone" id="dropzone">
+              <label for="work" class="sr-only">Your proposal text</label>
+              <textarea id="work" rows="5" placeholder="Paste your proposal draft here — or drag &amp; drop a .docx, .pdf, .md, or .txt file onto this box."></textarea>
+            </div>
+            <div class="check-row">
+              <input type="file" id="file" class="sr-only" tabindex="-1" aria-label="Upload a proposal file" accept=".docx,.pdf,.md,.txt">
+              <button type="button" class="btn quiet" id="upload">Upload file (.docx / .pdf / .md / .txt)</button>
+              <span class="words" id="words" aria-live="polite">0 words</span>
+              <button type="submit" class="btn primary" id="checkBtn">Check proposal &rarr;</button>
+            </div>
+          </form>
+
+          <form id="askPanel" class="panel ask" role="tabpanel" aria-labelledby="tabAsk" hidden>
+            <label for="question" class="sr-only">Your question</label>
+            <textarea id="question" rows="1" maxlength="2000" placeholder="Ask about required sections, word limits, APA rules, or milestones…"></textarea>
+            <button type="submit" class="btn primary send" id="send">Ask &rarr;</button>
+          </form>
+        </section>
       </section>
     </main>
 
     <footer class="foot">
-      <span>TFGPT &mdash; Guideline proofing instrument. Your supervisor decides; you own every word.</span>
+      <span>TFGPT &middot; IE BDBA student prototype (not an official IE tool). Your supervisor decides; you own every word.</span>
       <span class="foot-ver" id="version"></span>
     </footer>
   </div>
+
+  <!-- Hidden Easter Egg Modal: Jellycat Bartholomew Bear (client-side only) -->
+  <div class="modal-backdrop" id="bearModal" hidden role="dialog" aria-modal="true" aria-labelledby="bearTitle">
+    <div class="bear-card">
+      <button type="button" class="bear-close" id="bearClose" aria-label="Close Bartholomew Bear">&times;</button>
+      <div class="bear-frame">
+        <img id="bearImg" class="bear-photo" width="248" height="248" alt="Bartholomew Bear sitting with a tiny IE-blue thesis notebook">
+      </div>
+      <span class="bear-kicker">SECRET STUDY BUDDY &middot; JELLYCAT</span>
+      <h2 id="bearTitle">You found Bartholomew Bear!</h2>
+      <p class="bear-quote" id="bearQuote">Bartholomew reviewed your capstone stress levels: 100% valid. Take a breath, sip some water, and tackle one flag at a time.</p>
+      <div class="bear-actions">
+        <button type="button" class="btn primary" id="bearHug">Give Bartholomew a hug</button>
+        <span class="bear-hugs" id="bearHugs" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+
   <script src="/app.js"></script>
 </body>
 </html>

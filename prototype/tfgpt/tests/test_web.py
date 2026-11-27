@@ -79,6 +79,8 @@ def test_brand_logo_and_favicon_are_served(stack):
     assert logo.status_code == 200 and logo.headers["content-type"].startswith("image/png")
     fav = stack.web.get("/favicon.svg")
     assert fav.status_code == 200 and "image/svg+xml" in fav.headers["content-type"]
+    bear = stack.web.get("/bartholomew.png")
+    assert bear.status_code == 200 and bear.headers["content-type"].startswith("image/png")
 
 
 def test_resume_code_input_accepts_full_19_char_code_and_page_meets_a11y_csp(stack):
@@ -92,4 +94,5 @@ def test_resume_code_input_accepts_full_19_char_code_and_page_meets_a11y_csp(sta
     assert 'placeholder="XXXX-XXXX-XXXX-XXXX"' in html
     assert 'aria-live="polite"' in html and 'role="tablist"' in html and 'role="log"' in html
     assert "<script>" not in html  # strict CSP: external /app.js only
+    assert 'style="' not in html   # strict CSP: external /app.css only
 
