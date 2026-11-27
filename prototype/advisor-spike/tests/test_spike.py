@@ -683,8 +683,8 @@ def test_agree_combines_two_scorers_and_compares_with_the_judge(ws, capsys):
         (d / "sheet-v1.csv").write_text("\n".join(rows) + "\n", encoding="utf-8")
         return d
 
-    a = sheet("adri", {("K01", opus_col): "F1", ("K02", opus_col): "F2"})
-    b = sheet("kristian", {("K01", opus_col): "F1"})  # disagrees on K02
+    a = sheet("scorer", {("K01", opus_col): "F1", ("K02", opus_col): "F2"})
+    b = sheet("checker", {("K01", opus_col): "F1"})  # disagrees on K02
     write_verdict(ws, "opus__C1__v1__r1", verdict(["K01", "K02"]))
     write_verdict(ws, "glm__C1__v1__r1", verdict([]))
     spike.cmd_agree(types.SimpleNamespace(scorers=[str(a), str(b)], judge="judge-sonnet", one=False))

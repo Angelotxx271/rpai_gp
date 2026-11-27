@@ -43,6 +43,8 @@ Compared with the student's own general AI, TFGPT is a checker, not a writer:
 - **Net effect for TFGPT:** lower: no grade predictor to build or calibrate (an avoided cost) and shorter generations than drafting (AI inference); higher: keeping every programme's guidelines current, storing students' work and running scheduled checks. Whether the total falls is untested
 - **Positioning:** TFGPT is used instead of the student's AI of choice for the pre-meeting check, and lives alongside it for everything else
 
+*Pivot on 2026-11-24: the "instead of" positioning, hypothesis and falsifier 1 below were a naive assumption and are kept as history. TFGPT now coexists with the student's own AI (decision-record.md, "Pivot on 2026-11-24")*
+
 **Falsifiable hypothesis:** final-year IE students will use TFGPT instead of their AI of choice for the pre-meeting check, because a check that starts itself, already knows their programme's guidelines and keeps their context takes less effort than briefing their own AI, and IE will commit to its full maintenance and adoption. **We are wrong if:**
 1. Students don't end up using TFGPT instead of their AI of choice for the pre-meeting check
 2. IE does not commit to the full maintenance and adoption of the tool
@@ -99,6 +101,7 @@ This remains a hypothesis, not a validated blue ocean or confirmed business mode
 | Create | Unwanted or wrong flags could annoy students and push them back to their own AI |
 
 **Contradictions and unresolved gaps**
+- **Pivot on 2026-11-24:** the reconciliation below was replaced by "coexist", because "instead of" was a naive assumption (decision-record.md). Falsifier 1 is now tested by the "coexist" validation in roadmap.md, whose pass rule is still to be agreed before the test
 - "Instead of their AI of choice" (assumptions.md, goals.md, experiment-card.md) and "alongside" (market-research.md section 7) are reconciled as: instead of their AI of choice for the check, alongside it for everything else (falsifier 1). assumptions.md and goals.md now note that scope; the riskiest-assumption and Sprint Goal sentences themselves are unchanged
 - "Students will use AI no matter what" (opportunity.md need statement) and the first non-customer group (students who will not use AI for the check): the team holds both, the second as a smaller group
 - Concealment: the opportunity insight (a team hypothesis) says students care most about making work look not-AI, while Raise and Create need TFGPT to store the student's work
