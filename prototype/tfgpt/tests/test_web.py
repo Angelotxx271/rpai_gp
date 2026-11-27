@@ -96,3 +96,29 @@ def test_resume_code_input_accepts_full_19_char_code_and_page_meets_a11y_csp(sta
     assert "<script>" not in html  # strict CSP: external /app.js only
     assert 'style="' not in html   # strict CSP: external /app.css only
 
+
+def test_resume_mints_fresh_server_cookie_and_pack_heading_is_linear(stack):
+    import inspect
+    import time
+    from advisor import pack
+    from tfgpt_shared import serve
+
+    # Alert #1 regression: dual_stack_socket defaults to loopback unless BIND_HOST overrides (containers set BIND_HOST=::)
+    assert inspect.signature(serve.dual_stack_socket).parameters["host"].default == "::1"
+
+    # Alert #2 regression: whitespace-heavy heading-like lines parse in linear time (no ReDoS)
+    t0 = time.monotonic()
+    sections = pack.parse("# " + " " * 25000)
+    assert len(sections) == 1 and sections[0].sid == "S0"
+    assert time.monotonic() - t0 < 0.25
+
+    # Alert #3 regression: /api/resume rotates the cookie to a fresh server-generated token
+    code = stack.start()["resume_code"]
+    orig_cookie = stack.web.cookies.get("tfgpt_token")
+    stack.web.cookies.clear()
+    r = stack.post("/api/resume", json={"code": code})
+    assert r.status_code == 200 and r.json()["resume_code"] == code
+    new_cookie = stack.web.cookies.get("tfgpt_token")
+    assert new_cookie and new_cookie != orig_cookie
+    assert stack.web.get("/api/me").json()["student"]["topic"]
+
