@@ -31,7 +31,7 @@
 | GitHub Dependabot Vulnerability Alerts | **Enabled** (`0` alerts) | Checked via GitHub API on 2026-11-26 |
 | GitHub Dependabot Automated Security Updates | **Enabled** | Auto-opens security PRs for vulnerable dependencies |
 | Dependabot Version Updates | **Configured** | `.github/dependabot.yml` (pip across all 5 Python manifests, npm for `tfgpt-landing` & `tfgpt-pilot`, 3 Dockerfiles, GitHub Actions) |
-| GitHub CodeQL (Python + JS) | **Configured** | `.github/workflows/codeql.yml` |
+| GitHub CodeQL (Python + JS) | **Configured & Remediated** | `.github/workflows/codeql.yml` — all 9 initial alerts resolved on 2026-11-27 (`serve.py` loopback default + container `BIND_HOST=::`, `pack.py` linear heading regex, `web/app.py` fresh server cookie on `/api/resume`, `tfgpt-pilot` `express-rate-limit` on page routes, `tfgpt-landing` CSPRNG `crypto.getRandomValues` fallback) |
 | CI Full-History `gitleaks` + Hygiene + Bandit + `pip-audit` + `npm audit` | **Configured** | `.github/workflows/security.yml` (uploads JSON reports as 90-day artifacts + writes step summary) |
 | CI Offline Regression Suite (SQLite + Postgres 17 + Spike) | **Configured** | `.github/workflows/ci.yml` |
 | Secret exclusion rules | **Configured** | `prototype/.gitignore`, `tfgpt-landing/.gitignore`, `tfgpt-pilot/.gitignore`, `.git/info/exclude`, and root `.gitignore` (PR #39) |

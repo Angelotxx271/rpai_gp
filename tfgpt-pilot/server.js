@@ -6,6 +6,7 @@
 // following the wizard protocol, and fills the observation sheet.
 
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 const path = require("path");
 const crypto = require("crypto");
 const { makeStore } = require("./store");
@@ -104,6 +105,12 @@ app.use(express.static(path.join(__dirname, "public"), {
 const now = () => new Date().toISOString();
 const clean = (v, max) => (typeof v === "string" ? v.replace(/\r\n?/g, "\n").trim().slice(0, max) : "");
 const newId = () => crypto.randomBytes(5).toString("hex");
+const pageLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 120,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+});
 const page = (name) => (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   res.sendFile(path.join(__dirname, "public", name));
@@ -253,8 +260,8 @@ setInterval(() => {
 }, 10 * 60 * 1000).unref();
 
 // ---- student side -----------------------------------------------------------
-app.get("/", page("index.html"));
-app.get("/s/:token", page("chat.html"));
+app.get("/", pageLimiter, page("index.html"));
+app.get("/s/:token", pageLimiter, page("chat.html"));
 
 app.get("/api/s/:token", (req, res) => {
   const s = store.byToken(req.params.token);
@@ -339,7 +346,7 @@ const findSession = (req, res, next) => {
   return req.pilotSession ? next() : res.status(404).json({ error: "not_found" });
 };
 
-app.get("/admin", page("admin.html"));
+app.get("/admin", pageLimiter, page("admin.html"));
 
 const loginFailures = new Map(); // ip -> failure timestamps
 let allFailures = [];
@@ -527,7 +534,7 @@ app.get("/api/admin/export.csv", requireAdmin, (req, res) => {
 });
 
 app.get("/healthz", (req, res) => res.json({ ok: true }));
-app.use((req, res) => res.status(404).sendFile(path.join(__dirname, "public", "index.html")));
+app.use(pageLimiter, (req, res) => res.status(404).sendFile(path.join(__dirname, "public", "index.html")));
 // no stack traces to the browser, ever
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err.status !== 400 && err.type !== "entity.parse.failed") console.error(err);

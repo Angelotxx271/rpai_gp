@@ -82,8 +82,11 @@ def code_of(token: str) -> str:
     return "-".join(token[i:i + 4] for i in range(0, len(token), 4))
 
 
+B32_CHARS = frozenset("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567")
+
+
 def token_of(code: str) -> str:
-    return "".join(ch for ch in code.upper() if ch.isalnum())
+    return "".join(ch for ch in code.upper() if ch in B32_CHARS)
 
 
 def hash_of(token: str) -> str:
@@ -215,12 +218,14 @@ def create_app(database: Database | None = None, advisor: httpx.Client | None = 
         if not throttle.allow(request.client.host if request.client else "?"):
             raise ApiError(429, "cap_reached", "Too many tries. Wait an hour and try again.")
         token = token_of(body.code)
+        session_token = new_token()
         with database.session() as db:
             th = db.get(TokenHash, hash_of(token)) if len(token) == 16 else None
             if not th:
                 raise ApiError(404, "unknown_code", "That code doesn't match a TFGPT thread.")
+            db.add(TokenHash(hash=hash_of(session_token), student_id=th.student_id))
             out = me_json(db.get(Student, th.student_id), token)
-        return set_cookie(JSONResponse(out), token)
+        return set_cookie(JSONResponse(out), session_token)
 
     @app.patch("/api/me")
     def update_me(body: TopicBody, found=Depends(need)):
