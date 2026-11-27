@@ -11,7 +11,7 @@ from tfgpt_shared import textmatch
 
 from .models import DocPack, Document, Programme
 
-HEADING = re.compile(r"^(#{1,6})\s+(.*\S)\s*$")
+HEADING = re.compile(r"^(#{1,6})[ \t]+(\S[^\r\n]*)$")
 PROGRAMME = ("bdba", "Data and Business Analytics")
 
 

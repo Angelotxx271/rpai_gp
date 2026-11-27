@@ -7,20 +7,21 @@ import sys
 import uvicorn
 
 
-def dual_stack_socket(port: int) -> socket.socket:
+def dual_stack_socket(port: int, host: str = "::1") -> socket.socket:
     sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
-    sock.bind(("::", port))
+    sock.bind((host, port))
     return sock
 
 
 def main() -> None:
     factory = sys.argv[1]
     port = int(os.environ.get("PORT", "8000"))
+    host = os.environ.get("BIND_HOST", "::1")
     config = uvicorn.Config(factory, factory=True, proxy_headers=True, forwarded_allow_ips="*",
                             log_level=os.environ.get("LOG_LEVEL", "info"))
-    uvicorn.Server(config).run(sockets=[dual_stack_socket(port)])
+    uvicorn.Server(config).run(sockets=[dual_stack_socket(port, host)])
 
 
 if __name__ == "__main__":

@@ -183,7 +183,13 @@
 
 <script>
 (() => {
-  const sid = sessionStorage.getItem("tfgpt_sid") || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+  const newSid = () => {
+    if (crypto.randomUUID) return crypto.randomUUID();
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+  };
+  const sid = sessionStorage.getItem("tfgpt_sid") || newSid();
   sessionStorage.setItem("tfgpt_sid", sid);
 
   const send = (event, meta) => fetch("/api/event", {

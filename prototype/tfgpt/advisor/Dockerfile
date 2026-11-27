@@ -1,6 +1,6 @@
 # Built from prototype/tfgpt (railway up --path-as-root), so the shared package is in the context
 FROM python:3.12-slim
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 BIND_HOST=::
 WORKDIR /app
 COPY shared/requirements.txt shared/requirements.txt
 COPY advisor/requirements.txt advisor/requirements.txt
