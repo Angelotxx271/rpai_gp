@@ -162,6 +162,7 @@ Desk research shapes the hypothesis; real users test it. Market sources show wha
   - The riskiest assumption (assumptions.md), the Sprint Goal (goals.md) and the experiment card say "instead of their AI of choice"
   - The press release's evidence box now says "instead of their own AI (for the check; they keep their own AI for everything else)", and its subheadline "instead of re-explaining them to a general AI each time", which already reads as instead for the check
   - The Wizard-of-Oz result supports "instead" for the check tasks only. assumptions.md and goals.md now note the scope next to their unchanged sentences
+  - Replaced on 2026-11-24 by "coexist", because "instead of" was a naive assumption (decision-record.md, "Pivot on 2026-11-24")
 
 **What ERRC did with the further implications (ERRC.md, 2026-10-11, revised 2026-10-12):**
 1. An IE-rule-specific AI-use record (#8, #78): not taken into the grid; kept as an open option
@@ -191,7 +192,7 @@ Carry into ERRC:
 - **The decision:** live alongside general AI (section 7)
 - **Candidate moves, not decisions:** the five implications listed under section 7
 - **Tensions to keep visible:**
-  - "instead of their AI" against "alongside" (reconciled on 2026-10-12: instead for the check, alongside for everything else)
+  - "instead of their AI" against "alongside" (reconciled on 2026-10-12: instead for the check, alongside for everything else; replaced by "coexist" on 2026-11-24)
   - an AI log the advisor can see, against students' concealment (ai-persona-04)
   - the EU AI Act position (legal advice needed)
   - whether ChatGPT Edu is still live at IE

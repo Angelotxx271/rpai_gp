@@ -12,6 +12,17 @@
 - TFGPT flags points with the guideline section behind each one and gives no grade or overall verdict. 4 of 10 participants re-checked answers with Blackboard, a friend, Google or their supervisor (experiment-card.md; ERRC.md Eliminate)
 - The two-month gap between deliverables is qualified by programme: it comes from the Computer Science programme we heard about, and cadence differs elsewhere (market-research.md section 5)
 
+## Pivot on 2026-11-24: from "instead of" to "coexist"
+
+Team decision on 2026-11-24; the reason was recorded on 2026-11-27. We had assumed students would use TFGPT instead of their own AI: at first for their TFG work, and from 2026-10-12 for the pre-meeting check. We now see that as a naive assumption. Students already have an AI they know and keep using, and our own evidence leaned that way:
+- Landing page: of 19 signups, 2 said they'd use it instead of their own AI, 11 alongside it and 6 probably not (recruitment.md; stated intention, not behaviour)
+- Wizard-of-Oz: 3 of 10 opened their own AI. Two used it alongside the chat and one did every task in Claude (experiment-card.md; one 20-minute session)
+- Interviews: the only "yes" to switching was conditional, if the tool keeps her context (Participant 02), and students stick with the AI they already know (assumptions.md)
+
+So TFGPT no longer asks students to leave their own AI. It adds the check that their own AI does only if they set it up: the programme's documents preloaded and every flag cited (mission.md). The riskiest assumption is now "students' own AI and TFGPT will coexist" (assumptions.md), untested with a real tool. It is tested by the "coexist" validation in roadmap.md, whose pass rule is still to be agreed before the test. We took the complement branch in the table at the end of this file before falsifier 1 was tested in real use, so this is a team choice, not a test result
+
+The "instead of" wording stays in ERRC.md, opportunity.md, press-release.md, market-research.md, goals.md and experiment-card.md as history
+
 ## Spike already run: field comparison
 
 Two team members checked their own TFG proposals two ways, judged by their own advisors (spikes.md). With a plain Claude chat and only some of the documents, one advisor made 9 corrections, mostly major (methodology, research question). The TFGPT stand-in (all programme documents and fixed instructions preloaded, guidance and flags only, no sentences written) then flagged all 9 of those points, and the version revised with it came back with only small fixes. The other proposal got 17 written comments over three rounds of drafts; which drafts the stand-in checked was not recorded (corrected on 2026-11-24 from "4 minor corrections"; spikes.md). This confirms CONTINUE as feasibility on the team's own work (n = 2), not as demand
@@ -68,5 +79,5 @@ Options already in the evidence log, for the team to choose from when a result c
 |---|---|
 | A general AI with the context pasted in gives the same flags for the same effort (falsifier 4) | Stop TFGPT as a separate check, or pivot to an option ERRC.md set aside: an AI-use record for IE's disclosure rules, or the supervisor view |
 | TFGPT misses more than 40% of what a supervisor would flag (falsifier 3) | Narrow the check to what it flags reliably, and re-test before adding more |
-| Students don't use it instead of their own AI for the check in real use (falsifier 1) | Change: reframe TFGPT as a complement used alongside their own AI, the CHANGE branch of experiment-card.md |
+| Students don't use it instead of their own AI for the check in real use (falsifier 1) | Change: reframe TFGPT as a complement used alongside their own AI, the CHANGE branch of experiment-card.md. Taken on 2026-11-24, before this test (see "Pivot on 2026-11-24" above) |
 | IE does not commit to maintaining and adopting it (falsifier 2) | Narrow to one programme or one advisor willing to keep the guidelines current, or stop the IE-backed version |

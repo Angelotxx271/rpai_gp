@@ -83,6 +83,8 @@ Compared with the student's own general AI, TFGPT is a checker, not a writer:
 
 **We are wrong if:** (1) students don't end up using TFGPT instead of their AI of choice for the pre-meeting check; (2) IE does not commit to the full maintenance and adoption of the tool; (3) TFGPT misses more than 40% of what a supervisor would otherwise flag as not ideal in the TFG; (4) the check can be copy-pasted into a different LLM and it does the same, in which case TFGPT has no value. "Does the same" means the same flags for the same effort; ERRC.md sets out how each is measured
 
+*Pivot on 2026-11-24: falsifier (1) and the "instead of" line above were a naive assumption and are kept as history. TFGPT now coexists with the student's own AI (decision-record.md, "Pivot on 2026-11-24")*
+
 This remains a hypothesis, not a validated blue ocean or confirmed business model
 
 ## Open gaps
@@ -101,4 +103,4 @@ This remains a hypothesis, not a validated blue ocean or confirmed business mode
 - Whether AI is allowed in each student's final-project syllabus (#7, #12, #13)
 - Willingness to pay, and who would pay; IE or other universities as the buyer is a HYPOTHESIS
 - Whether a tool that flags and suggests fixes but never grades stays outside EU AI Act Annex III 3(b) (legal advice needed)
-- "Instead of their AI of choice" and "alongside" are reconciled as instead for the check, alongside for everything else (ERRC.md); assumptions.md records it
+- "Instead of their AI of choice" and "alongside" are reconciled as instead for the check, alongside for everything else (ERRC.md); assumptions.md records it. Replaced on 2026-11-24 by "coexist", because "instead of" was a naive assumption (decision-record.md)
